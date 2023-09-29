@@ -17,11 +17,16 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-image: radial-gradient(circle at 1px 1px, #eeeeee 1px, transparent 0);
+  background-size: 5vw 5vw;
+}
+@media (min-width: 768px){
+  body {
+    background-size: 2vw 2vw;
+  }
+}
+@media (min-width: 1024px){
+  body {
+    background-size: 1vw 1vw;
+  }
 }
