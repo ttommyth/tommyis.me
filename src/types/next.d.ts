@@ -3,3 +3,7 @@ type NextAppDirectoryProps =  {
     locale:string
   };
 }
+
+type ComponentWithLocale<T> = {
+  locale: T;
+}
