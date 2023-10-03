@@ -1,5 +1,6 @@
 import {useTranslations} from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
+import { PropsWithChildren } from 'react';
  
 export default function Index({
   params: {locale}

@@ -2,6 +2,7 @@ import { Layout } from '@/components/server/Layout'
 import '@/styles/globals.scss'
 import type { Metadata } from 'next'
 import { Noto_Sans } from 'next/font/google'
+import { PropsWithChildren } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 const font = Noto_Sans({ subsets: ['latin'], display: 'swap', weight:'400' })
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
   params: {locale}
-}: NextAppDirectoryProps) {
+}: PropsWithChildren<NextAppDirectoryProps>) {
   return (
     <html lang={locale}>
       <body className={twMerge(font.className, "relative")}>

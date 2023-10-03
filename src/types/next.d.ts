@@ -1,6 +1,5 @@
-interface NextAppDirectoryProps {
-  children: React.ReactNode,
+type NextAppDirectoryProps =  {
   params: {
     locale:string
-  }
+  };
 }
