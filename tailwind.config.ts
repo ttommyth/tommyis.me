@@ -1,4 +1,10 @@
 import type { Config } from 'tailwindcss'
+import plugin from 'tailwindcss/plugin'
+import _ from 'lodash';
+const map = _.map
+const classNameWithNegative = (classes: {[key:string]:(v:string)=>any})=>{
+  return {...classes, ...Object.fromEntries(Object.entries(classes).map(it=>["-"+it[0], (v:string)=>it[1]("-"+v)]))}
+}
 
 const config: Config = {
   darkMode: 'class',
@@ -46,6 +52,153 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(
+      function ({  config, addUtilities,matchUtilities,  addBase, theme, e }) {
+        addBase({
+          '*, ::before, ::after': {
+            '--tw-translate-x': '0',
+            '--tw-translate-y': '0',
+            '--tw-translate-z': '0',
+            '--tw-rotate-x': '0',
+            '--tw-rotate-y': '0',
+            '--tw-rotate-z': '0',
+            '--tw-skew-x': '0',
+            '--tw-skew-y': '0',
+            '--tw-scale-x': '1',
+            '--tw-scale-y': '1',
+            '--tw-scale-z': '1',
+            // '--tw-self-perspective': '0',
+            '--tw-transform': [
+              'translateX(var(--tw-translate-x))',
+              'translateY(var(--tw-translate-y))',
+              'rotateX(var(--tw-rotate-x)) rotateY(var(--tw-rotate-y)) rotateZ(var(--tw-rotate-z))',
+              'translateZ(var(--tw-translate-z))',
+              'skewX(var(--tw-skew-x))',
+              'skewY(var(--tw-skew-y))',
+              'scale3d(var(--tw-scale-x), var(--tw-scale-y), var(--tw-scale-z))',
+            ].join(' '),
+          },
+        })
+    
+        addUtilities({
+          '.transform-style-flat': {
+            'transform-style': 'flat',
+          },
+          '.transform-style-3d': {
+            'transform-style': 'preserve-3d',
+          },
+        })
+    
+        addUtilities({
+          '.backface-visible': {
+            'backface-visibility': 'visible',
+          },
+          '.backface-hidden': {
+            'backface-visibility': 'hidden',
+          },
+        })
+    
+        const perspectiveOriginUtilities = map(theme('transformOrigin'), (value, key) => {
+          return {
+            [`.${e(`perspective-origin-${key}`)}`]: {
+              'perspective-origin': value,
+            },
+          }
+        })
+    
+        addUtilities(perspectiveOriginUtilities)
+    
+        matchUtilities({
+          perspective:(v)=>({
+            perspective: v
+          })
+        }, {
+          values: theme('perspectiveValues')
+        })
+    
+        addUtilities({
+          '.transform-3d-none': { transform: 'none' },
+          // '.transform-3d': {
+          //     '@defaults transform': {},
+          //     transform: 'var(--tw-transform)',
+          // }
+        })
+        
+        matchUtilities(classNameWithNegative({
+          "rotate-x":(v)=>({
+            '--tw-rotate-x': v,
+            transform: 'var(--tw-transform)',
+          }),
+          "rotate-y":(v)=>({
+            '--tw-rotate-y': v,
+            transform: 'var(--tw-transform)',
+          }),
+          "rotate-z":(v)=>({
+            '--tw-rotate-z': v,
+            transform: 'var(--tw-transform)',
+          })
+        }), {
+          values: theme('rotate')
+        })  
+    
+        matchUtilities(classNameWithNegative({
+          "translate-x":(v)=>({
+            '--tw-rotate-x': v,
+            transform: 'var(--tw-transform)',
+          }),
+          "translate-y":(v)=>({
+            '--tw-translate-y': v,
+            transform: 'var(--tw-transform)',
+          }),
+          "translate-z":(v)=>({
+            '--tw-translate-z': v,
+            transform: 'var(--tw-transform)',
+          })
+        }), {
+          values: theme('rotate')
+        })
+        
+        matchUtilities(classNameWithNegative({
+          "scale-x":(v)=>({
+            '--tw-scale-x': v,
+            transform: 'var(--tw-transform)',
+          }),
+          "scale-y":(v)=>({
+            '--tw-scale-y': v,
+            transform: 'var(--tw-transform)',
+          }),
+          "scale-z":(v)=>({
+            '--tw-scale-z': v,
+            transform: 'var(--tw-transform)',
+          })
+        }), {
+          values: theme('rotate')
+        })    
+      },
+      {
+        theme: {
+          perspectiveValues: {
+            none: 'none',
+            1: '100px',
+            2: '200px',
+            3: '300px',
+            4: '600px',
+            5: '500px',
+            6: '600px',
+            7: '700px',
+            8: '800px',
+            9: '900px',
+            10: '1000px',
+            '25vw': '25vw',
+            '50vw': '50vw',
+            '75w': '75vw',
+            '100vw': '100vw',
+          },
+        },
+      }
+    )
+    
+  ],
 }
 export default config
