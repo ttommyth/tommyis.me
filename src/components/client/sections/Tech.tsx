@@ -5,6 +5,52 @@ import Matter, { Mouse, MouseConstraint, World } from "matter-js";
 import { FC, useEffect, useRef } from "react"
 import { twMerge } from "tailwind-merge";
 
+const skills: {name:string, image:string, weight?:number}[]=[
+  {
+    name: "React.js",
+    image: "/image/skill/react.png",
+  },
+  {
+    name: "Next.js",
+    image: "/image/skill/nextjs.png"
+  },
+  {
+    name: "Tailwind CSS",
+    image: "/image/skill/tailwindcss.png"
+  },
+  {
+    name: "Expo",
+    image: "/image/skill/expo.png"
+  },
+  {
+    name: "AWS",
+    image: "/image/skill/aws.png",
+    weight: 0.7
+  },
+  {
+    name: "React Native",
+    image: "/image/skill/react.png",
+    weight: 0.5
+  },
+  {
+    name: "Docker",
+    image: "/image/skill/docker.png"
+  },
+  {
+    name: "Cloudflare",
+    image: "/image/skill/cloudflare.png",
+    weight: 0.7
+  },
+  {
+    name: "C#",
+    image: "/image/skill/csharp.png"
+  },
+  {
+    name: "Typescript",
+    image: "/image/skill/typescript.png"
+  },
+]
+
 const TechPlayground = ()=>{
   const ref = useRef<HTMLDivElement | null>(null);
   useEffect(()=>{
@@ -32,8 +78,6 @@ const TechPlayground = ()=>{
     });
 
     // create two boxes and a ground
-    const boxA = Bodies.rectangle(0, 0, 80, 80);
-    const boxB = Bodies.rectangle(0, 0, 80, 80);
     const ground = Bodies.rectangle(
       (rect.width / 2) + 160, rect.height + 80, rect.width + 320, 160,{render: { fillStyle: '#080808'}, isStatic: true });
     const wallLeft = Bodies.rectangle( -80, rect.height / 2, 160,   rect.height, { isStatic: true });
@@ -41,7 +85,20 @@ const TechPlayground = ()=>{
     const roof = Bodies.rectangle(
       (rect.width / 2) + 160, -80, rect.width + 320, 160, { isStatic: true })
     // add all of the bodies to the world
-    Composite.add(engine.world, [boxA, boxB, ground, wallLeft, wallRight, roof]);
+    Composite.add(engine.world, [
+      ground, wallLeft, wallRight, roof
+    ]);
+    Composite.add(engine.world,      
+      skills.map(skill=>Bodies.rectangle(0,0, 80*(skill.weight??1), 80*(skill.weight??1), {
+        render: {
+          sprite: {
+            texture: skill.image,
+            xScale:1,
+            yScale:1
+          }
+        }
+      })),
+    )
 
     // add mouse control
     const mouse = Mouse.create(render.canvas),
