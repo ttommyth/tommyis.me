@@ -83,11 +83,17 @@ const skills: {name:string, image:string, weight?:number}[]=[
     name: "Nx",
     image: "/image/skill/nx.png"
   },
+  {
+    name: "Cura",
+    image: "/image/skill/cura.png",
+    weight: 0.5
+  },
 ]
 
 const TechPlayground = ()=>{
   const ref = useRef<HTMLDivElement | null>(null);
   const [locked, setLocked] = useState(true);
+  const [reset, setReset] = useState(0);
   useEffect(()=>{
     if(!ref)
       return;
@@ -127,7 +133,7 @@ const TechPlayground = ()=>{
     ]);
 
     Composite.add(engine.world,      
-      skills.map((skill,idx)=>Bodies.rectangle(40+idx,100, 80*(skill.weight??1), 80*(skill.weight??1), {
+      skills.map((skill,idx)=>Bodies.rectangle(40+idx,100 + 20*Math.random(), 80*(skill.weight??1), 80*(skill.weight??1), {
         render: {
           sprite: {
             texture: skill.image,
@@ -162,14 +168,21 @@ const TechPlayground = ()=>{
 
     // run the engine
     Runner.run(runner, engine);
-  }, [])
+    return ()=>{
+      Render.stop(render);
+      Runner.stop(runner);
+      Engine.clear(engine);
+      render.canvas.remove();
+      render.textures = {};
+    }
+  }, [reset])
   return <>
     <div ref={ref} className="w-full h-full">
 
     </div>
-    <button className="absolute top-2 right-2"><ArrowPathIcon className=" w-8 h-8" /></button>
+    <button className="absolute top-2 right-2" onClick={ev=>setReset(Math.random())}><ArrowPathIcon className=" w-8 h-8" /></button>
     <div className={twMerge(locked?"block": "hidden", "absolute sm:hidden left-0 top-0 bottom-0 right-0  z-10 bg-dotted-glass opacity-50 transition")} />
-    <button className="absolute right-2 bottom-2 z-10" onClick={ev=>setLocked(v=>!v)}>{locked?<LockOpenIcon className=" w-8 h-8"  />:<LockClosedIcon className=" w-8 h-8" />}</button>
+    <button className="absolute right-2 bottom-2 z-10 block sm:hidden rounded-full bg-primary-500 p-2" onClick={ev=>setLocked(v=>!v)}>{locked?<LockOpenIcon className=" w-8 h-8"  />:<LockClosedIcon className=" w-8 h-8" />}</button>
   </>
 }
 
