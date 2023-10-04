@@ -82,11 +82,12 @@ export const Tech:FC<{}> = (props)=>{
     <div className="w-[320px] h-[80dvh] bg-dotted border-2 border-base-300 dark:border-base-900 rounded-xl overflow-hidden">
       <TechPlayground />
     </div>
-    <div className="hidden sm:block grow">
-      test
+    <div className="hidden sm:flex grow flex-col p-8 gap-8">
+      <h2 className="text-4xl font-extrabold">⬅️ My Skill set</h2>
+      <input className=" w-full text-xl" type="text" placeholder="search" />
     </div>
-    <div className="block sm:hidden grow">
-      sm
+    <div className="block sm:hidden grow w-full px-2 py-2">
+      <input className=" w-full" type="text"  placeholder="search"  />
     </div>
   </div>
 }
