@@ -1,10 +1,5 @@
 import type { Config } from 'tailwindcss'
 import plugin from 'tailwindcss/plugin'
-import _ from 'lodash';
-const map = _.map
-const classNameWithNegative = (classes: {[key:string]:(v:string)=>any})=>{
-  return {...classes, ...Object.fromEntries(Object.entries(classes).map(it=>["-"+it[0], (v:string)=>it[1]("-"+v)]))}
-}
 
 const config: Config = {
   darkMode: 'class',
@@ -99,15 +94,13 @@ const config: Config = {
           },
         })
     
-        const perspectiveOriginUtilities = map(theme('transformOrigin'), (value, key) => {
-          return {
-            [`.${e(`perspective-origin-${key}`)}`]: {
-              'perspective-origin': value,
-            },
-          }
+        matchUtilities({
+          'perspective-origin':(v)=>({
+            'perspective-origin': v
+          })
+        }, {
+          values: theme('transformOrigin')
         })
-    
-        addUtilities(perspectiveOriginUtilities)
     
         matchUtilities({
           perspective:(v)=>({
@@ -124,8 +117,7 @@ const config: Config = {
           //     transform: 'var(--tw-transform)',
           // }
         })
-        
-        matchUtilities(classNameWithNegative({
+        matchUtilities({
           "rotate-x":(v)=>({
             '--tw-rotate-x': v,
             transform: 'var(--tw-transform)',
@@ -138,13 +130,13 @@ const config: Config = {
             '--tw-rotate-z': v,
             transform: 'var(--tw-transform)',
           })
-        }), {
-          values: theme('rotate')
+        }, {
+          values: theme('rotate'),
+          supportsNegativeValues:true
         })  
-    
-        matchUtilities(classNameWithNegative({
+        matchUtilities(({
           "translate-x":(v)=>({
-            '--tw-rotate-x': v,
+            '--tw-translate-x': v,
             transform: 'var(--tw-transform)',
           }),
           "translate-y":(v)=>({
@@ -156,10 +148,11 @@ const config: Config = {
             transform: 'var(--tw-transform)',
           })
         }), {
-          values: theme('rotate')
+          values: theme('space'),
+          supportsNegativeValues:true
         })
         
-        matchUtilities(classNameWithNegative({
+        matchUtilities(({
           "scale-x":(v)=>({
             '--tw-scale-x': v,
             transform: 'var(--tw-transform)',
@@ -173,7 +166,8 @@ const config: Config = {
             transform: 'var(--tw-transform)',
           })
         }), {
-          values: theme('rotate')
+          values: theme('scale'),
+          supportsNegativeValues:true
         })    
       },
       {
