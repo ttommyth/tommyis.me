@@ -12,6 +12,11 @@ export const useDarkMode:()=>[(string|undefined), ( value: string|undefined ) =>
       document.documentElement.classList.remove('dark')
     }
   }, [theme]);
+  useEffect(()=>{
+    if(theme != 'dark' && window?.matchMedia('(prefers-color-scheme: dark)')?.matches){
+      setTheme('dark');
+    }
+  }, [])
   return [theme??undefined,setTheme];
 }
 

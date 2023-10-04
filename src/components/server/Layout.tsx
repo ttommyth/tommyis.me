@@ -6,7 +6,7 @@ export const Layout:FC<PropsWithChildren<{}>>=({children})=>{
   return <>
     <DarkModeHelper/>
     <Header/>
-    <main className="mx-auto container max-w-4xl px-4 ">{children}</main>
+    <main className="mx-auto container max-w-4xl">{children}</main>
     <footer></footer>
   </>
 }
