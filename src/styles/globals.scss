@@ -26,12 +26,12 @@ body{
   backdrop-filter: blur(4px);
 }
 :is(.dark .bg-dotted-glass){
-  background-image: radial-gradient(transparent 1px, theme("colors.base.800")  1px );
+  background-image: radial-gradient(transparent 1px, theme("colors.base.900")  1px );
 }
 
 
 .bg-dotted {
-  background-image: radial-gradient(theme("colors.base.300") 1px, transparent 0);
+  background-image: radial-gradient(theme("colors.base.400") 1px, transparent 0);
   background-size: 5vw 5vw;
   background-position: center;
   @apply transition-colors
