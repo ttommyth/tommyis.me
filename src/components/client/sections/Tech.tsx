@@ -1,7 +1,7 @@
 "use client";
 import styles from "@/styles/box.module.scss";
 import { motion, useDragControls, useScroll, useTransform } from "framer-motion";
-import Matter, { Mouse, MouseConstraint, World } from "matter-js";
+import Matter, { Composites, Mouse, MouseConstraint, World } from "matter-js";
 import { FC, useEffect, useRef } from "react"
 import { twMerge } from "tailwind-merge";
 
@@ -49,6 +49,39 @@ const skills: {name:string, image:string, weight?:number}[]=[
     name: "Typescript",
     image: "/image/skill/typescript.png"
   },
+  {
+    name: "Jest",
+    image: "/image/skill/jest.png",
+    weight: 0.5
+  },
+  {
+    name: ".net core",
+    image: "/image/skill/dotnetcore.png",
+    weight: 0.5
+  },
+  {
+    name: "Kotlin",
+    image: "/image/skill/kotlin.png",
+    weight: 0.5
+  },
+  {
+    name: "Playwright",
+    image: "/image/skill/playwright.png"
+  },
+  {
+    name: "Raspberry PI",
+    image: "/image/skill/rpi.png",
+    weight: 0.5
+  },
+  {
+    name: "Storybook",
+    image: "/image/skill/storybook.png",
+    weight: 0.7
+  },
+  {
+    name: "Nx",
+    image: "/image/skill/nx.png"
+  },
 ]
 
 const TechPlayground = ()=>{
@@ -72,8 +105,10 @@ const TechPlayground = ()=>{
       element: ref.current as HTMLElement,
       engine: engine,
       options:{
+        background: "transparent",
         width: rect.width,
-        height: rect.height
+        height: rect.height,
+        wireframes: false
       }
     });
 
@@ -88,13 +123,14 @@ const TechPlayground = ()=>{
     Composite.add(engine.world, [
       ground, wallLeft, wallRight, roof
     ]);
+
     Composite.add(engine.world,      
-      skills.map(skill=>Bodies.rectangle(0,0, 80*(skill.weight??1), 80*(skill.weight??1), {
+      skills.map((skill,idx)=>Bodies.rectangle(40+idx,100, 80*(skill.weight??1), 80*(skill.weight??1), {
         render: {
           sprite: {
             texture: skill.image,
-            xScale:1,
-            yScale:1
+            xScale: 1*(skill.weight??1),
+            yScale: 1*(skill.weight??1)
           }
         }
       })),
@@ -105,7 +141,7 @@ const TechPlayground = ()=>{
       mouseConstraint = MouseConstraint.create(engine, {
         mouse: mouse,
         constraint: {
-          stiffness: 0.2,
+          stiffness: 0.1,
           render: {
             visible: false
           }
