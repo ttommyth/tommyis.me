@@ -1,10 +1,16 @@
 import { Hero } from '@/components/client/sections/Hero';
 import { Tech } from '@/components/client/sections/Tech';
+import { Metadata } from 'next';
 import {useTranslations} from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import dynamic from 'next/dynamic';
 import { PropsWithChildren, Suspense } from 'react';
  
+export const metadata: Metadata = {
+  title: 'Tommy is me',
+  description: 'The portfolio page of Tommy the developer',
+}
+
 export default function Index({
   params: {locale}
 }: NextAppDirectoryProps) {
