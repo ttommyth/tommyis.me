@@ -7,6 +7,10 @@ body{
   @apply text-base-900 bg-base-100 dark:bg-base-800 dark:text-base-100 transition-colors overflow-x-hidden
 }
 
+input{
+  @apply bg-base-100 dark:bg-base-900 dark:text-white  rounded-md px-4 py-2 border border-base-500
+}
+
 @layer utilities{
 
 .bg-dotted-glass::before {
