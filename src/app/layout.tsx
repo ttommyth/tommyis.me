@@ -1,8 +1,11 @@
-import './globals.css'
+import { Layout } from '@/components/server/Layout'
+import '@/styles/globals.scss'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Noto_Sans } from 'next/font/google'
+import { PropsWithChildren } from 'react'
+import { twMerge } from 'tailwind-merge'
 
-const inter = Inter({ subsets: ['latin'] })
+const font = Noto_Sans({ subsets: ['latin'], display: 'swap', weight:'400' })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -11,12 +14,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+  params: {locale}
+}: PropsWithChildren<NextAppDirectoryProps>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang={locale}>
+      <body className={twMerge(font.className, "relative")}>
+        <Layout>
+          {children}
+        </Layout>
+      </body>
     </html>
   )
 }

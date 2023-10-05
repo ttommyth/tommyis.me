@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body{
+  @apply text-base-900 bg-base-100 dark:bg-base-800 dark:text-base-100 transition-colors overflow-x-hidden
+}
+
+@layer utilities{
+
+.bg-dotted-glass::before {
+  display: block;
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  opacity: 0.2;
+  @apply bg-gray-800 dark:bg-gray-200
+}
+.bg-dotted-glass {
+  background-image: radial-gradient(transparent 1px, theme("colors.base.100") 1px );
+  background-size: 4px 4px;
+  backdrop-filter: blur(4px);
+}
+:is(.dark .bg-dotted-glass){
+  background-image: radial-gradient(transparent 1px, theme("colors.base.900")  1px );
+}
+
+
+.bg-dotted {
+  background-image: radial-gradient(theme("colors.base.400") 1px, transparent 0);
+  background-size: 5vw 5vw;
+  background-position: center;
+  @apply transition-colors
+}
+
+:is(.dark .bg-dotted){
+  background-image: radial-gradient(theme("colors.base.900")  1px, transparent 0);
+}
+
+@media (min-width: 768px){
+  .bg-dotted {
+    background-size: 2vw 2vw;
+  }
+}
+@media (min-width: 1024px){
+  .bg-dotted {
+    background-size: 1vw 1vw;
+  }
+}
+}

@@ -1,0 +1,10 @@
+{
+  "i18n-ally.localesPaths": [
+    "src/locale",
+    "src/locale/messages"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "i18n-ally.keystyle": "nested",
+}
