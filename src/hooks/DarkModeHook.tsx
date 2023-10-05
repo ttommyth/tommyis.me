@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useLocalForage } from "./LocalForageHook";
+import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 
 export const useDarkMode:()=>[(string|undefined), ( value: string|undefined ) => void] = () => {
   const [theme,setTheme] = useLocalForage<string | undefined>('theme', undefined);
@@ -27,5 +28,5 @@ export const DarkModeHelper=()=>{
 
 export const DarkModeSwitch=()=>{
   const [theme,setTheme] = useDarkMode();
-  return <button onClick={ev=>setTheme(theme=="light"?"dark":"light")}>dark</button>
+  return <button onClick={ev=>setTheme(theme=="light"?"dark":"light")} type="button"> {theme=="light"?<SunIcon className="w-8 h-8"/>:<MoonIcon className="w-8 h-8"/>}</button>
 }

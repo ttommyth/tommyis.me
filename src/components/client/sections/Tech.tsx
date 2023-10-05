@@ -88,6 +88,16 @@ const skills: {name:string, image:string, weight?:number}[]=[
     image: "/image/skill/cura.png",
     weight: 0.5
   },
+  {
+    name: "Elastic Search",
+    image: "/image/skill/elasticsearch.png",
+    weight: 0.7
+  },
+  {
+    name: "Rabbit MQ",
+    image: "/image/skill/rabbitmq.png",
+    weight: 0.5
+  }
 ]
 
 const TechPlayground = ()=>{
@@ -132,16 +142,17 @@ const TechPlayground = ()=>{
       ground, wallLeft, wallRight, roof
     ]);
 
-    Composite.add(engine.world,      
-      skills.map((skill,idx)=>Bodies.rectangle(40+idx,100 + 20*Math.random(), 80*(skill.weight??1), 80*(skill.weight??1), {
-        render: {
-          sprite: {
-            texture: skill.image,
-            xScale: 1*(skill.weight??1),
-            yScale: 1*(skill.weight??1)
-          }
+    const boxes = skills.map((skill,idx)=>Bodies.rectangle(40+idx,100 + 20*Math.random(), 80*(skill.weight??1), 80*(skill.weight??1), {
+      render: {
+        sprite: {
+          texture: skill.image,
+          xScale: 1*(skill.weight??1),
+          yScale: 1*(skill.weight??1)
         }
-      })),
+      }
+    }))
+    Composite.add(engine.world,      
+      boxes
     )
 
     // add mouse control

@@ -19,18 +19,18 @@ export default function Index({
         iamArray: JSON.parse(t.raw("iamArray"))
       }}/>
     </div>
-    <div className='snap-always snap-center relative sm:static  w-[100dvw] sm:w-auto h-[100dvh] min-h-[500px]'>    
+    <div className='snap-always snap-center relative sm:static  w-[100dvw] sm:w-auto h-[100dvh] min-h-[500px]' id='skills'>    
       <Suspense fallback={<p>Loading...</p>}>
         <Tech />
       </Suspense>  
     </div>
-    <div className='snap-always snap-center relative sm:static  w-[100dvw] sm:w-auto h-[100dvh] min-h-[500px]'>      
+    {/* <div className='snap-always snap-center relative sm:static  w-[100dvw] sm:w-auto h-[100dvh] min-h-[500px]'>      
       <Hero locale={{
         title1: t("heroTitle1"),
         title2: t("heroTitle2"),
         iam: t("iam"),
         iamArray: JSON.parse(t.raw("iamArray"))
       }}/>
-    </div>
+    </div> */}
   </div>;
 }
