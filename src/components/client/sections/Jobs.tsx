@@ -34,8 +34,12 @@ const JobAccordion: FC<{ i:number, expanded:number|false, setExpanded:(v:number|
 export const Jobs = ()=>{
   const [expanded, setExpanded] = useState<false | number>(0);
 
-  return <div className="flex flex-col pt-12 sm:pt-0 w-[100dvw] sm:w-full items-center overflow-y-scroll sm:overflow-y-auto min-h-[100dvh]">
-    <h2 className="text-4xl">Jobs</h2>
-    {[0,1,2,3].map(it=><JobAccordion key={it} i={it} expanded={expanded} setExpanded={setExpanded}/>)}
+  return <div className=" overflow-y-scroll sm:overflow-y-auto min-h-[100dvh] max-h-[100dvh] sm:max-h-none">
+    <div className="flex flex-col pt-12 sm:pt-0 w-[100dvw] sm:w-full items-center">
+      <h2 className="text-4xl">Jobs</h2>
+      <div className="h-screen"></div>
+      <div className="h-screen"></div>
+      {[0,1,2,3].map(it=><JobAccordion key={it} i={it} expanded={expanded} setExpanded={setExpanded}/>)}
+    </div>
   </div>
 }
