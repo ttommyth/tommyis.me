@@ -16,7 +16,7 @@ export default function Index({
 }: NextAppDirectoryProps) {
   unstable_setRequestLocale(locale);
   const t = useTranslations('Index');
-  return <div className='w-auto overflow-x-auto sm:overflow-x-hidden flex flex-row sm:flex-col snap-x  snap-mandatory sm:snap-none gap-4'>
+  return <div className='w-auto overflow-x-auto sm:overflow-x-hidden flex flex-row sm:flex-col snap-x  snap-mandatory sm:snap-none gap-4 px-8 py-0 sm:px-0 sm:py-8' id='root-container'>
     <div className='snap-always snap-center relative sm:static w-[100dvw] sm:w-auto h-[100dvh] min-h-[500px]' id='hero'>      
       <Hero locale={{
         title1: t("heroTitle1"),
