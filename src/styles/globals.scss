@@ -4,14 +4,23 @@
 
 
 body{
-  @apply text-base-900 bg-base-100 dark:bg-base-800 dark:text-base-100 transition-colors overflow-x-hidden
+  @apply bg-default text-base-900 dark:text-base-100 overflow-x-hidden
 }
 
 input{
-  @apply bg-base-100 dark:bg-base-900 dark:text-white  rounded-md px-4 py-2 border border-base-500
+  @apply bg-default dark:text-white  rounded-md px-4 py-2 border border-base-500
 }
 
 @layer utilities{
+  .border-style-expand{
+    border-style: solid dashed solid;
+  }
+  .bg-default{
+    @apply bg-base-100 dark:bg-base-800 transition-colors
+  }
+  .border-default{
+    @apply border-base-300 dark:border-base-900  transition-colors
+  }
 
 .bg-dotted-glass::before {
   display: block;
@@ -30,7 +39,7 @@ input{
   backdrop-filter: blur(4px);
 }
 :is(.dark .bg-dotted-glass){
-  background-image: radial-gradient(transparent 1px, theme("colors.base.900")  1px );
+  background-image: radial-gradient(transparent 1px, theme("colors.base.800")  1px );
 }
 
 

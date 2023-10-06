@@ -269,7 +269,7 @@ export const Tech:FC<{}> = (props)=>{
   // const rotateY = useTransform(scroll.scrollYProgress, [0,1], ['-350px', '350px']);
 
   return <div className="flex flex-col sm:flex-row justify-center items-center h-full">
-    <div className="w-[320px] h-[100dvh] sm:h-[80dvh] bg-dotted border-2 border-dotted border-base-300 dark:border-base-900 rounded-xl overflow-hidden relative">
+    <div className="w-[320px] h-[100dvh] sm:h-[80dvh] bg-dotted border-2 border-default rounded-xl overflow-hidden relative">
       <TechPlayground highlightItems={searchText?matchTarget.map(it=>it.name):undefined}/>
 
       <div className="block sm:hidden grow w-full px-2 py-2 absolute top-12 z-10">
