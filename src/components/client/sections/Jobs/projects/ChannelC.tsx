@@ -8,7 +8,7 @@ export const ChannelC = () => {
         <Link href="https://channelchk.com" target="_blank" className="dui-input border-2 border-default  ">https://channelchk.com</Link>
       </div>
       <div className="w-full  aspect-video">
-        <ImageCarousel images={["/image/skill/nextjs.png", "/image/skill/nextjs.png", "/image/skill/nextjs.png", "/image/skill/nextjs.png", "/image/skill/nextjs.png"]}/>
+        <ImageCarousel images={["/image/job_developer.png", "/image/skill/nextjs.png", "/image/skill/nextjs.png", "/image/skill/nextjs.png", "/image/skill/nextjs.png"]}/>
       </div>
 
     </div>

@@ -99,7 +99,7 @@ const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
           </motion.div>
         </AnimatePresence>
       </div>
-      <div className="carousel-indicator absolute bottom-0 flex justify-center left-0 right-0 p-2 gap-2">
+      <div className="carousel-indicator absolute bottom-0 flex justify-center left-1/2 -translate-x-1/2 p-1 mb-1 rounded-full gap-2 bg-default">
         <div
           className="cursor-pointer"
           onClick={handlePrevious}
