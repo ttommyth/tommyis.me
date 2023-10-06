@@ -4,7 +4,7 @@ import { FC, useState } from "react"
 import { ConditionalWrapper } from "../../utils/ConditionalWrapper";
 import Link from "next/link";
 import { ArrowDownIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
-import {TodoNode, JobNode, ProjectNode, PersonalProjectNode } from "./Nodes";
+import {TodoNode, JobNode, ProjectNode, PersonalProjectNode, EducationNode } from "./Nodes";
 import { ChannelC } from "./projects/ChannelC";
 
 
@@ -43,16 +43,22 @@ export const Jobs = ()=>{
           period: "10/2018 - 07/2021"
         }} />
         <PersonalProjectNode project={{
-          title: "Senior System Analyst",
-          company: "Cooltech Solutions Limited",
-          url: "https://cooltechsol.com",
-          period: "07/2021 - 10/2023"
+          title: "Custom Robot Controller with AR Mobile App",
+          company: "City University of Hong Kong",
+          url: "http://dspace.cityu.edu.hk/handle/2031/9098",
+          period: "07/2018 - 08/2018"
         }} i={1} expanded={expanded} setExpanded={setExpanded}/>
         <JobNode job={{
           title: "Programmer",
           company: "HK Systems Limited",
           url: "https://hksl.com.hk",
           period: "08/2017 - 06/2018"
+        }} />
+        <EducationNode education={{
+          title: "BSc Computer Science",
+          school: "City University of Hong Kong",
+          gpa: "3.47/4.3",
+          period: "09/2016 - 08/2018"
         }} />
       </div>
     </div>
