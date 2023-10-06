@@ -21,7 +21,11 @@ const config: Config = {
 
   theme:{
     extend: {
+      spacing: {
+        'icon': '1.5rem',
+      },
       colors: {
+        'comment': '#6a9955',
         'primary': {
           100: '#E6FFFA',
           200: '#B2F5EA',

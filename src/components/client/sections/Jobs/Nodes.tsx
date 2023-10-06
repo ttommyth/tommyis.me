@@ -1,4 +1,4 @@
-import { ChevronDownIcon } from "@heroicons/react/24/solid"
+import { ArrowRightOnRectangleIcon, ArrowTopRightOnSquareIcon, ChevronDownIcon } from "@heroicons/react/24/solid"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { FC, PropsWithChildren, useState } from "react"
@@ -9,7 +9,7 @@ import ImageCarousel from "../../ImageCarousel"
 export const TodoNode:FC<{}> = ()=>{
   return <div className="flex flex-col ">
     <div className="absolute left-[-8px] mt-1  w-auto h-6 bg-default border-default  text-center transition-colors text-base-300 dark:text-base-900" title="comment">
-      <span style={{color: "#6a9955"}}>{"//TODO: insert next job here"}</span>
+      <span className="text-comment">{"//TODO: insert next job here"}</span>
     </div>
     <span className="h-8"></span>
   </div>
@@ -25,11 +25,11 @@ export const JobNode:FC<{
     period:string
   }
 }> = ({job})=>{
-  return <div className="flex flex-col ">
-    <div className="absolute  left-[-1px] mt-1 -translate-x-1/2 w-6 h-6 bg-default border-default border-2 rounded-full transition-colors" title="Job"/>
+  return <div className="flex flex-col items-start">
+    <div className="absolute  left-[-1px] mt-1 -translate-x-1/2 w-icon h-icon bg-default border-default border-2 rounded-full transition-colors" title="Job"/>
     <h3 className="text-xl font-bold">{job.title}</h3>
-    <ConditionalWrapper wrapper={(node)=><Link href={job.url!} target="_blank">{node}</Link>} condition={!!job.url}>
-      <h4 className="text-gray-500 text-md">{job.company}</h4>
+    <ConditionalWrapper wrapper={(node)=><Link href={job.url!} target="_blank" className="flex justify-center gap-2">{node} <ArrowTopRightOnSquareIcon  className="w-icon h-icon inline-block text-gray-500"/> </Link>} condition={!!job.url}>
+      <h4 className="text-gray-500 text-md inline-block w-auto">{job.company}</h4>
     </ConditionalWrapper>
     <h4 className="text-xs text-gray-500">{job.period}</h4>
   </div>
@@ -43,8 +43,8 @@ export const ProjectNode:FC<PropsWithChildren<{
     period:string,
   },i:number, expanded:number|undefined, setExpanded:(v:number|undefined)=>void
 }>> = ({project, i, expanded, setExpanded, children})=>{
-  return <div className="flex flex-col ml-2 sm:ml-4 gap-2 ">
-    <div className="absolute left-[-1px] mt-1 -translate-x-1/2 w-6 h-6 bg-default border-default border-2 rounded-md transition-colors" title="Project"/>
+  return <div className="flex flex-col ml-0 sm:ml-4 gap-2 ">
+    <div className="absolute left-[-1px] mt-1 -translate-x-1/2 w-icon h-icon bg-default border-default border-2 rounded-md transition-colors" title="Project"/>
     <span className="flex flex-wrap sm:flex-row gap-2 sm:gap-4 sm:items-center">
       <ConditionalWrapper wrapper={(node)=><Link href={project.url!} target="_blank">{node}</Link>} condition={!!project.url}>
         <h3 className="text-xl font-bold">{project.name}</h3>
@@ -63,7 +63,7 @@ export const ProjectNode:FC<PropsWithChildren<{
       >
         <motion.div 
           animate={{ rotate: expanded==i ? "180deg" : "0deg" }}>
-          <ChevronDownIcon className="w-6 h-6 text-base-400 dark:text-base-900" />
+          <ChevronDownIcon className="w-icon h-icon text-default-invert" />
         </motion.div>
       </motion.header>
       <AnimatePresence initial={false}>
@@ -78,6 +78,7 @@ export const ProjectNode:FC<PropsWithChildren<{
               collapsed: { opacity: 0, height: 0 }
             }}
             transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+            className="w-full p-2 sm:p-4 overflow-auto"
           >
             {children}
           </motion.section>
@@ -97,7 +98,7 @@ export const PersonalProjectNode:FC<{
   },i:number, expanded:number|undefined, setExpanded:(v:number|undefined)=>void
 }> = ({project})=>{
   return <div className="flex flex-col ">
-    <div className="absolute  left-[-1px]  mt-1 -translate-x-1/2 w-6 h-6 bg-default border-default border-2 -rotate-45 rounded-md transition-colors" title="Personal Project" />
+    <div className="absolute  left-[-1px]  mt-1 -translate-x-1/2 w-icon h-icon bg-default border-default border-2 -rotate-45 rounded-md transition-colors" title="Personal Project" />
     <h3 className="text-xl font-bold">{project.title}</h3>
     <ConditionalWrapper wrapper={(node)=><Link href={project.url!} target="_blank">{node}</Link>} condition={!!project.url}>
       <h4 className="text-gray-500 text-md">{project.company}</h4>

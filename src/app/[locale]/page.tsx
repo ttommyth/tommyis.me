@@ -31,7 +31,7 @@ export default function Index({
         <Tech />
       </Suspense>  
     </div>
-    <div className='snap-always snap-center relative sm:static  w-[100dvw] sm:w-auto h-[100dvh] sm:h-auto' id='jobs'>    
+    <div className='snap-always snap-center relative sm:static  w-[100dvw] sm:w-auto h-[100dvh] sm:h-auto scroll-m-0 sm:scroll-m-20' id='jobs'>    
       <Suspense fallback={<p>Loading...</p>}>
         <Jobs />
       </Suspense>

@@ -27,7 +27,7 @@ const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
     },
     exit: {
       opacity: 0,
-      scale: 0.8,
+      // scale: 0.8,
       transition: {
         duration: 0.5,
       },
@@ -99,17 +99,17 @@ const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
           </motion.div>
         </AnimatePresence>
       </div>
-      <div className="carousel-indicator absolute bottom-0 flex justify-center left-1/2 -translate-x-1/2 p-1 mb-1 rounded-full gap-2 bg-default">
+      <div className="carousel-indicator absolute bottom-0 flex justify-center left-1/2 -translate-x-1/2 p-1 mb-1 rounded-full gap-2  bg-default text-default-invert">
         <div
           className="cursor-pointer"
           onClick={handlePrevious}
         >
-          <ChevronLeftIcon className="w-6 h-6 text-base-300 dark:text-base-900"/>
+          <ChevronLeftIcon className="w-icon h-icon"/>
         </div>
         {images.map((_, index) => (
           <motion.div
             key={index}
-            className={`w-6 h-6 bg-default border-default border-2 cursor-pointer flex justify-center items-center`}
+            className={`w-icon h-icon bg-default border-default-invert border-2 cursor-pointer flex justify-center items-center`}
             onClick={() => handleDotClick(index)}
             initial="initial"
             animate={currentIndex === index ? "animate" : ""}
@@ -124,7 +124,7 @@ const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
               whileHover="hover"
               variants={dotsContentVariants}
             >
-              <ChevronUpIcon className="w-6 h-6 text-base-300 dark:text-base-900"/>
+              <ChevronUpIcon className="w-icon h-icon "/>
             </motion.div>
           </motion.div>
         ))}
@@ -133,7 +133,7 @@ const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
           className="cursor-pointer"
           onClick={handleNext}
         >
-          <ChevronRightIcon className="w-6 h-6 text-base-300 dark:text-base-900"/>
+          <ChevronRightIcon className="w-icon h-icon"/>
         </div>
       </div>
     </div>

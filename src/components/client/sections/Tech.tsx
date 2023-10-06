@@ -276,7 +276,7 @@ export const Tech:FC<{}> = (props)=>{
       
         <span className="relative">
           <input className=" w-full text-xl pl-10" type="text"  value={searchText} onChange={ev=>setSearchText(ev.target.value)} placeholder="Filter..." />
-          <FunnelIcon className="w-6 h-6 absolute left-2 top-1/2 -translate-y-1/2"/>
+          <FunnelIcon className="w-icon h-icon absolute left-2 top-1/2 -translate-y-1/2"/>
         </span>
       </div>
     </div>
@@ -284,7 +284,7 @@ export const Tech:FC<{}> = (props)=>{
       <h2 className="text-4xl font-extrabold">⬅️ My Skill set</h2>
       <span className="relative">
         <input className=" w-full text-xl pl-10" type="text"  value={searchText} onChange={ev=>setSearchText(ev.target.value)} placeholder="Filter..." />
-        <FunnelIcon className="w-6 h-6 absolute left-2 top-1/2 -translate-y-1/2"/>
+        <FunnelIcon className="w-icon h-icon absolute left-2 top-1/2 -translate-y-1/2"/>
       </span>
     </div>
   </div>
