@@ -62,7 +62,11 @@ const config: Config = {
       },
     },
   },
+  corePlugins: {
+    aspectRatio: false,
+  },
   plugins: [
+    require('@tailwindcss/aspect-ratio'),
     require("daisyui"),
     plugin(
       function ({  config, addUtilities,matchUtilities,  addBase, theme, e }) {

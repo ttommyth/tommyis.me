@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { FC, PropsWithChildren, useState } from "react"
 import { ConditionalWrapper } from "../../utils/ConditionalWrapper"
-import ImageCarousel from "../../ImageCarousel"
+import ImageCarousel from "../../common/ImageCarousel"
 import { twMerge } from "tailwind-merge"
 import { AcademicCapIcon } from "@heroicons/react/24/outline"
 

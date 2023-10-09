@@ -84,7 +84,7 @@ const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
   };
 
   return (
-    <div className="carousel w-full h-full" >
+    <div className="carousel w-full h-full relative" >
       <div className="carousel-images relative  overflow-hidden w-full h-full">
         <AnimatePresence>
           <motion.div
