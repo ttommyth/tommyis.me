@@ -6,6 +6,8 @@ import Link from "next/link";
 import { ArrowDownIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import {TodoNode, JobNode, ProjectNode, PersonalProjectNode, EducationNode } from "./Nodes";
 import { ChannelC } from "./projects/ChannelC";
+import { Kitchee } from "./projects/Kitchee";
+import { Studylu } from "./projects/Studylu";
 
 
 export const Jobs = ()=>{
@@ -23,12 +25,31 @@ export const Jobs = ()=>{
           period: "07/2022 - 10/2023"
         }} />
         <ProjectNode project={{
+          icon: "/image/project/cc/icon.png",
           name: "Channel C HK",
           url: "https://channelchk.com",
-          labels: ["Web Development","App Development", "Data Analysis"],
+          labels: ["Web Development","App Development", "Backend Development", "Data Analysis"],
           period: "2021 - 2023"
         }} i={0} expanded={expanded} setExpanded={setExpanded}>
           <ChannelC/>
+        </ProjectNode>
+        <ProjectNode project={{
+          icon: "/image/project/kitchee/icon.png",
+          name: "Kitchee",
+          url: "https://kitchee.com",
+          labels: ["Web Development", "CMS Customization"],
+          period: "2022 - 2023"
+        }} i={1} expanded={expanded} setExpanded={setExpanded}>
+          <Kitchee/>
+        </ProjectNode>
+        <ProjectNode project={{
+          icon: "/image/project/studylu/icon.png",
+          name: "Studylu",
+          url: "https://studylu.com",
+          labels: ["Web Development", "Backend Development"],
+          period: "2021 - 2023"
+        }} i={2} expanded={expanded} setExpanded={setExpanded}>
+          <Studylu/>
         </ProjectNode>
         <JobNode job={{
           title: "System Analyst",
