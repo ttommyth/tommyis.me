@@ -22,7 +22,7 @@ const TechGrid:FC<{
     }
     return sortedSkills;
   },[highlightItems]);
-  return <div className="grid pt-32 sm:pt-1 grid-cols-3 sm:grid-cols-2 md:grid-cols-3 items-center justify-center p-1 gap-2 overflow-y-scroll max-h-full">
+  return <div className="grid pt-32 sm:pt-1 grid-cols-3 sm:grid-cols-2 md:grid-cols-3 items-center justify-center p-1 gap-2 overflow-y-auto max-h-full">
     {
       sortedSkills.map((it,idx)=><motion.div layoutId={`tech-grid-${it.name}`}
         animate={{opacity: highlightItems?(highlightItems.includes(it.name)?1:0.2):1}}
