@@ -1,5 +1,5 @@
 "use client";
-export const skills: {name:string, image:string, weight?:number}[]=[
+export const skills=[
   {
     name: "React.js",
     image: "/image/skill/react.png",
@@ -102,4 +102,6 @@ export const skills: {name:string, image:string, weight?:number}[]=[
     image: "/image/skill/firebase.png",
     weight: 0.7
   }
-]
+] as const
+export const readonlySkills: readonly {readonly name:string,readonly image:string,readonly weight?:number}[] = skills;
+export const skillsDict = Object.fromEntries(readonlySkills.map((skill)=>[skill.name, skill]));
