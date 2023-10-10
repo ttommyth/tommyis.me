@@ -2,13 +2,39 @@
 import styles from "@/styles/box.module.scss";
 import { AdjustmentsHorizontalIcon, ArrowPathIcon, FunnelIcon, LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid";
 import { motion, useDragControls, useScroll, useTransform, useVelocity } from "framer-motion";
-import { debounce, throttle } from "lodash";
-import Matter, { Composites, Mouse, MouseConstraint, World } from "matter-js";
+import { debounce, delay, throttle } from "lodash";
+import Matter, { Composites, Mouse, MouseConstraint, Sleeping, World } from "matter-js";
 import MiniSearch from "minisearch";
 import { FC, useEffect, useMemo, useRef, useState } from "react"
 import { twMerge } from "tailwind-merge";
+import Image from "next/image";
 import { readonlySkills, skills } from "../utils/Skills";
+import {HiViewGrid, HiChip} from "react-icons/hi";
 
+const TechGrid:FC<{
+  highlightItems?: string[]
+}> = (props)=>{
+  const {highlightItems}= props;
+  const sortedSkills = useMemo(()=>{
+    const sortedSkills = Object.values(readonlySkills).sort((a,b)=>(b.weight??1) - (a.weight??1));
+    if(highlightItems){
+      return [...sortedSkills.filter(it=>highlightItems.includes(it.name)), ...sortedSkills.filter(it=>!highlightItems.includes(it.name))]
+    }
+    return sortedSkills;
+  },[highlightItems]);
+  return <div className="grid pt-32 sm:pt-1 grid-cols-3 sm:grid-cols-2 md:grid-cols-3 items-center justify-center p-1 gap-2 overflow-y-scroll max-h-full">
+    {
+      sortedSkills.map((it,idx)=><motion.div layoutId={`tech-grid-${it.name}`}
+        animate={{opacity: highlightItems?(highlightItems.includes(it.name)?1:0.2):1}}
+        className={twMerge("flex flex-col justify-end items-center")} key={it.name}>
+        <div className="relative" style={{width:"50px", height:"50px"}}>
+          <Image src={it.image} alt={it.name} fill objectFit="contain" priority={true}/>
+        </div>
+        <span className="text-xs">{it.name}</span>
+      </motion.div>)
+    }
+  </div>
+}
 const TechPlayground:FC<{
   highlightItems?: string[]
 }> = (props)=>{
@@ -69,7 +95,8 @@ const TechPlayground:FC<{
           xScale: 1*(skill.weight??1),
           yScale: 1*(skill.weight??1)
         }
-      }
+      },
+      mass: 10
     }));
     bodyRef.current = Object.fromEntries(boxes.map((box,idx)=>[readonlySkills[idx].name, box]));
     Composite.add(engine.world,      
@@ -116,7 +143,16 @@ const TechPlayground:FC<{
         body.render.opacity =highlightItems? highlightItems.includes(key)?1:0.2 : 1;
         if(highlightItems?.length==1 && highlightItems.includes(key)){
           Matter.Body.rotate(body, -body.angle)
-          Matter.Body.setVelocity(body, {x:0, y:-10})
+          Matter.Body.setMass(body, 1000);
+          Matter.Body.setVelocity(body, {x:0, y:-50})
+          delay(()=>{
+            body.frictionAir = 1;
+          },500)
+          delay(()=>{
+            body.frictionAir = 0.01;
+            Matter.Body.setMass(body, 10);
+            
+          },2000)
         }
       });
     }
@@ -154,14 +190,26 @@ const TechPlayground:FC<{
   </>
 }
 
+const FilterInput:FC<{value:string, setValue:(v:string)=>void, layoutFormat: "playground"|"grid", setLayoutFormat: (v:"playground"|"grid")=>void}> =
+ ({value, setValue, layoutFormat, setLayoutFormat})=>{
+  
+   return       <span className="relative">
+     <input className=" w-full text-xl pl-10 pr-10" type="text"  value={value} onChange={ev=>setValue(ev.target.value)} placeholder="Filter..." />
+     <FunnelIcon className="w-icon h-icon absolute left-2 top-1/2 -translate-y-1/2"/>
+     <button type="button" className="right-4 top-1/2  -translate-y-1/2 absolute" onClick={ev=>setLayoutFormat(layoutFormat=="playground"?"grid":"playground")}>
+       {layoutFormat=="playground"?<HiChip className="w-icon h-icon"/>:<HiViewGrid className="w-icon h-icon"/>}
+     </button>
+   </span>
+ }
+
 export const Tech:FC<{}> = (props)=>{
-  const controls = useDragControls()
+  const [layoutFormat, setLayoutFormat] = useState<"playground"|"grid">("playground"); 
 
   const minisearch = useMemo(()=>{
     const ms = new MiniSearch({
       idField: 'name',
-      fields: ['name', 'description'], // fields to index for full-text search
-      storeFields: ['name', 'description'], // fields to return with search results
+      fields: ['name', 'description', 'alias'], // fields to index for full-text search
+      storeFields: ['name', 'description', 'alias'], // fields to return with search results
     })
     ms.addAll(skills)
     return ms;
@@ -180,22 +228,20 @@ export const Tech:FC<{}> = (props)=>{
 
   return <div className="flex flex-col sm:flex-row justify-center items-center h-full">
     <div className="w-[320px] h-[100dvh] sm:h-[80dvh] bg-dotted border-2 border-default rounded-xl overflow-hidden relative">
-      <TechPlayground highlightItems={searchText?matchTarget.map(it=>it.name):undefined}/>
+      {layoutFormat=="playground"?
+        <TechPlayground highlightItems={searchText?matchTarget.map(it=>it.name):undefined}/>
+        :
+        <TechGrid highlightItems={searchText?matchTarget.map(it=>it.name):undefined}/>
+      }
 
       <div className="block sm:hidden grow w-full px-2 py-2 absolute top-12 z-10">
       
-        <span className="relative">
-          <input className=" w-full text-xl pl-10" type="text"  value={searchText} onChange={ev=>setSearchText(ev.target.value)} placeholder="Filter..." />
-          <FunnelIcon className="w-icon h-icon absolute left-2 top-1/2 -translate-y-1/2"/>
-        </span>
+        <FilterInput  value={searchText} setValue={setSearchText} layoutFormat={layoutFormat} setLayoutFormat={setLayoutFormat}/>
       </div>
     </div>
     <div className="hidden sm:flex grow flex-col p-8 gap-8">
       <h2 className="text-4xl font-extrabold">⬅️ My Skill set</h2>
-      <span className="relative">
-        <input className=" w-full text-xl pl-10" type="text"  value={searchText} onChange={ev=>setSearchText(ev.target.value)} placeholder="Filter..." />
-        <FunnelIcon className="w-icon h-icon absolute left-2 top-1/2 -translate-y-1/2"/>
-      </span>
+      <FilterInput  value={searchText} setValue={setSearchText} layoutFormat={layoutFormat} setLayoutFormat={setLayoutFormat}/>
     </div>
   </div>
 }
