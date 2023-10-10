@@ -1,7 +1,7 @@
 "use client";
 import styles from "@/styles/box.module.scss";
 import { AdjustmentsHorizontalIcon, ArrowPathIcon, FunnelIcon, LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid";
-import { motion, useDragControls, useScroll, useTransform, useVelocity } from "framer-motion";
+import { motion, useAnimationControls, useDragControls, useScroll, useTransform, useVelocity } from "framer-motion";
 import { debounce, delay, throttle } from "lodash";
 import Matter, { Composites, Mouse, MouseConstraint, Sleeping, World } from "matter-js";
 import MiniSearch from "minisearch";
@@ -192,10 +192,19 @@ const TechPlayground:FC<{
 
 const FilterInput:FC<{value:string, setValue:(v:string)=>void, layoutFormat: "playground"|"grid", setLayoutFormat: (v:"playground"|"grid")=>void}> =
  ({value, setValue, layoutFormat, setLayoutFormat})=>{
+   const controls = useAnimationControls()
   
-   return       <span className="relative">
-     <input className=" w-full text-xl pl-10 pr-10" type="text"  value={value} onChange={ev=>setValue(ev.target.value)} placeholder="Filter..." />
-     <FunnelIcon className="w-icon h-icon absolute left-2 top-1/2 -translate-y-1/2"/>
+   return <span className="relative">
+     <input className=" w-full text-xl pl-10 pr-10" type="text"  value={value} onChange={ev=>setValue(ev.target.value)} placeholder="Filter..." onInput={ev=>controls.start("play")} />
+     <motion.div className="absolute left-2 top-0 bottom-0" animate={controls} variants={{
+       "play":{
+         scaleX: [0.8, 1],
+         scaleY: [1.2, 1],
+         transition: { ease:"anticipate", duration: 0.35 }
+       }
+     }}>
+       <FunnelIcon className="w-icon h-icon top-1/2 translate-y-1/2 "/>
+     </motion.div>
      <button type="button" className="right-4 top-1/2  -translate-y-1/2 absolute" onClick={ev=>setLayoutFormat(layoutFormat=="playground"?"grid":"playground")}>
        {layoutFormat=="playground"?<HiChip className="w-icon h-icon"/>:<HiViewGrid className="w-icon h-icon"/>}
      </button>

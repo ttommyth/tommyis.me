@@ -98,10 +98,17 @@ const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
             variants={slideVariants}
             className="absolute w-full h-full"
           >
-            <Image src={images[currentIndex]} fill alt={"image-"+(currentIndex+1)} objectFit="contain" 
-              quality={75}
-              placeholder="blur"
-              blurDataURL={`/_next/image?url=${images[currentIndex]}&w=64&q=1`}/>
+            {
+              images.map((_, idx)=>(
+                <Image src={images[idx]} fill alt={"image-"+(idx+1)} objectFit="contain"
+                  key={idx} 
+                  className={currentIndex==idx?"opacity-100":"opacity-0"}
+                  priority={true}
+                  quality={75}
+                  placeholder="blur"
+                  blurDataURL={`/_next/image?url=${images[idx]}&w=64&q=1`}/>
+              ))
+            }
           </motion.div>
         </AnimatePresence>
         <Link href={images[currentIndex]} target="_blank" className="absolute top-0 right-0 p-2 m-2 bg-default text-default-inverted rounded-md !bg-opacity-50 backdrop-blur-md "><ArrowTopRightOnSquareIcon className="w-icon h-icon"/></Link>
