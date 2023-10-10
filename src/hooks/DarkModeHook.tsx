@@ -4,7 +4,7 @@ import { useLocalForage } from "./LocalForageHook";
 import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 
 export const useDarkMode:()=>[(string|undefined), ( value: string|undefined ) => void] = () => {
-  const [theme,setTheme] = useLocalForage<string | undefined>('theme', undefined);
+  const [theme,setTheme, removeTheme, isLoaded] = useLocalForage<string | undefined>('theme', undefined);
   useEffect(()=>{
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
     if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -14,10 +14,10 @@ export const useDarkMode:()=>[(string|undefined), ( value: string|undefined ) =>
     }
   }, [theme]);
   useEffect(()=>{
-    if(theme != 'dark' && window?.matchMedia('(prefers-color-scheme: dark)')?.matches){
+    if(isLoaded && theme ==undefined && window?.matchMedia('(prefers-color-scheme: dark)')?.matches){
       setTheme('dark');
     }
-  }, [])
+  }, [isLoaded, theme])
   return [theme??undefined,setTheme];
 }
 
