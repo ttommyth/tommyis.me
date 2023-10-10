@@ -60,7 +60,7 @@ export const Jobs = ()=>{
         <JobNode job={{
           title: "Analyst Programmer",
           company: "HK Systems Limited",
-          url: "https://cooltechsol.com",
+          url: "https://hksl.com.hk",
           period: "10/2018 - 07/2021"
         }} />
         <PersonalProjectNode project={{
@@ -68,7 +68,7 @@ export const Jobs = ()=>{
           company: "City University of Hong Kong",
           url: "http://dspace.cityu.edu.hk/handle/2031/9098",
           period: "07/2018 - 08/2018"
-        }} i={1} expanded={expanded} setExpanded={setExpanded}/>
+        }} i={3} expanded={expanded} setExpanded={setExpanded}/>
         <JobNode job={{
           title: "Programmer",
           company: "HK Systems Limited",
