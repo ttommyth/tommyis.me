@@ -196,14 +196,14 @@ const FilterInput:FC<{value:string, setValue:(v:string)=>void, layoutFormat: "pl
   
    return <span className="relative">
      <input className=" w-full text-xl pl-10 pr-10" type="text"  value={value} onChange={ev=>setValue(ev.target.value)} placeholder="Filter..." onInput={ev=>controls.start("play")} />
-     <motion.div className="absolute left-2 top-0 bottom-0" animate={controls} variants={{
+     <motion.div className="absolute left-2 top-0 bottom-0 flex justify-center items-center" animate={controls} variants={{
        "play":{
          scaleX: [0.8, 1],
          scaleY: [1.2, 1],
          transition: { ease:"anticipate", duration: 0.35 }
        }
      }}>
-       <FunnelIcon className="w-icon h-icon top-1/2 -translate-y-1/2 absolute"/>
+       <FunnelIcon className="w-icon h-icon"/>
      </motion.div>
      <button type="button" className="right-4 top-1/2  -translate-y-1/2 absolute" onClick={ev=>setLayoutFormat(layoutFormat=="playground"?"grid":"playground")}>
        {layoutFormat=="playground"?<HiChip className="w-icon h-icon"/>:<HiViewGrid className="w-icon h-icon"/>}
