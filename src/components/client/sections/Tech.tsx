@@ -7,7 +7,7 @@ import Matter, { Composites, Mouse, MouseConstraint, World } from "matter-js";
 import MiniSearch from "minisearch";
 import { FC, useEffect, useMemo, useRef, useState } from "react"
 import { twMerge } from "tailwind-merge";
-import { skills } from "../utils/Skills";
+import { readonlySkills, skills } from "../utils/Skills";
 
 const TechPlayground:FC<{
   highlightItems?: string[]
@@ -16,6 +16,7 @@ const TechPlayground:FC<{
   
   const ref = useRef<HTMLDivElement | null>(null);
   const bodyRef = useRef<{[key: string]: Matter.Body}>({});
+  const rectRef = useRef<DOMRect | null>(null);
   const [locked, setLocked] = useState(true);
   const [reset, setReset] = useState(0);
   const { scrollY } = useScroll({
@@ -25,7 +26,8 @@ const TechPlayground:FC<{
   useEffect(()=>{
     if(!ref)
       return;
-    const rect = ref.current?.getBoundingClientRect()??{x:0,y:0,height:0,width:0};
+    rectRef.current = ref.current?.getBoundingClientRect()??{x:0,y:0,height:0,width:0, bottom:0, left:0, right:0, top:0, toJSON:()=>({})};
+    const rect = rectRef.current;
     // module aliases
     const Engine = Matter.Engine,
       Render = Matter.Render,
@@ -60,7 +62,7 @@ const TechPlayground:FC<{
       ground, wallLeft, wallRight, roof
     ]);
 
-    const boxes = skills.map((skill,idx)=>Bodies.rectangle(80+ (Math.random()*rect.width/2),100 + 20+ 40*Math.random(), 80*(skill.weight??1), 80*(skill.weight??1), {
+    const boxes = readonlySkills.map((skill,idx)=>Bodies.rectangle(80+ (Math.random()*rect.width/2),100 + 20+ 40*Math.random(), 80*(skill.weight??1), 80*(skill.weight??1), {
       render: {
         sprite: {
           texture: skill.image,
@@ -69,7 +71,7 @@ const TechPlayground:FC<{
         }
       }
     }));
-    bodyRef.current = Object.fromEntries(boxes.map((box,idx)=>[skills[idx].name, box]));
+    bodyRef.current = Object.fromEntries(boxes.map((box,idx)=>[readonlySkills[idx].name, box]));
     Composite.add(engine.world,      
       boxes
     )
@@ -121,7 +123,9 @@ const TechPlayground:FC<{
   }, [highlightItems])
   useEffect(()=>{
     const debouncedCallback = debounce(()=>{
-      setReset(Math.random());
+      const newRect = ref.current?.getBoundingClientRect()
+      if(rectRef.current?.width != newRect?.width || rectRef.current?.height != newRect?.height)
+        setReset(Math.random());
     }, 500);
     window.addEventListener("resize", debouncedCallback);
     return ()=>{

@@ -4,6 +4,7 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
+import { SkillsPile } from "@/components/client/common/SkillsPile";
 
 
 const   appStoreUrl="https://apps.apple.com/hk/app/channel-c-hk/id6443536056"
@@ -74,5 +75,8 @@ export const ChannelC = () => {
       </div>
   
     </div>
+    <SkillsPile skills={[
+      "React.js", "React Native", "Cloudflare", "AWS", "Docker", "Elastic Search", "Expo", "Firebase", "Tailwind CSS", "Typescript", "Next.js"
+    ]}/>
   </div>
 }

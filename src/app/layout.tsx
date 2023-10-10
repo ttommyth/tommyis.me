@@ -1,3 +1,4 @@
+import { OnClickGraphicEffect } from '@/components/client/common/OnClickGraphicEffect'
 import { Layout } from '@/components/server/Layout'
 import '@/styles/globals.scss'
 import type { Metadata } from 'next'
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body className={twMerge(font.className, "relative")}>
         <Layout>
           {children}
+          <OnClickGraphicEffect />
         </Layout>
       </body>
     </html>

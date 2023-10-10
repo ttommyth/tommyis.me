@@ -4,6 +4,7 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid"
 import Link from "next/link"
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
+import { SkillsPile } from "@/components/client/common/SkillsPile";
 
 
 const websiteContent = `
@@ -24,5 +25,9 @@ export const Studylu = () => {
         websiteContent
       }
     </ReactMarkdown>
+
+    <SkillsPile skills={[
+      "React.js", "Cloudflare", "AWS", "Docker", "Tailwind CSS", "Typescript", "Next.js", "Storybook", "Jest", "Elastic Search", "Socket.IO"
+    ]}/>
   </div>
 }
