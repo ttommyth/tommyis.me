@@ -3,9 +3,11 @@ import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { FC, PropsWithChildren, useState } from "react"
 import { ConditionalWrapper } from "../../utils/ConditionalWrapper"
-import ImageCarousel from "../../ImageCarousel"
+import ImageCarousel from "../../common/ImageCarousel"
 import { twMerge } from "tailwind-merge"
 import { AcademicCapIcon } from "@heroicons/react/24/outline"
+import Image from "next/image"
+import { ListBulletIcon } from "@heroicons/react/20/solid"
 
 //toDO;
 export const TodoNode:FC<{}> = ()=>{
@@ -46,7 +48,13 @@ export const ProjectNode:FC<PropsWithChildren<{
   },i:number, expanded:number|undefined, setExpanded:(v:number|undefined)=>void
 }>> = ({project, i, expanded, setExpanded, children})=>{
   return <div className="flex flex-col ml-0 sm:ml-4 gap-2 ">
-    <div className="absolute left-[-1px] mt-1 -translate-x-1/2 w-icon h-icon bg-default border-default border-2 rounded-md transition-colors" title="Project"/>
+    <div className="absolute left-[-1px] mt-1 -translate-x-1/2 w-icon h-icon bg-default border-default border-2 rounded-md transition-colors p-0 overflow-hidden text-default" title="Project">
+      <motion.div 
+        animate={{ width: expanded==i ? "auto" : "0px" }}
+        className="overflow-hidden">
+        <ListBulletIcon className="w-5 h-5 top-0" />
+      </motion.div>
+    </div>
     <span className="flex flex-wrap sm:flex-row gap-2 sm:gap-4 sm:items-center">
       <ConditionalWrapper wrapper={(node)=><Link href={project.url!} target="_blank">{node}</Link>} condition={!!project.url}>
         <h3 className="text-xl font-bold">{project.name}</h3>
@@ -82,6 +90,13 @@ export const ProjectNode:FC<PropsWithChildren<{
             transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
             className={twMerge("w-full p-2 sm:p-4  overflow-y-hidden")}
           >
+
+            {
+              project.icon ?<div className="pb-4">
+                <Image src={project.icon} className="w-auto h-12 mx-auto" width={0} height={0} sizes="100vw" alt="icon"/>
+              </div>
+                :<></>
+            }
             {children}
           </motion.section>
         )}

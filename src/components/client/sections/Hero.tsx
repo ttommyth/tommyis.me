@@ -6,7 +6,7 @@ import { ReactComponent as  LinkedinLogo } from "public/icon/linkedin.svg";
 import { ArrowSmallRightIcon } from '@heroicons/react/24/solid'
 import { DarkModeSwitch } from "@/hooks/DarkModeHook";
 import { FC } from "react";
-import { VerticalRoll } from "../VerticalRoll";
+import { VerticalRoll } from "../common/VerticalRoll";
 
 export const Hero:FC<{
   locale: {
@@ -17,7 +17,7 @@ export const Hero:FC<{
   }
 }> = (props)=>{
   const {locale} = props;
-  return <div>
+  return <div className="w-[100dvw]">
     <div className="left-0 w-[100dvw] h-[100dvh] absolute flex items-center bg-dotted min-h-[500px]">
       <div className="mx-auto container max-w-4xl flex flex-col sm:flex-row justify-between items-center px-4">
         <div className="flex flex-col gap-2 grow">
@@ -34,6 +34,5 @@ export const Hero:FC<{
         </div>
       </div>
     </div>
-    <div className="invisible h-[100dvh] min-h-[500px]  w-[100dvw]"></div>
   </div> 
 }

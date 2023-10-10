@@ -3,6 +3,8 @@ import { FC, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 
 const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -41,11 +43,11 @@ const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
   };
   const dotsVariants = {
     initial: {
-      borderRadius: "0.7rem",
+      borderRadius: "0.8rem",
     },
     animate: {
       borderRadius: "0.375rem",
-      transition: { duration: 0.2 },
+      transition: { duration: 0.35 },
     },
   };
 
@@ -59,7 +61,7 @@ const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
       y:0,
       opacity:1,
       scale:1,
-      transition: { duration: 0.2 },
+      transition: { duration: 0.35 },
     },
   };
 
@@ -84,7 +86,7 @@ const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
   };
 
   return (
-    <div className="carousel w-full h-full" >
+    <div className="carousel w-full h-full relative" >
       <div className="carousel-images relative  overflow-hidden w-full h-full">
         <AnimatePresence>
           <motion.div
@@ -98,6 +100,7 @@ const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
             <Image src={images[currentIndex]} fill alt="" objectFit="contain"/>
           </motion.div>
         </AnimatePresence>
+        <Link href={images[currentIndex]} target="_blank" className="absolute top-0 right-0 p-2 m-2 bg-default text-default-inverted rounded-md !bg-opacity-50 backdrop-blur-md "><ArrowTopRightOnSquareIcon className="w-icon h-icon"/></Link>
       </div>
       <div className="carousel-indicator absolute bottom-0 flex justify-center left-1/2 -translate-x-1/2 p-1 mb-1 rounded-full gap-2  bg-default text-default-invert">
         <div

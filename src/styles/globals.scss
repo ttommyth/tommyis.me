@@ -12,6 +12,12 @@ input{
 }
 
 @layer utilities{
+  .absolute-fill{
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
   .border-style-expand{
     border-style: solid dashed solid;
   }
@@ -34,46 +40,115 @@ input{
     @apply text-base-900 dark:text-base-300  transition-colors
   }
 
-.bg-dotted-glass::before {
-  display: block;
-  content: "";
-  position: absolute;
-  top: -1px;
-  left: 0;
-  right: 0;
-  height: 1px;
-  opacity: 0.2;
-  @apply bg-gray-800 dark:bg-gray-200
-}
-.bg-dotted-glass {
-  background-image: radial-gradient(transparent 1px, theme("colors.base.100") 1px );
-  background-size: 4px 4px;
-  backdrop-filter: blur(4px);
-}
-:is(.dark .bg-dotted-glass){
-  background-image: radial-gradient(transparent 1px, theme("colors.base.800")  1px );
-}
-
-
-.bg-dotted {
-  background-image: radial-gradient(theme("colors.base.400") 1px, transparent 0);
-  background-size: 5vw 5vw;
-  background-position: center;
-  @apply transition-colors
-}
-
-:is(.dark .bg-dotted){
-  background-image: radial-gradient(theme("colors.base.900")  1px, transparent 0);
-}
-
-@media (min-width: 768px){
-  .bg-dotted {
-    background-size: 2vw 2vw;
+  .bg-dotted-glass::before {
+    display: block;
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    opacity: 0.2;
+    @apply bg-gray-800 dark:bg-gray-200
   }
-}
-@media (min-width: 1024px){
-  .bg-dotted {
-    background-size: 1vw 1vw;
+  .bg-dotted-glass {
+    background-image: radial-gradient(theme("colors.base.100"/30%) 1px, theme("colors.base.100") 1px );
+    background-size: 4px 4px;
+    backdrop-filter: blur(4px);
   }
-}
+  :is(.dark .bg-dotted-glass){
+    background-image: radial-gradient(theme("colors.base.800"/30%) 1px, theme("colors.base.800")  1px );
+  }
+
+
+  .bg-dotted {
+    background-image: radial-gradient(theme("colors.base.400") 1px, transparent 0);
+    background-size: 5vw 5vw;
+    background-position: center;
+    @apply transition-colors
+  }
+
+  :is(.dark .bg-dotted){
+    background-image: radial-gradient(theme("colors.base.900")  1px, transparent 0);
+  }
+
+  @media (min-width: 768px){
+    .bg-dotted {
+      background-size: 2vw 2vw;
+    }
+  }
+  @media (min-width: 1024px){
+    .bg-dotted {
+      background-size: 1vw 1vw;
+    }
+  }
+
+  // .bg-dotted-hover{
+  //   @apply bg-dotted transition-colors bg-opacity-0 hover:bg-opacity-100
+  // }
+
+  // custom prose
+  .custom-prose h2{
+    @apply text-2xl font-bold mb-4
+  }
+  .custom-prose h3{
+    @apply text-xl font-bold mb-4
+  }
+  .custom-prose h4{
+    @apply text-lg font-bold mb-4
+  }
+  .custom-prose h5{
+    @apply text-base font-bold mb-4
+  }
+  .custom-prose h6{
+    @apply text-sm font-bold mb-4
+  }
+  .custom-prose p{
+    @apply mb-4 font-thin leading-6
+  }
+  .custom-prose ul{
+    @apply mb-4 list-disc list-inside
+  }
+  .custom-prose ol{
+    @apply mb-4 list-decimal list-inside
+  }
+  .custom-prose li{
+    @apply mb-2
+  }
+  .custom-prose a{
+    @apply text-blue-500 underline
+  }
+  .custom-prose a:hover{
+    @apply text-blue-600
+  }
+  .custom-prose blockquote{
+    @apply border-l-4 border-blue-500 pl-4 mb-4
+  }
+  .custom-prose code{
+    @apply bg-gray-100 dark:bg-gray-800 px-1 rounded
+  }
+  .custom-prose pre{
+    @apply bg-gray-100 dark:bg-gray-800 px-1 rounded
+  }
+  .custom-prose hr{
+    @apply my-4
+  }
+  .custom-prose img{
+    @apply my-4
+  }
+
+
+  .bg-highlight{
+    animation: highlight 4s linear infinite;
+    background-size: 400% 100%;
+    background-position: 400% 0%;
+    background-color: none;
+    background-image: linear-gradient(99deg, #1A202C 0%, #2D3748 35%, #4A5568 50%,#2D3748 65%, #1A202C 100%);
+  }
+
+  @keyframes highlight {
+    to {
+      background-position: 0% 0%;
+    }
+   }
 }
