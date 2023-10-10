@@ -203,7 +203,7 @@ const FilterInput:FC<{value:string, setValue:(v:string)=>void, layoutFormat: "pl
          transition: { ease:"anticipate", duration: 0.35 }
        }
      }}>
-       <FunnelIcon className="w-icon h-icon top-1/2 translate-y-1/2 "/>
+       <FunnelIcon className="w-icon h-icon top-1/2 -translate-y-1/2 absolute"/>
      </motion.div>
      <button type="button" className="right-4 top-1/2  -translate-y-1/2 absolute" onClick={ev=>setLayoutFormat(layoutFormat=="playground"?"grid":"playground")}>
        {layoutFormat=="playground"?<HiChip className="w-icon h-icon"/>:<HiViewGrid className="w-icon h-icon"/>}
