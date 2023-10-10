@@ -35,7 +35,7 @@ Moreover, we've make use of lottie to enhance the user experience with animation
 export const ChannelC = () => {
   return <div className="flex flex-col gap-4">
     <DeviceContainer url={"https://channelchk.com"} deviceType={"browser"}>
-      <ImageCarousel images={["/image/project/cc/1.png", "/image/project/cc/2.png"]}/>
+      <ImageCarousel images={Array.from(new Array(2)).map((_,idx)=>`/image/project/cc/${idx+1}.png`)}/>
     </DeviceContainer>
     <ReactMarkdown className={"custom-prose"}>
       {
@@ -45,7 +45,7 @@ export const ChannelC = () => {
     <div className="flex flex-col sm:flex-row gap-4 items-center">
       <div className="max-w-full">
         <DeviceContainer url={"https://channelchk.com/app"} deviceType={"mobile"}>
-          <ImageCarousel images={["/image/project/cc/1.png", "/image/project/cc/2.png"]}/>
+          <ImageCarousel images={Array.from(new Array(4)).map((_,idx)=>`/image/project/cc/app/${idx+1}.jpeg`)}/>
         </DeviceContainer>
       </div>
       <div className="grow">

@@ -52,12 +52,12 @@ input{
     @apply bg-gray-800 dark:bg-gray-200
   }
   .bg-dotted-glass {
-    background-image: radial-gradient(transparent 1px, theme("colors.base.100") 1px );
+    background-image: radial-gradient(theme("colors.base.100"/30%) 1px, theme("colors.base.100") 1px );
     background-size: 4px 4px;
     backdrop-filter: blur(4px);
   }
   :is(.dark .bg-dotted-glass){
-    background-image: radial-gradient(transparent 1px, theme("colors.base.800")  1px );
+    background-image: radial-gradient(theme("colors.base.800"/30%) 1px, theme("colors.base.800")  1px );
   }
 
 

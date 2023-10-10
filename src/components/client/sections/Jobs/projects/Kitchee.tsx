@@ -5,26 +5,22 @@ import Link from "next/link"
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
 
-const WebsiteContent = `
-## Channel C Website
+const websiteContent = `
+## Kitchee Official Website
 
-Channel C HK, a fast-growing internet media platform since 2021, needed a website to showcase content that couldn't be effectively presented in YouTube videos.
- Our team developed a website using Next.js and Tailwind CSS, prioritizing loading speed and development efficiency.
+Kitchee is a professional football club in Hong Kong. They needed a website to showcase their team and players, as well as to promote their merchandise.
 
-The Channel C Website offers a user-friendly interface for visitors to explore the diverse range of content, including articles, comments, interactive features, and partner-ship promotion.
- With seamless social media integration, users can easily engage and share their favorite content.
-
-By creating this bespoke website, we've provided Channel C with a powerful platform to expand their online presence beyond YouTube.
- The Channel C Website delivers an immersive visual experience and supports the brand's continued growth and success.
+We make use of Next.js and Tailwind CSS to develop a website that is fast and easy to maintain.
+ Also building the project in a monorepo structure powered by Nx, we are able to share code between the website and the CMS admin panel.
 `  
 export const Kitchee = () => {
   return <div className="flex flex-col gap-4">
     <DeviceContainer url={"https://kitchee.com"} deviceType={"browser"}>
-      <ImageCarousel images={["/image/project/cc/1.png", "/image/project/cc/2.png"]}/>
+      <ImageCarousel images={Array.from(new Array(6)).map((_,idx)=>`/image/project/kitchee/${idx+1}.png`)}/>
     </DeviceContainer>
     <ReactMarkdown className={"custom-prose"}>
       {
-        WebsiteContent
+        websiteContent
       }
     </ReactMarkdown>
   </div>

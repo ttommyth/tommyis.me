@@ -11,7 +11,7 @@ export const DeviceContainer: FC<PropsWithChildren<{url: string, deviceType: "br
         <ArrowTopRightOnSquareIcon className="w-icon h-icon"/>
       </span>
     </div>
-    <div className={twMerge("w-full", props.deviceType=="mobile"?"aspect-h-16 aspect-w-9":"aspect-w-16 aspect-h-9")}>
+    <div className={twMerge("w-full", props.deviceType=="mobile"?"aspect-h-[19] aspect-w-9":"aspect-w-16 aspect-h-9")}>
       <div className="absolute absolute-fill">
         {props.children}
       </div>
