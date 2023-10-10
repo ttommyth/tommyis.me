@@ -25,8 +25,6 @@ const nextConfig = {
     })
     return config
   },
-  output:process.env.NODE_ENV=="development"?undefined:"export",
-
 }
 const withNextIntl = require('next-intl/plugin')(
   './src/locale/i18n.ts'
