@@ -1,5 +1,5 @@
 import { FC, useMemo } from "react";
-import { skills, skillsDict } from "../utils/Skills";
+import { skills, skillsDict } from "../../../data/skills";
 import { gaussianRandom, getDistance } from "@/helper/maths";
 import Image from "next/image";
 

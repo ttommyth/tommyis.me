@@ -1,4 +1,3 @@
-"use client";
 export const skills=[
   {
     name: "React.js",

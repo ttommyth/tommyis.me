@@ -8,6 +8,7 @@ import { ArrowSmallRightIcon } from '@heroicons/react/24/solid'
 import { DarkModeSwitch } from "@/hooks/DarkModeHook";
 import { FC } from "react";
 import { VerticalRoll } from "../common/VerticalRoll";
+import { githubLink, kofiLink, linkedinLink } from "@/data/contact";
 
 export const Hero:FC<{
   locale: {
@@ -26,9 +27,9 @@ export const Hero:FC<{
           <h1 className="text-6xl font-black">{locale.title2}</h1>
           <h2 className="flex items-bottom gap-2">{locale.iam} <VerticalRoll messages={locale.iamArray}/></h2>
           <ul className="flex gap-2 mt-4">
-            <li><Link href="https://github.com/ttommyth"><GithubLogo className="w-8 h-8 fill-current" /> </Link></li>
-            <li><Link href="https://www.linkedin.com/in/ttommyth/"><LinkedinLogo className="w-8 h-8 fill-current" /> </Link></li>
-            <li><Link href="https://ko-fi.com/ttommyth"><KofiLogo className="w-8 h-8 fill-current" /> </Link></li>
+            <li><Link href={githubLink}><GithubLogo className="w-8 h-8 fill-current" /> </Link></li>
+            <li><Link href={linkedinLink}><LinkedinLogo className="w-8 h-8 fill-current" /> </Link></li>
+            <li><Link href={kofiLink}><KofiLogo className="w-8 h-8 fill-current" /> </Link></li>
           </ul>
         </div>
         <div className="w-72 relative">

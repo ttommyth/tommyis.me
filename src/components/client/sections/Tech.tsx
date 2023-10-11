@@ -8,7 +8,7 @@ import MiniSearch from "minisearch";
 import { FC, useEffect, useMemo, useRef, useState } from "react"
 import { twMerge } from "tailwind-merge";
 import Image from "next/image";
-import { readonlySkills, skills } from "../utils/Skills";
+import { readonlySkills, skills } from "../../../data/skills";
 import {HiViewGrid, HiChip} from "react-icons/hi";
 
 const TechGrid:FC<{
