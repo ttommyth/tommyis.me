@@ -89,7 +89,7 @@ export const Contact = () => {
 
           <div className="flex flex-col grow bg-dotted [&>div]:pl-4 [&>div]:p-8 [&>div:nth-child(odd)]:bg-base-300/50 [&>div:nth-child(odd)]:dark:bg-base-900/50 py-2 overflow-y-auto">
             <MessageLine from="me">
-            Hello there! This is a contact me form implemented with React Hook Form and Yup. Please enter your name in the input box below! 🧑🏻‍💻
+            Hello there! This is an contact me form, utilizing React Hook Form and Yup for seamless functionality, bolstered by reCAPTCHA v3 to ensure enhanced security. Please enter your name in the input box below! 🧑🏻‍💻
             </MessageLine>
 
             {
