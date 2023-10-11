@@ -1,5 +1,5 @@
 import { FC, useMemo } from "react";
-import { skills, skillsDict } from "../utils/Skills";
+import { skills, skillsDict } from "../../../data/skills";
 import { gaussianRandom, getDistance } from "@/helper/maths";
 import Image from "next/image";
 
@@ -17,7 +17,7 @@ export const SkillsPile:FC<{skills: (typeof skills)[number]['name'][]}> = ({skil
       return target;
     }
     skills.forEach((skill,idx)=>{
-      styles.push(generateLocation());
+      styles[idx]=generateLocation();
     })
     return styles.map((it,idx)=>({
       left: it.left+"%",

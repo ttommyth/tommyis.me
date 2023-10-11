@@ -4,10 +4,13 @@
 
 
 body{
-  @apply bg-default text-base-900 dark:text-base-100 overflow-x-hidden
+  @apply bg-default text-base-800 dark:text-base-200 overflow-x-hidden
 }
 
 input{
+  @apply bg-default dark:text-white  rounded-md px-4 py-2 border border-base-500
+}
+textarea{
   @apply bg-default dark:text-white  rounded-md px-4 py-2 border border-base-500
 }
 
@@ -62,14 +65,14 @@ input{
 
 
   .bg-dotted {
-    background-image: radial-gradient(theme("colors.base.400") 1px, transparent 0);
+    background-image: radial-gradient(theme("colors.base.300"/80%) 1px, transparent 0);
     background-size: 5vw 5vw;
     background-position: center;
     @apply transition-colors
   }
 
   :is(.dark .bg-dotted){
-    background-image: radial-gradient(theme("colors.base.900")  1px, transparent 0);
+    background-image: radial-gradient(theme("colors.base.900"/80%)  1px, transparent 0);
   }
 
   @media (min-width: 768px){
@@ -144,6 +147,13 @@ input{
     background-position: 400% 0%;
     background-color: none;
     background-image: linear-gradient(99deg, #1A202C 0%, #2D3748 35%, #4A5568 50%,#2D3748 65%, #1A202C 100%);
+  }
+  .bg-highlight-glass{
+    animation: highlight 4s linear infinite;
+    background-size: 400% 100%;
+    background-position: 400% 0%;
+    background-color: none;
+    background-image: linear-gradient(99deg, #1A202C33 0%, #2D374833 35%, #4A5568aa 50%,#2D374833 65%, #1A202C33 100%);
   }
 
   @keyframes highlight {

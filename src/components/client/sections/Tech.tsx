@@ -8,7 +8,7 @@ import MiniSearch from "minisearch";
 import { FC, useEffect, useMemo, useRef, useState } from "react"
 import { twMerge } from "tailwind-merge";
 import Image from "next/image";
-import { readonlySkills, skills } from "../utils/Skills";
+import { readonlySkills, skills } from "../../../data/skills";
 import {HiViewGrid, HiChip} from "react-icons/hi";
 
 const TechGrid:FC<{
@@ -22,7 +22,7 @@ const TechGrid:FC<{
     }
     return sortedSkills;
   },[highlightItems]);
-  return <div className="grid pt-32 sm:pt-1 grid-cols-3 sm:grid-cols-2 md:grid-cols-3 items-center justify-center p-1 gap-2 overflow-y-scroll max-h-full">
+  return <div className="grid pt-16 sm:pt-1 grid-cols-3 sm:grid-cols-2 md:grid-cols-3 items-center justify-center p-1 gap-2 overflow-y-auto max-h-full">
     {
       sortedSkills.map((it,idx)=><motion.div layoutId={`tech-grid-${it.name}`}
         animate={{opacity: highlightItems?(highlightItems.includes(it.name)?1:0.2):1}}
@@ -196,14 +196,14 @@ const FilterInput:FC<{value:string, setValue:(v:string)=>void, layoutFormat: "pl
   
    return <span className="relative">
      <input className=" w-full text-xl pl-10 pr-10" type="text"  value={value} onChange={ev=>setValue(ev.target.value)} placeholder="Filter..." onInput={ev=>controls.start("play")} />
-     <motion.div className="absolute left-2 top-0 bottom-0" animate={controls} variants={{
+     <motion.div className="absolute left-2 top-0 bottom-0 flex justify-center items-center" animate={controls} variants={{
        "play":{
          scaleX: [0.8, 1],
          scaleY: [1.2, 1],
          transition: { ease:"anticipate", duration: 0.35 }
        }
      }}>
-       <FunnelIcon className="w-icon h-icon top-1/2 -translate-y-1/2 absolute"/>
+       <FunnelIcon className="w-icon h-icon"/>
      </motion.div>
      <button type="button" className="right-4 top-1/2  -translate-y-1/2 absolute" onClick={ev=>setLayoutFormat(layoutFormat=="playground"?"grid":"playground")}>
        {layoutFormat=="playground"?<HiChip className="w-icon h-icon"/>:<HiViewGrid className="w-icon h-icon"/>}
@@ -236,15 +236,14 @@ export const Tech:FC<{}> = (props)=>{
   // const rotateY = useTransform(scroll.scrollYProgress, [0,1], ['-350px', '350px']);
 
   return <div className="flex flex-col sm:flex-row justify-center items-center h-full">
-    <div className="w-[320px] h-[100dvh] sm:h-[80dvh] bg-dotted border-2 border-default rounded-xl overflow-hidden relative">
+    <div className="w-[320px] h-[100dvh] sm:h-[80dvh] bg-dotted border-2 border-default rounded-xl overflow-hidden relative pt-appbar sm:pt-0">
       {layoutFormat=="playground"?
         <TechPlayground highlightItems={searchText?matchTarget.map(it=>it.name):undefined}/>
         :
         <TechGrid highlightItems={searchText?matchTarget.map(it=>it.name):undefined}/>
       }
 
-      <div className="block sm:hidden grow w-full px-2 py-2 absolute top-12 z-10">
-      
+      <div className="block sm:hidden grow w-full px-2 py-2 absolute top-appbar z-10">
         <FilterInput  value={searchText} setValue={setSearchText} layoutFormat={layoutFormat} setLayoutFormat={setLayoutFormat}/>
       </div>
     </div>
