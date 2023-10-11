@@ -56,7 +56,7 @@ export const Contact = () => {
     setLoading(true);
     try{
       grecaptcha!.ready(async()=>{
-        const token = await grecaptcha?.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!, {action: 'submit'});
+        const token = await grecaptcha?.execute('reCAPTCHA_site_key', {action: 'submit'});
         await axios.post("/api/contact", {...data, recaptcha:token});
         setStep("submitted");
       });
