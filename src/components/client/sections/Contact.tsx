@@ -120,7 +120,7 @@ export const Contact = () => {
               step=="submitted"?<>
               </>:
                 step=="submit"?
-                  <button type="submit" className="flex items-center gap-4 px-4 py-2 bg-base-900 mx-auto rounded-xl">
+                  <button type="submit" className="flex items-center gap-4 px-4 py-2 border-default-invert border-2 bg-base-200 dark:bg-base-900 mx-auto rounded-xl">
               Send <PaperAirplaneIcon className="w-4 h-4"/>
                   </button>:<>
                     {

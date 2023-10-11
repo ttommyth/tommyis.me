@@ -17,7 +17,7 @@ export const SkillsPile:FC<{skills: (typeof skills)[number]['name'][]}> = ({skil
       return target;
     }
     skills.forEach((skill,idx)=>{
-      styles.push(generateLocation());
+      styles[idx]=generateLocation();
     })
     return styles.map((it,idx)=>({
       left: it.left+"%",
