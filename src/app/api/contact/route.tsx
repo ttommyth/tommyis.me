@@ -13,7 +13,7 @@ export async function POST(request: Request) {
       content: `## New feedback:\n${body.name} (${body.email})\n> ${body.content}`
     })
   }else{
-    console.warn("request recaptcha failed", body);
+    console.warn("request recaptcha failed", {errorCode:verifyToken.data?.["error-codes"], body: body});
     return NextResponse.json({ message: "recaptcha failed" }, { status: 400 });
   }
   return NextResponse.json({ message: "good" }, { status: 200 });
