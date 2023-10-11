@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 // To handle a POST request to /api
 export async function POST(request: Request) {
   const body = await request.json();
+  console.log("process.env.RECAPTCHA_SERVER_KEY", process.env.RECAPTCHA_SERVER_KEY)
   const verifyToken = await axios.post("https://www.google.com/recaptcha/api/siteverify", {
     secret: process.env.RECAPTCHA_SERVER_KEY,
     response: body.recaptcha
