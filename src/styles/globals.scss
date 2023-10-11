@@ -13,6 +13,9 @@ input{
 textarea{
   @apply bg-default dark:text-white  rounded-md px-4 py-2 border border-base-500
 }
+.grecaptcha-badge { 
+  visibility: hidden;
+}
 
 @layer utilities{
   .absolute-fill{
