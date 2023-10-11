@@ -22,7 +22,7 @@ const TechGrid:FC<{
     }
     return sortedSkills;
   },[highlightItems]);
-  return <div className="grid pt-32 sm:pt-1 grid-cols-3 sm:grid-cols-2 md:grid-cols-3 items-center justify-center p-1 gap-2 overflow-y-auto max-h-full">
+  return <div className="grid pt-16 sm:pt-1 grid-cols-3 sm:grid-cols-2 md:grid-cols-3 items-center justify-center p-1 gap-2 overflow-y-auto max-h-full">
     {
       sortedSkills.map((it,idx)=><motion.div layoutId={`tech-grid-${it.name}`}
         animate={{opacity: highlightItems?(highlightItems.includes(it.name)?1:0.2):1}}
@@ -236,15 +236,14 @@ export const Tech:FC<{}> = (props)=>{
   // const rotateY = useTransform(scroll.scrollYProgress, [0,1], ['-350px', '350px']);
 
   return <div className="flex flex-col sm:flex-row justify-center items-center h-full">
-    <div className="w-[320px] h-[100dvh] sm:h-[80dvh] bg-dotted border-2 border-default rounded-xl overflow-hidden relative">
+    <div className="w-[320px] h-[100dvh] sm:h-[80dvh] bg-dotted border-2 border-default rounded-xl overflow-hidden relative pt-appbar sm:pt-0">
       {layoutFormat=="playground"?
         <TechPlayground highlightItems={searchText?matchTarget.map(it=>it.name):undefined}/>
         :
         <TechGrid highlightItems={searchText?matchTarget.map(it=>it.name):undefined}/>
       }
 
-      <div className="block sm:hidden grow w-full px-2 py-2 absolute top-12 z-10">
-      
+      <div className="block sm:hidden grow w-full px-2 py-2 absolute top-appbar z-10">
         <FilterInput  value={searchText} setValue={setSearchText} layoutFormat={layoutFormat} setLayoutFormat={setLayoutFormat}/>
       </div>
     </div>

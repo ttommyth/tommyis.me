@@ -22,6 +22,7 @@ const config: Config = {
   theme:{
     extend: {
       spacing: {
+        'appbar': '4rem',
         'icon': '1.5rem',
       },
       colors: {

@@ -62,7 +62,7 @@ export const Contact = () => {
       setLoading(false);
     }
   }
-  return <div className="min-h-[100dvh] min-w-[320px] flex justify-center items-center px-0 pt-12 sm:py-4 h-[100dvh] sm:h-auto ">
+  return <div className="min-h-[100dvh] min-w-[320px] flex justify-center items-center px-0 pt-appbar sm:pt-4 sm:py-4 h-[100dvh] sm:h-auto ">
     <div className=" flex justify-stretch items-stretch w-full bg-base-300 dark:bg-base-900 border-default border-2  rounded-md flex-col sm:flex-row h-full sm:h-auto max-h-[100dvh] sm:max-h-[80dvh]">
       <div className="flex flex-row sm:flex-col h-auto sm:h-full [&>*]:p-2 [&>*]:rounded-md [&>*]:flex [&>*]:gap-4 [&>*]:items-center gap-2 p-2 text-sm pb-2 sm:pb-48 whitespace-nowrap">
         <span className="bg-base-400 dark:bg-base-800"><ChatBubbleLeftEllipsisIcon className="w-icon h-icon"/><span className="hidden sm:inline-block">Website</span></span>
@@ -80,7 +80,7 @@ export const Contact = () => {
       </div>
       <div className="bg-default grow flex flex-col overflow-y-hidden relative">
 
-        <div className="flex flex-col grow bg-dotted [&>div]:pl-4 [&>div]:p-8 [&>div:nth-child(odd)]:bg-base-300/50 [&>div:nth-child(odd)]:dark:bg-base-900/50 py-2 overflow-y-scroll">
+        <div className="flex flex-col grow bg-dotted [&>div]:pl-4 [&>div]:p-8 [&>div:nth-child(odd)]:bg-base-300/50 [&>div:nth-child(odd)]:dark:bg-base-900/50 py-2 overflow-y-auto">
           <MessageLine from="me">
             Hello there! This is a contact me form implemented with React Hook Form and Yup. Please enter your name in the input box below! 🧑🏻‍💻
           </MessageLine>
