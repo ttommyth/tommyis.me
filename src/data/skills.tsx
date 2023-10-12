@@ -2,17 +2,17 @@ export const skills=[
   {
     name: "React.js",
     image: "/image/skill/react.png",
-    alias: ["react", "tsx", "jsx"]
+    alias: ["react", "tsx", "jsx"],
   },
   {
     name: "Next.js",
     image: "/image/skill/nextjs.png",
-    alias: ["next", "nextjs"]
+    alias: ["next", "nextjs"],
   },
   {
     name: "Tailwind CSS",
     image: "/image/skill/tailwindcss.png",
-    alias: ["tailwind", "tailwindcss"]
+    alias: ["tailwind", "tailwindcss"],
   },
   {
     name: "Expo",
@@ -23,7 +23,7 @@ export const skills=[
     name: "AWS",
     image: "/image/skill/aws.png",
     weight: 0.7,
-    alias: ["amazon"]
+    alias: ["amazon"],
   },
   {
     name: "React Native",
@@ -38,17 +38,17 @@ export const skills=[
   {
     name: "Cloudflare",
     image: "/image/skill/cloudflare.png",
-    weight: 0.7
+    weight: 0.7,
   },
   {
     name: "C#",
     image: "/image/skill/csharp.png",
-    alias: ["csharp", "c sharp", "c #"]
+    alias: ["csharp", "c sharp", "c #"],
   },
   {
     name: "Typescript",
     image: "/image/skill/typescript.png",
-    alias: ["javascript","ts"]
+    alias: ["javascript","ts"],
   },
   {
     name: "Jest",
@@ -64,7 +64,7 @@ export const skills=[
   {
     name: "Kotlin",
     image: "/image/skill/kotlin.png",
-    weight: 0.5
+    weight: 0.5,
   },
   {
     name: "Playwright",
@@ -75,12 +75,12 @@ export const skills=[
     name: "Raspberry PI",
     image: "/image/skill/rpi.png",
     weight: 0.5,
-    alias: ["rpi"]
+    alias: ["rpi"],
   },
   {
     name: "Storybook",
     image: "/image/skill/storybook.png",
-    weight: 0.7
+    weight: 0.7,
   },
   {
     name: "Nx",
@@ -97,7 +97,7 @@ export const skills=[
     name: "Elastic Search",
     image: "/image/skill/elasticsearch.png",
     weight: 0.7,
-    alias: ["elasticsearch", "elastic"]
+    alias: ["elasticsearch", "elastic"],
   },
   {
     name: "Rabbit MQ",
@@ -115,7 +115,13 @@ export const skills=[
     image: "/image/skill/firebase.png",
     weight: 0.7,
     alias:["fcm", "gcp"]
+  },
+  {
+    name: "Redis",
+    image: "/image/skill/redis.png",
+    weight: 0.7,
   }
 ] as const
-export const readonlySkills: readonly {readonly name:string,readonly image:string,readonly weight?:number}[] = skills;
+export type SkillType =  Readonly<{name:string,image:string, weight?:number}>
+export const readonlySkills: readonly SkillType[] = skills;
 export const skillsDict = Object.fromEntries(readonlySkills.map((skill)=>[skill.name, skill]));
