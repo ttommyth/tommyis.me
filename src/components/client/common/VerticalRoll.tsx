@@ -13,7 +13,7 @@ export const VerticalRoll:FC<{
       <span className="invisible">{maxBy(messages, it=>it.length)}</span>
       {messages.map((it, idx)=><span className="absolute block" style={{top: `${100 * idx}%`}}
         key={idx}>
-        {it}
+        {it +" "}
       </span>)}
       <span className="absolute block" style={{top: `${100 * messages.length}%`}}>
         {messages[0]}

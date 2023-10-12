@@ -12,9 +12,10 @@ import { readonlySkills, skills } from "../../../../data/skills";
 import {HiViewGrid, HiChip} from "react-icons/hi";
 
 const TechGrid:FC<{
-  highlightItems?: string[]
+  highlightItems?: string[],
+  className?: string
 }> = (props)=>{
-  const {highlightItems}= props;
+  const {highlightItems, className}= props;
   const sortedSkills = useMemo(()=>{
     const sortedSkills = Object.values(readonlySkills).sort((a,b)=>(b.weight??1) - (a.weight??1));
     if(highlightItems){
@@ -22,9 +23,9 @@ const TechGrid:FC<{
     }
     return sortedSkills;
   },[highlightItems]);
-  return <div className="grid pt-16 sm:pt-1 grid-cols-3 sm:grid-cols-2 md:grid-cols-3 items-center justify-center p-1 gap-2 overflow-y-auto max-h-full">
+  return <div className={twMerge("grid pt-16 sm:pt-1 grid-cols-3 sm:grid-cols-2 md:grid-cols-3 items-center justify-center p-1 gap-2 overflow-y-auto max-h-full", className)}>
     {
-      sortedSkills.map((it,idx)=><motion.div layoutId={`tech-grid-${it.name}`}
+      sortedSkills.map((it,idx)=><motion.div layoutId={`tech-grid-${it.name}-${idx}`}
         animate={{opacity: highlightItems?(highlightItems.includes(it.name)?1:0.2):1}}
         className={twMerge("flex flex-col justify-end items-center")} key={it.name}>
         <div className="relative" style={{width:"50px", height:"50px"}}>
@@ -241,8 +242,9 @@ export const Tech:FC<{}> = (props)=>{
       {layoutFormat=="playground"?
         <TechPlayground highlightItems={searchText?matchTarget.map(it=>it.name):undefined}/>
         :
-        <TechGrid highlightItems={searchText?matchTarget.map(it=>it.name):undefined}/>
+        <></>
       }
+      <TechGrid highlightItems={searchText?matchTarget.map(it=>it.name):undefined}  className={layoutFormat=="playground"?"hidden":""}/>
 
       <div className="block sm:hidden grow w-full px-2 py-2 absolute top-appbar z-10">
         <FilterInput  value={searchText} setValue={setSearchText} layoutFormat={layoutFormat} setLayoutFormat={setLayoutFormat}/>
