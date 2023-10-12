@@ -5,7 +5,8 @@ import type { Metadata } from 'next'
 import { Noto_Sans } from 'next/font/google'
 import { PropsWithChildren } from 'react'
 import { twMerge } from 'tailwind-merge'
-
+import { Analytics } from '@vercel/analytics/react';
+ 
 const font = Noto_Sans({ subsets: ['latin'], display: 'swap', weight:'400' })
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default function RootLayout({
           {children}
           <OnClickGraphicEffect />
         </Layout>
+        <Analytics />
       </body>
     </html>
   )
