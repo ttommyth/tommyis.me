@@ -6,15 +6,19 @@ import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 export const useDarkMode:()=>[(string|undefined), ( value: string|undefined ) => void] = () => {
   const [theme,setTheme, removeTheme, isLoaded] = useLocalForage<string | undefined>('theme', undefined);
   useEffect(()=>{
+    if(!isLoaded)
+      return;
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
     if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
     }
-  }, [theme]);
+  }, [isLoaded && theme]);
   useEffect(()=>{
-    if(isLoaded && theme ==undefined && window?.matchMedia('(prefers-color-scheme: dark)')?.matches){
+    if(!isLoaded)
+      return;
+    if(theme ==undefined && window?.matchMedia('(prefers-color-scheme: dark)')?.matches){
       setTheme('dark');
     }
   }, [isLoaded, theme])
