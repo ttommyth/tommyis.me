@@ -8,7 +8,6 @@ export const OnClickGraphicEffect = () => {
   useEffect(()=>{
     const onClick= (ev: MouseEvent)=>{
       setClick((it)=>({x: ev.clientX, y: ev.clientY}));
-      console.log("click", ev);
     }
     window.addEventListener("click",onClick);
     return ()=>{
