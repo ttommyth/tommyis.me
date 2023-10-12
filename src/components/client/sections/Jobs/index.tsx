@@ -85,3 +85,4 @@ export const Jobs = ()=>{
     </div>
   </div>
 }
+export default Jobs;

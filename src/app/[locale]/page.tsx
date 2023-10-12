@@ -1,16 +1,17 @@
-import { Contact } from '@/components/client/sections/Contact';
 import { Hero } from '@/components/client/sections/Hero';
-import { Jobs } from '@/components/client/sections/Jobs';
-import { Tech } from '@/components/client/sections/Tech';
 import { Metadata } from 'next';
 import {useTranslations} from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import dynamic from 'next/dynamic';
 import { PropsWithChildren, Suspense } from 'react';
+const Jobs = dynamic(() => import('@/components/client/sections/Jobs'), { ssr: false });
+const Tech = dynamic(() => import('@/components/client/sections/Tech'), { ssr: false });
+const Contact = dynamic(() => import('@/components/client/sections/Contact'), { ssr: false });
  
 export const metadata: Metadata = {
   title: 'Tommy is me',
   description: 'The portfolio page of Tommy the developer',
+  keywords:["Next.js", "SEO", "React", "full-stack development", "frontend developer", "Tailwind CSS", "portfolio", "projects", "web development", "developer", "typescript", "c#", "csharp", "dotnetcore", ".net core"]
 }
 
 export default function Index({
@@ -28,19 +29,13 @@ export default function Index({
       }}/>
     </div>
     <div className='snap-always snap-center relative sm:static  w-[100dvw] sm:w-auto h-[100dvh] min-h-[500px]' id='skills'>    
-      <Suspense fallback={<p>Loading...</p>}>
-        <Tech />
-      </Suspense>  
+      <Tech />
     </div>
     <div className='snap-always snap-center relative sm:static  w-[100dvw] sm:w-auto h-[100dvh] sm:h-auto scroll-m-0 sm:scroll-m-20' id='jobs'>    
-      <Suspense fallback={<p>Loading...</p>}>
-        <Jobs />
-      </Suspense>
+      <Jobs />
     </div>
     <div className='snap-always snap-center relative sm:static  w-[100dvw] sm:w-auto h-[100dvh] sm:h-auto scroll-m-0 sm:scroll-m-20' id='contact'>    
-      <Suspense fallback={<p>Loading...</p>}>
-        <Contact />
-      </Suspense>
+      <Contact />
     </div>
     {/* <div className='snap-always snap-center relative sm:static  w-[100dvw] sm:w-auto h-[100dvh] min-h-[500px]'>      
       <Hero locale={{

@@ -210,7 +210,6 @@ const FilterInput:FC<{value:string, setValue:(v:string)=>void, layoutFormat: "pl
      </button>
    </span>
  }
-
 export const Tech:FC<{}> = (props)=>{
   const [layoutFormat, setLayoutFormat] = useState<"playground"|"grid">("playground"); 
 
@@ -253,3 +252,5 @@ export const Tech:FC<{}> = (props)=>{
     </div>
   </div>
 }
+
+export default Tech;

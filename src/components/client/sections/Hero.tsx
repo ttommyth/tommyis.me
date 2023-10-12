@@ -39,3 +39,4 @@ export const Hero:FC<{
     </div>
   </div> 
 }
+export default Hero;

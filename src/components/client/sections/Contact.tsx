@@ -139,7 +139,7 @@ export const Contact = () => {
                         )
                       }
                       <button className="absolute right-2 top-1/2 -translate-y-1/2 disabled:text-base-500" type="button" onClick={ev=>setStep(v=>v=="name"?"email":v=="email"?"content":"submit")}
-                        disabled={!!formState.errors[step]}>
+                        disabled={!!formState.errors[step] || !formState.dirtyFields[step]}>
                         <PaperAirplaneIcon className=" w-icon h-icon"/>
                       </button>
                       <span className="text-sm absolute top-full pt-1 left-2 text-red-500">{formState.errors[step]?.message}</span>
@@ -157,3 +157,4 @@ export const Contact = () => {
     </div> 
   </>
 }
+export default Contact;

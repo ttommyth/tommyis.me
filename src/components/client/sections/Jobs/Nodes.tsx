@@ -77,30 +77,28 @@ export const ProjectNode:FC<PropsWithChildren<{
         </motion.div>
       </motion.header>
       <AnimatePresence initial={false}>
-        {expanded==i && (
-          <motion.section
-            key="content"
-            initial="collapsed"
-            animate="open"
-            exit="collapsed"
-            variants={{
-              open: { opacity: 1, height: "auto" },
-              collapsed: { opacity: 0, height: 0 }
-            }}
-            transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
-            className={twMerge("w-full overflow-y-hidden")}
-          >
-            <div className="p-2 sm:p-4">
-              {
-                project.icon ?<div className="pb-4">
-                  <Image src={project.icon} className="w-auto h-12 mx-auto" width={0} height={0} sizes="100vw" alt="icon"/>
-                </div>
-                  :<></>
-              }
-              {children}
-            </div>
-          </motion.section>
-        )}
+        <motion.section
+          key="content"
+          initial="collapsed"
+          animate={expanded==i ? "open" : "collapsed"}
+          exit="collapsed"
+          variants={{
+            open: { opacity: 1, height: "auto" },
+            collapsed: { opacity: 0, height: 0 }
+          }}
+          transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+          className={twMerge("w-full overflow-y-hidden")}
+        >
+          <div className="p-2 sm:p-4">
+            {
+              project.icon ?<div className="pb-4">
+                <Image src={project.icon} className="w-auto h-12 mx-auto" width={0} height={0} sizes="100vw" alt="icon"/>
+              </div>
+                :<></>
+            }
+            {children}
+          </div>
+        </motion.section>
       </AnimatePresence>
     </motion.div>
   </div>

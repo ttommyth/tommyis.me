@@ -126,7 +126,7 @@ const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
             className={`w-icon h-icon bg-default border-default-invert border-2 cursor-pointer flex justify-center items-center`}
             onClick={() => handleDotClick(index)}
             initial="initial"
-            animate={currentIndex === index ? "animate" : ""}
+            animate={currentIndex === index ? "animate" : "initial"}
             whileHover="hover"
             variants={dotsVariants}
           >
@@ -134,7 +134,7 @@ const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
               key={index}
               onClick={() => handleDotClick(index)}
               initial="initial"
-              animate={currentIndex === index ? "animate" : ""}
+              animate={currentIndex === index ? "animate" : "initial"}
               whileHover="hover"
               variants={dotsContentVariants}
             >
