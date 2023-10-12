@@ -11,8 +11,8 @@ const websiteContent = `
 
 Kitchee is a professional football club in Hong Kong. They needed a website to showcase their team and players, as well as to promote their merchandise.
 
-We make use of Next.js and Tailwind CSS to develop a website that is fast and easy to maintain.
- Also building the project in a monorepo structure powered by Nx, we are able to share code between the website and the CMS admin panel.
+We make use of **Next.js** and **Tailwind CSS** to develop a website that is fast and easy to maintain.
+ Also building the project in a *monorepo structure* powered by **Nx**, we are able to share code between the website and the CMS admin panel.
 `  
 export const Kitchee = () => {
   return <div className="flex flex-col gap-4">

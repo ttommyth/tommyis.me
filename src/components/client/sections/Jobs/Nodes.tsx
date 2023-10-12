@@ -5,9 +5,14 @@ import { FC, PropsWithChildren, useState } from "react"
 import { ConditionalWrapper } from "../../utils/ConditionalWrapper"
 import ImageCarousel from "../../common/ImageCarousel"
 import { twMerge } from "tailwind-merge"
-import { AcademicCapIcon } from "@heroicons/react/24/outline"
+import { AcademicCapIcon, LockClosedIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
 import { ListBulletIcon } from "@heroicons/react/20/solid"
+
+const projectLabelStyles:{[key:string]:string}={
+  "Website":"bg-primary-400 dark:bg-primary-600",
+  "Backend":"bg-secondary-400 dark:bg-secondary-600",
+}
 
 //toDO;
 export const TodoNode:FC<{}> = ()=>{
@@ -45,6 +50,7 @@ export const ProjectNode:FC<PropsWithChildren<{
     labels?: string[]
     url?:string,
     period:string,
+    confidential?:boolean
   },i:number, expanded:number|undefined, setExpanded:(v:number|undefined)=>void
 }>> = ({project, i, expanded, setExpanded, children})=>{
   return <div className="flex flex-col ml-0 sm:ml-4 gap-2 ">
@@ -57,9 +63,10 @@ export const ProjectNode:FC<PropsWithChildren<{
     </div>
     <span className="flex flex-wrap sm:flex-row gap-2 sm:gap-4 sm:items-center">
       <ConditionalWrapper wrapper={(node)=><Link href={project.url!} target="_blank">{node}</Link>} condition={!!project.url}>
-        <h3 className="text-xl font-bold">{project.name}</h3>
+        <h3 className="text-xl font-bold flex flex-row">{project.name}
+          {project.confidential?<LockClosedIcon className="w-4 h-4"  title="confidential"/>:<></>}</h3>
       </ConditionalWrapper>
-      {project.labels?.map((label,idx)=><span key={"label-"+idx} className="text-xs rounded-full p-1  sm:py-2 sm:px-4 bg-base-300 dark:bg-base-900">
+      {project.labels?.map((label,idx)=><span key={"label-"+idx} className={twMerge("text-xs rounded-full p-1  sm:py-2 sm:px-4 bg-base-300 dark:bg-base-900", projectLabelStyles[label]??"")}>
         {label}
       </span>)}
     </span>
@@ -78,30 +85,33 @@ export const ProjectNode:FC<PropsWithChildren<{
           <ChevronDownIcon className="w-icon h-icon text-default-invert" />
         </motion.div>
       </motion.header>
-      <AnimatePresence initial={false}>
-        <motion.section
-          key="content"
-          initial="collapsed"
-          animate={expanded==i ? "open" : "collapsed"}
-          exit="collapsed"
-          variants={{
-            open: { opacity: 1, height: "auto" },
-            collapsed: { opacity: 0, height: 0 }
-          }}
-          transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
-          className={twMerge("w-full overflow-y-hidden")}
-        >
-          <div className="p-2 sm:p-4">
-            {
-              project.icon ?<div className="pb-4">
-                <Image src={project.icon} className="w-auto h-12 mx-auto" width={0} height={0} sizes="100vw" alt="icon"/>
-              </div>
-                :<></>
-            }
-            {children}
-          </div>
-        </motion.section>
-      </AnimatePresence>
+      {children==undefined?<>
+      </>:
+        <AnimatePresence initial={false}>
+          <motion.section
+            key="content"
+            initial="collapsed"
+            animate={expanded==i ? "open" : "collapsed"}
+            exit="collapsed"
+            variants={{
+              open: { opacity: 1, height: "auto" },
+              collapsed: { opacity: 0, height: 0 }
+            }}
+            transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+            className={twMerge("w-full overflow-y-hidden")}
+          >
+            <div className="p-2 sm:p-4">
+              {
+                project.icon ?<div className="pb-4">
+                  <Image src={project.icon} className="w-auto h-12 mx-auto" width={0} height={0} sizes="100vw" alt="icon"/>
+                </div>
+                  :<></>
+              }
+              {children}
+            </div>
+          </motion.section>
+        </AnimatePresence>
+      }
     </motion.div>
   </div>
 }

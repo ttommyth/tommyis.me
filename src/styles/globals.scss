@@ -49,6 +49,26 @@ textarea{
     @apply text-base-900 dark:text-base-300  transition-colors
   }
 
+  .bg-strip{
+    background-image: repeating-linear-gradient(
+      -45deg,
+      theme("colors.base.100") ,
+      theme("colors.base.100") 8%,
+      theme("colors.base.200") 8%,
+      theme("colors.base.200") 16%
+    );
+  }
+
+  .dark .bg-strip{
+    background-image: repeating-linear-gradient(
+      -45deg,
+      theme("colors.base.800") ,
+      theme("colors.base.800") 8%,
+      theme("colors.base.900") 8%,
+      theme("colors.base.900") 16%
+    );
+  }
+
   .bg-dotted-glass::before {
     display: block;
     content: "";
@@ -113,7 +133,7 @@ textarea{
     @apply text-sm font-bold mb-4
   }
   .custom-prose p{
-    @apply mb-4 font-thin leading-6
+    @apply mb-4 leading-6
   }
   .custom-prose ul{
     @apply mb-4 list-disc list-inside
@@ -144,6 +164,13 @@ textarea{
   }
   .custom-prose img{
     @apply my-4
+  }
+  .custom-prose strong{
+    @apply font-bold text-primary-500
+  }
+  
+  .custom-prose em{
+    @apply font-thin
   }
 
 

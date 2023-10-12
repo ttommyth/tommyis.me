@@ -12,7 +12,7 @@ const websiteContent = `
 
 We created Studylu to help small and medium-sized education centres to build their own e-learning platform. This platform providing over 60000 questions in multiple answering form and subject.
 
-By utilizing Socket.IO and Redis, we created real-time process tracking between students, teachers and parents. This allows parents to monitor their children's progress in real time.
+By utilizing **Socket.IO** and **Redis**, we created *real-time process tracking* between students, teachers and parents. This allows parents to monitor their children's progress in real time.
 
 `  
 export const Studylu = () => {

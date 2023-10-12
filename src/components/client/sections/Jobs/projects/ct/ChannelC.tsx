@@ -13,24 +13,26 @@ const ChannelCWebsiteContent = `
 ## Channel C Website
 
 Channel C HK, a fast-growing internet media platform since 2021, needed a website to showcase content that couldn't be effectively presented in YouTube videos.
- Our team developed a website using Next.js and Tailwind CSS, prioritizing loading speed and development efficiency.
+ Our team developed a website using **Next.js** and **Tailwind CSS**, prioritizing loading speed and development efficiency.
 
 The Channel C Website offers a user-friendly interface for visitors to explore the diverse range of content, including articles, comments, interactive features, and partner-ship promotion.
  With seamless social media integration, users can easily engage and share their favorite content.
 
 By creating this bespoke website, we've provided Channel C with a powerful platform to expand their online presence beyond YouTube.
  The Channel C Website delivers an immersive visual experience and supports the brand's continued growth and success.
+
+In addiction, this website integrated with *Google Analytics v4* and *Google Tag Manager* to provide the team with insights on user behavior.
 `  
 const ChannelCAppContent = `
 ## Channel C Mobile App
 
 After the successful launch of Channel C Website, we were tasked with developing a mobile app to further expand the brand's online presence and enhance user engagement.
 
-The Channel C Mobile App is a cross-platform app built with React Native and Expo. Providing a seamless user experience across iOS and Android devices,
+The Channel C Mobile App is a cross-platform app built with **React Native** and **Expo**. Providing a seamless user experience across iOS and Android devices,
  the app allows users to access Channel C's content on the go with deeplink.
 
-Moreover, we've make use of lottie to enhance the user experience with animations.
- The app also supports push notifications via Firebase Cloud Messaging to keep users up to date with the latest content.
+Moreover, we've make use of **Lottie** to enhance the user experience with animations.
+ The app also supports push notifications via **Firebase Cloud Messaging** to keep users up to date with the latest content.
 ` 
 
 export const ChannelC = () => {

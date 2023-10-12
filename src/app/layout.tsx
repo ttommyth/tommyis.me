@@ -7,7 +7,7 @@ import { PropsWithChildren } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Analytics } from '@vercel/analytics/react';
  
-const font = Noto_Sans({ subsets: ['latin'], display: 'swap', weight:'400' })
+const font = Noto_Sans({ subsets: ['latin'], display: 'swap', weight:['300','400', '700'] })
 
 export const metadata: Metadata = {
   title: 'Tommy is me',
