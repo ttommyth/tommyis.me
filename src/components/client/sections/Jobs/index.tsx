@@ -79,7 +79,7 @@ export const Jobs = ()=>{
           icon: "/image/project/hkjc/icon.png",
           name: "HKJC Form System",
           labels: ["Website","Mobile App", "Backend"],
-          period: "2021 - 2023",
+          period: "2019 - 2021",
           confidential:true
         }} i={expandIndex++} expanded={expanded} setExpanded={setExpanded}>
           <Hkjcfs/>
@@ -88,7 +88,7 @@ export const Jobs = ()=>{
           icon: "/image/project/hkha/icon.png",
           name: "HKHA Internal RFID System",
           labels: ["Desktop App","Mobile App", "Backend"],
-          period: "2021 - 2023",
+          period: "2020 - 2021",
           confidential:true
         }} i={expandIndex++} expanded={expanded} setExpanded={setExpanded}>
           <Hkha/>
@@ -96,7 +96,7 @@ export const Jobs = ()=>{
         <ProjectNode project={{
           name: "Asset Management System",
           labels: ["Mobile App", "Backend"],
-          period: "2021 - 2023",
+          period: "2018 - 2021",
           confidential:true
         }} i={expandIndex++} expanded={expanded} setExpanded={setExpanded}>
           <Ams/>
