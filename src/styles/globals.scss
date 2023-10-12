@@ -2,16 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+  @apply bg-primary-500 text-base-100
+}
 
 body{
   @apply bg-default text-base-800 dark:text-base-200 overflow-x-hidden
 }
 
 input{
-  @apply bg-default dark:text-white  rounded-md px-4 py-2 border border-base-500
+  @apply bg-default dark:text-white  rounded-md px-4 py-2 border-2 border-default
 }
 textarea{
-  @apply bg-default dark:text-white  rounded-md px-4 py-2 border border-base-500
+  @apply bg-default dark:text-white  rounded-md px-4 py-2 border-2 border-default
 }
 .grecaptcha-badge { 
   visibility: hidden;
@@ -163,5 +166,41 @@ textarea{
     to {
       background-position: 0% 0%;
     }
+   }
+   @keyframes circle-enter {
+    0% {
+      opacity: 0;
+      transform: scale(1, 0);
+      visibility: hidden;
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1, 1);
+    }
+  }
+   .interact{
+     @apply cursor-pointer relative
+   }
+   .interact:after{
+    content: "";
+    position: absolute;
+    margin: -8px;
+    @apply border-default-invert border-2 border-dashed absolute-fill rounded-full select-none opacity-0 transition-all rotate-0 
+   }
+   .interact:hover:after{
+    @apply opacity-100 rotate-12 transition-all
+   }
+   
+   .group-interact{
+    @apply cursor-pointer relative
+   }
+   .group-interact:after{
+    content: "";
+    position: absolute;
+    margin: -8px;
+    @apply border-default-invert border-2 border-dashed absolute-fill rounded-full select-none opacity-0 transition-all rotate-0 
+   }
+   .group:hover .group-interact:after{
+    @apply opacity-100 rotate-12 transition-all
    }
 }

@@ -32,5 +32,5 @@ export const DarkModeHelper=()=>{
 
 export const DarkModeSwitch=()=>{
   const [theme,setTheme] = useDarkMode();
-  return <button onClick={ev=>setTheme(theme=="light"?"dark":"light")} type="button"> {theme=="light"?<SunIcon className="w-8 h-8"/>:<MoonIcon className="w-8 h-8"/>}</button>
+  return <button onClick={ev=>setTheme(theme=="light"?"dark":"light")} type="button" className="interact"> {theme=="light"?<SunIcon className="w-8 h-8"/>:<MoonIcon className="w-8 h-8"/>}</button>
 }

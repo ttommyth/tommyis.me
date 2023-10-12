@@ -27,9 +27,9 @@ export const Hero:FC<{
           <h1 className="text-6xl font-black">{locale.title2}</h1>
           <h2 className="flex items-bottom gap-2">{locale.iam} <VerticalRoll messages={locale.iamArray}/></h2>
           <ul className="flex gap-2 mt-4">
-            <li><Link href={githubLink}><GithubLogo className="w-8 h-8 fill-current" /> </Link></li>
-            <li><Link href={linkedinLink}><LinkedinLogo className="w-8 h-8 fill-current" /> </Link></li>
-            <li><Link href={kofiLink}><KofiLogo className="w-8 h-8 fill-current" /> </Link></li>
+            <li><Link href={githubLink} target="_blank" className="interact"><GithubLogo className="w-8 h-8 fill-current " /> </Link></li>
+            <li><Link href={linkedinLink} target="_blank" className="interact"><LinkedinLogo className="w-8 h-8 fill-current" /> </Link></li>
+            <li><Link href={kofiLink} target="_blank" className="interact"><KofiLogo className="w-8 h-8 fill-current" /> </Link></li>
           </ul>
         </div>
         <div className="w-72 relative">

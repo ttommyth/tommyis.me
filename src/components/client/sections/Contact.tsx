@@ -72,7 +72,7 @@ export const Contact = () => {
     <div className="min-h-[100dvh] min-w-[320px] flex justify-center items-center px-0 pt-appbar sm:pt-4 sm:py-4 h-[100dvh] sm:h-auto ">
       <div className=" flex justify-stretch items-stretch w-full bg-base-300 dark:bg-base-900 border-default border-2  rounded-md flex-col sm:flex-row h-full sm:h-auto max-h-[100dvh] sm:max-h-[80dvh]">
         <div className="flex flex-row sm:flex-col h-auto sm:h-full [&>*]:p-2 [&>*]:rounded-md [&>*]:flex [&>*]:gap-4 [&>*]:items-center gap-2 p-2 text-sm pb-2 sm:pb-48 whitespace-nowrap">
-          <span className="bg-base-400 dark:bg-base-800"><ChatBubbleLeftEllipsisIcon className="w-icon h-icon"/><span className="hidden sm:inline-block">Website</span></span>
+          <span className="bg-base-200 dark:bg-base-800"><ChatBubbleLeftEllipsisIcon className="w-icon h-icon"/><span className="hidden sm:inline-block">Website</span></span>
           <Link href={"https://www.google.com/maps/place/%E9%A6%99%E6%B8%AF"} target="_blank"  className="dui-tooltip dui-tooltip-bottom sm:dui-tooltip-top" data-tip="Find me in"><MapPinIcon className="w-icon h-icon "/><span className="hidden sm:inline-block ">Hong Kong</span></Link>
           <button className="dui-tooltip dui-tooltip-bottom sm:dui-tooltip-top" data-tip="Click to copy" type="button" onClick={ev=>navigator.clipboard.writeText(email)}>          
             <EnvelopeIcon className="w-icon h-icon"/>
@@ -99,7 +99,7 @@ export const Contact = () => {
                     stepArr.indexOf(step) > stepArr.indexOf(it) ?
                       <>
                         <MessageLine from="user">
-                          {watchAllFields[it]} {step=="submitted"?<></>: <button onClick={ev=>setStep(it)}><PencilIcon className="w-4 h-4"/></button>}
+                          {watchAllFields[it]} {step=="submitted"?<></>: <button onClick={ev=>setStep(it)} className="ml-2 interact"><PencilIcon className="w-4 h-4"/></button>}
                         </MessageLine>
                         {followUpMessage[stepArr.indexOf(it)]?
                           <MessageLine from="me">
@@ -122,7 +122,7 @@ export const Contact = () => {
             }
           </div>
           <form className="m-2  mb-8 flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-            <span className="relative">
+            <span className="relative group">
               {
                 step=="submitted"?<>
                 </>:
@@ -138,9 +138,11 @@ export const Contact = () => {
                         }
                         )
                       }
-                      <button className="absolute right-2 top-1/2 -translate-y-1/2 disabled:text-base-500" type="button" onClick={ev=>setStep(v=>v=="name"?"email":v=="email"?"content":"submit")}
+                      <button className="absolute right-2 top-1/2 -translate-y-1/2 disabled:text-base-500 " type="button" onClick={ev=>setStep(v=>v=="name"?"email":v=="email"?"content":"submit")}
                         disabled={!!formState.errors[step] || !formState.dirtyFields[step]}>
-                        <PaperAirplaneIcon className=" w-icon h-icon"/>
+                        <div className="group-interact" >
+                          <PaperAirplaneIcon className=" w-icon h-icon "/>
+                        </div>
                       </button>
                       <span className="text-sm absolute top-full pt-1 left-2 text-red-500">{formState.errors[step]?.message}</span>
                     </>

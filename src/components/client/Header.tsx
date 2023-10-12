@@ -6,7 +6,7 @@ export const Header = ()=>{
       <ul className="flex mx-auto container   gap-8   grow overflow-y-auto whitespace-nowrap h-full items-center">
         <a href="#hero">Tommy is me</a>
         <a href="#skills">Skills</a>
-        <a href="#jobs">Jobs</a>
+        <a href="#jobs">My Work</a>
         <a href="#contact">Contact Me</a>
       </ul>
       <DarkModeSwitch />

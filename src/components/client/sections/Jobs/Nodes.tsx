@@ -65,13 +65,15 @@ export const ProjectNode:FC<PropsWithChildren<{
     </span>
     <h4 className="text-xs text-gray-500">{project.period}</h4>
     <motion.div     
-      className="w-full h-auto border-default border-2 border-solid aria-expanded:border-style-expand rounded-md flex flex-col items-center bg-dotted group " aria-expanded={expanded==i}>
+      className="w-full h-auto border-default border-2 border-solid aria-expanded:border-style-expand rounded-md flex flex-col items-center bg-dotted " aria-expanded={expanded==i}>
       <motion.header
         initial={false}
-        className=" flex flex-row justify-center w-full bg-default border-default border-dashed group-aria-expanded:border-b-2 group-aria-expanded:rounded-b-none  cursor-pointer rounded-md "
+        className=" flex flex-row justify-center w-full bg-default border-default border-dashed aria-expanded:border-b-2 aria-expanded:rounded-b-none  cursor-pointer rounded-md group"
         onClick={(ev) => setExpanded(expanded==i ? undefined : i)}
+        aria-expanded={expanded==i}
       >
         <motion.div 
+          className=" group-interact"
           animate={{ rotate: expanded==i ? "180deg" : "0deg" }}>
           <ChevronDownIcon className="w-icon h-icon text-default-invert" />
         </motion.div>

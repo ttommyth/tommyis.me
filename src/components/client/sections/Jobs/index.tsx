@@ -15,7 +15,7 @@ export const Jobs = ()=>{
 
   return <div className=" overflow-y-auto sm:overflow-y-auto min-h-[100dvh] max-h-[100dvh] sm:max-h-none">
     <div className="flex flex-col pt-appbar sm:pt-0 w-[100dvw] sm:w-full items-center overflow-x-hidden">
-      <h2 className="text-4xl mb-8">Jobs</h2>
+      <h2 className="text-4xl mb-8">My Work</h2>
       <div className="ml-8 sm:ml-8 p-4 pl-6 pr-8 border-l-2 border-default w-full h-auto relative flex flex-col  transition-colors gap-8">
         <TodoNode  />
         <JobNode job={{
