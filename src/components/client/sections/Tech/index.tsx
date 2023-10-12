@@ -244,7 +244,7 @@ export const Tech:FC<{}> = (props)=>{
         :
         <></>
       }
-      <TechGrid highlightItems={searchText?matchTarget.map(it=>it.name):undefined}  className={layoutFormat=="playground"?"hidden":""}/>
+      <TechGrid highlightItems={searchText?matchTarget.map(it=>it.name):undefined}  className={twMerge("pt-appbar sm:pt-0", layoutFormat=="playground"?"hidden":"")}/>
 
       <div className="block sm:hidden grow w-full px-2 py-2 absolute top-appbar z-10">
         <FilterInput  value={searchText} setValue={setSearchText} layoutFormat={layoutFormat} setLayoutFormat={setLayoutFormat}/>
