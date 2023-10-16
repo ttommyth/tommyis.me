@@ -25,7 +25,7 @@ export const Hero:FC<{
         <div className="flex flex-col gap-2 grow">
           <h2>{locale.title1}</h2>
           <h1 className="text-6xl font-black">{locale.title2}</h1>
-          <h2 className="flex items-bottom gap-2">{locale.iam} <VerticalRoll messages={locale.iamArray}/></h2>
+          <span className="flex items-bottom gap-2">{locale.iam} <VerticalRoll messages={locale.iamArray}/></span>
           <ul className="flex gap-2 mt-4">
             <li><Link href={githubLink} target="_blank" className="interact"><GithubLogo className="w-8 h-8 fill-current " /> </Link></li>
             <li><Link href={linkedinLink} target="_blank" className="interact"><LinkedinLogo className="w-8 h-8 fill-current" /> </Link></li>
