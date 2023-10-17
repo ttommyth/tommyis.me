@@ -22,15 +22,16 @@ const playableSkillNames: ((typeof skills[number])["name"])[] = [
   "Next.js",
   "Typescript"
 ]
+const ballScale = [0, 6, 12, 20, 28, 36, 46, 56, 66, 78, 90];
 const playableSkills = playableSkillNames.map((it,idx)=>({...skillsDict[it], gameScoreWeight: idx,
   createBody: (x:number, y: number)=>{
-    return Bodies.circle(x,y, 20+(idx!*4), {
+    return Bodies.circle(x,y, 20+(ballScale[idx]??0), {
       render: {
         sprite: {
           texture: skillsDict[it].image,
-          xScale: 1/4 + idx!*4 *1/40,
-          yScale: 1/4 + idx!*4 * 1/40
-        },
+          xScale: 1/4 + (ballScale[idx]??0) * 1/40,
+          yScale: 1/4 + (ballScale[idx]??0) * 1/40
+        }
       },
       label: ""+idx!,
       mass: 10+(idx!*4),
@@ -91,11 +92,11 @@ export const WatermelonSkillsGame:FC<{
     ]);
 
     const boxes = [...playableItems, ...playableItems, ...playableItems]
-      .map((skill,idx)=>skill.createBody(80+ (Math.random()*rect.width/2),100 + 20+ 40*Math.random()));
+      .map((skill,idx)=>skill.createBody(40+ (Math.random()*rect.width),100 + 20+ 40*Math.random()));
     Composite.add(engine.world,      
       boxes
     )
-    Matter.Events.on(engine, "collisionStart", function (event) {
+    Matter.Events.on(engine, "collisionActive", function (event) {
       console.log(event, [...event.pairs]);
       event.pairs.forEach(pair=>{
         if(pair.bodyA.label == pair.bodyB.label){
@@ -104,8 +105,8 @@ export const WatermelonSkillsGame:FC<{
           const skill = playableItemDict[parseInt(higher.label)+1];
           if(skill){
             delay(()=>{
-              Matter.Composite.add(engine.world, skill.createBody(higher.position.x, higher.position.y));
-            }, 100);
+              Matter.Composite.add(engine.world, skill.createBody((pair.bodyA.position.x + pair.bodyB.position.x )/2, (pair.bodyA.position.y + pair.bodyB.position.y )/2));
+            }, 150);
           }
         }
       })
