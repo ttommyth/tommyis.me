@@ -120,6 +120,11 @@ export const skills=[
     name: "Redis",
     image: "/image/skill/redis.png",
     weight: 0.7,
+  },
+  {
+    name: "Python",
+    image: "/image/skill/python.png",
+    weight: 0.7,
   }
 ] as const
 export type SkillType =  Readonly<{name:string,image:string, weight?:number}>
