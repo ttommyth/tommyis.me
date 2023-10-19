@@ -10,6 +10,7 @@ import { twMerge } from "tailwind-merge";
 import Image from "next/image";
 import { readonlySkills, skills } from "../../../../data/skills";
 import {HiViewGrid, HiChip} from "react-icons/hi";
+import Link from "next/link";
 
 const TechGrid:FC<{
   highlightItems?: string[],
@@ -251,7 +252,7 @@ export const Tech:FC<{}> = (props)=>{
       </div>
     </div>
     <div className="hidden sm:flex grow flex-col p-8 gap-8">
-      <h2 className="text-4xl font-extrabold">⬅️ My Skill set</h2>
+      <h2 className="text-4xl font-extrabold flex items-center"><span className="mr-2">⬅️ My Skill set </span><Link href="/melongame"><span className=" text-xl p-2 text-gray-500">🍉 GAME</span></Link></h2>
       <FilterInput  value={searchText} setValue={setSearchText} layoutFormat={layoutFormat} setLayoutFormat={setLayoutFormat}/>
     </div>
   </div>
