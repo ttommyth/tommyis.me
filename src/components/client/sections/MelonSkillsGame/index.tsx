@@ -32,6 +32,7 @@ const collisionCategories = {
 }
 const scores = [1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66];
 const ballScale = [0, 6, 12, 20, 28, 36, 46, 56, 66, 78, 90];
+const randomFirstNIndex = 5;
 const playableSkills = playableSkillNames.map((it,idx)=>({...skillsDict[it], gameScoreWeight: idx,
   score: scores[idx],
   createBody: (x:number, y: number, notInGame?:boolean)=>{
@@ -65,8 +66,9 @@ export const WatermelonSkillsGame:FC<{
   const worldRef = useRef<World|null>(null);
   const mouseX = useMotionValue(0);
   const springMouseX = useSpring(mouseX);
-  const [nextBallIndex, setNextBallIndex] = useState(Math.floor(Math.random()*playableSkills.length/3)); 
-  const [nextSecondBallIndex, setNextSecondBallIndex] = useState(Math.floor(Math.random()*playableSkills.length/3)); 
+  const [disableSpawn, setDisableSpawn] = useState(false); 
+  const [nextBallIndex, setNextBallIndex] = useState(Math.floor(Math.random()*randomFirstNIndex)); 
+  const [nextSecondBallIndex, setNextSecondBallIndex] = useState(Math.floor(Math.random()*randomFirstNIndex)); 
   const nextBallScale = useMotionValue(1/4 + ((ballScale[nextBallIndex]??0) * 1/40));
   const springNextBallScale = useSpring(nextBallScale);
   const [score, setScore] = useState(0);
@@ -202,7 +204,7 @@ export const WatermelonSkillsGame:FC<{
     mouseX.updateAndNotify(Math.min(bound.width,  ev.clientX - bound.left));
   }, [mouseX]);
   const handleMouseClick = useCallback<MouseEventHandler>((ev)=>{
-    if(!worldRef.current)
+    if(!worldRef.current || disableSpawn)
       return;
     const nextSkill = playableSkills[nextBallIndex??0];
     nextSkillBodyRef.current = nextSkill.createBody(springMouseX.get(), 0);
@@ -214,10 +216,14 @@ export const WatermelonSkillsGame:FC<{
     Matter.Composite.add(engineRef.current!.world, nextSkillBodyRef.current);
     setNextBallIndex(nextSecondBallIndex);
     nextBallScale.set(1/4 + ((ballScale[nextSecondBallIndex]??0) * 1/40));
-    const randNextBallIndex = Math.floor(Math.random()*playableSkills.length/3);
+    const randNextBallIndex = Math.floor(Math.random()*randomFirstNIndex);
     setNextSecondBallIndex(randNextBallIndex);
+    setDisableSpawn(true);
+    delay(()=>{
+      setDisableSpawn(false);
+    }, 350)
 
-  }, [nextBallIndex, nextSecondBallIndex]);
+  }, [nextBallIndex, nextSecondBallIndex, disableSpawn]);
   useMotionValueEvent(mouseX, "change", (latest) => {
     console.log("x changed to", latest)
   })
@@ -227,8 +233,8 @@ export const WatermelonSkillsGame:FC<{
         <ScorePanel score={score} />
         <ScoreRecord />
       </div>
-      <div className="grow relative mt-12" onMouseMove={handleMouseMove} onClick={handleMouseClick}>
-        <motion.div className="absolute -top-12" style={{left: springMouseX, scale: springNextBallScale, translateX: "-50%" }}>
+      <div className="grow relative mt-12 select-none" onMouseMove={handleMouseMove} onClick={handleMouseClick}>
+        <motion.div className="absolute -top-12" style={{left: springMouseX, scale: springNextBallScale, translateX: "-50%", opacity: disableSpawn?"50%":"100%" }}>
           <Image src={playableSkills[nextBallIndex].image} alt={playableSkillNames[nextBallIndex]} width={80} height={80} className=""  />
         </motion.div>
         <div ref={ref} className="w-full h-full border-b-2 border-x-2 border-default bg-dotted rounded-b-3xl" />
