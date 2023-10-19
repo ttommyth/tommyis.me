@@ -1,28 +1,29 @@
 "use client";
 import { skills, skillsDict } from "@/data/skills";
 import { ArrowPathIcon, LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid";
-import { useScroll, useVelocity, delay, useMotionValue, motion } from "framer-motion";
+import { useScroll, useVelocity, delay, useMotionValue, motion, useMotionValueEvent, useSpring } from "framer-motion";
 import { debounce, throttle } from "lodash";
-import Matter, { Bodies, Body, Mouse, MouseConstraint, Sleeping, World } from "matter-js";
+import Matter, { Bodies, Body, Engine, Mouse, MouseConstraint, Sleeping, World } from "matter-js";
 import next from "next";
-import { FC, useRef, useState, useEffect, useMemo, MouseEventHandler, useCallback, use } from "react";
+import { FC, useRef, useState, useEffect, useMemo, MouseEventHandler, useCallback, use, Fragment } from "react";
 import { twMerge } from "tailwind-merge";
 import { ScorePanel } from "./ScorePanel";
 import { ScoreRecord } from "./ScoreRecord";
 import Image from 'next/image';
+import { ArrowRightIcon, FireIcon } from "@heroicons/react/20/solid";
 
 //sort by interest level desc
 const playableSkillNames: ((typeof skills[number])["name"])[] = [
   "Raspberry PI",
   "Kotlin",
   "Elastic Search",
-  "C#",
+  "Cura",
   ".net core",
   "Docker",
   "AWS",  
   "Tailwind CSS",
   "React.js",
-  "Next.js",
+  "Storybook",
   "Typescript"
 ]
 const collisionCategories = {
@@ -46,6 +47,8 @@ const playableSkills = playableSkillNames.map((it,idx)=>({...skillsDict[it], gam
       collisionFilter:{
         category: notInGame? collisionCategories.ghost: collisionCategories.base,
       },
+      friction:0.001,
+      restitution: 0.8,
       label: ""+idx!,
       mass: 10+(idx!*4),
     })
@@ -58,9 +61,14 @@ export const WatermelonSkillsGame:FC<{
   const ref = useRef<HTMLDivElement | null>(null);
   const rectRef = useRef<DOMRect | null>(null);
   const nextSkillBodyRef = useRef<Matter.Body | null>(null);
+  const engineRef = useRef<Engine|null>(null);
   const worldRef = useRef<World|null>(null);
   const mouseX = useMotionValue(0);
-  const [nextBallIndex, setNextBallIndex] = useState(Math.floor(Math.random()*playableSkills.length)); 
+  const springMouseX = useSpring(mouseX);
+  const [nextBallIndex, setNextBallIndex] = useState(Math.floor(Math.random()*playableSkills.length/3)); 
+  const [nextSecondBallIndex, setNextSecondBallIndex] = useState(Math.floor(Math.random()*playableSkills.length/3)); 
+  const nextBallScale = useMotionValue(1/4 + ((ballScale[nextBallIndex]??0) * 1/40));
+  const springNextBallScale = useSpring(nextBallScale);
   const [score, setScore] = useState(0);
   const [reset, setReset] = useState(0);
   const { scrollY } = useScroll({
@@ -109,12 +117,12 @@ export const WatermelonSkillsGame:FC<{
       ground, wallLeft, wallRight//, roof
     ]);
 
-    const boxes = [...playableItems, ...playableItems, ...playableItems] //TODO: tmp
-      .map((skill,idx)=>skill.createBody(40+ (Math.random()*rect.width),100 + 20+ 40*Math.random()));
-    Composite.add(engine.world,      
-      boxes
-    )
-    Matter.Events.on(engine, "collisionActive", function (event) {
+    // const boxes = [...playableItems, ...playableItems, ...playableItems] //TODO: tmp
+    //   .map((skill,idx)=>skill.createBody(40+ (Math.random()*rect.width),100 + 20+ 40*Math.random()));
+    // Composite.add(engine.world,      
+    //   boxes
+    // )
+    Matter.Events.on(engine, "collisionStart", function (event) {
       event.pairs.forEach(pair=>{
         if(pair.bodyA.label == pair.bodyB.label){
           const higher = pair.bodyA.position.y < pair.bodyB.position.y?pair.bodyA:pair.bodyB;
@@ -123,8 +131,10 @@ export const WatermelonSkillsGame:FC<{
           if(skill){
             delay(()=>{
               setScore(s=>s+skill.score);
-              Matter.Composite.add(engine.world, skill.createBody((pair.bodyA.position.x + pair.bodyB.position.x )/2, (pair.bodyA.position.y + pair.bodyB.position.y )/2));
-            }, 150);
+              const newBody =skill.createBody((pair.bodyA.position.x + pair.bodyB.position.x )/2, (pair.bodyA.position.y + pair.bodyB.position.y )/2);
+              Matter.Body.setVelocity(newBody, {x:Math.random()*5-2.5, y:-2})
+              Matter.Composite.add(engine.world, newBody);
+            }, 250);
           }
         }
       })
@@ -159,10 +169,10 @@ export const WatermelonSkillsGame:FC<{
     // nextSkillBodyRef.current.position.y = nextSkillBodyRef.current.circleRadius!/2;
     // Matter.Composite.add(engine.world, nextSkillBodyRef.current);
     // mouseX.on("change", (v)=>{
-    //   if(nextSkillBodyRef.current)
-    //     nextSkillBodyRef.current.position.x = v;
+    //   console.log(v)
     // });
     worldRef.current = engine.world;
+    engineRef.current = engine;
     return ()=>{
       Render.stop(render);
       World.clear(engine.world, false);
@@ -186,34 +196,54 @@ export const WatermelonSkillsGame:FC<{
     }
   },[])
   const handleMouseMove = useCallback<MouseEventHandler>((ev)=>{
-    mouseX.set(ev.clientX - ev.currentTarget.getBoundingClientRect().left);
+    const bound = ev.currentTarget.getBoundingClientRect();
+    mouseX.updateAndNotify(Math.min(bound.width,  ev.clientX - bound.left));
   }, [mouseX]);
   const handleMouseClick = useCallback<MouseEventHandler>((ev)=>{
     if(!worldRef.current)
       return;
     const nextSkill = playableSkills[nextBallIndex??0];
-    nextSkillBodyRef.current = nextSkill.createBody(ev.clientX - ev.currentTarget.getBoundingClientRect().left, 0);
-    nextSkillBodyRef.current.position.y = nextSkillBodyRef.current.circleRadius!*1;
+    nextSkillBodyRef.current = nextSkill.createBody(springMouseX.get(), 0);
+    // nextSkillBodyRef.current.position.y = nextSkillBodyRef.current.circleRadius!*1;
     // nextSkillBodyRef.current.velocity.x = 0;
     // nextSkillBodyRef.current.velocity.y = 0;
-    Matter.Composite.add(worldRef.current, nextSkillBodyRef.current);
-    setNextBallIndex(Math.floor(Math.random()*playableSkills.length));
+    
+    Matter.Body.setVelocity(nextSkillBodyRef.current, {x:springMouseX.getVelocity()/200, y:0})
+    Matter.Composite.add(engineRef.current!.world, nextSkillBodyRef.current);
+    setNextBallIndex(nextSecondBallIndex);
+    nextBallScale.set(1/4 + ((ballScale[nextSecondBallIndex]??0) * 1/40));
+    const randNextBallIndex = Math.floor(Math.random()*playableSkills.length/3);
+    setNextSecondBallIndex(randNextBallIndex);
 
-  }, []);
+  }, [nextBallIndex, nextSecondBallIndex]);
+  useMotionValueEvent(mouseX, "change", (latest) => {
+    console.log("x changed to", latest)
+  })
   return <div className="w-full flex flex-col pt-appbar sm:pt-24 h-[90dvh] gap-2">
     <div className="flex flex-col sm:flex-row w-full grow gap-2">
-      <div className="flex flex-row sm:flex-col w-64 gap-2">
-        <ScorePanel score={score} bestScore={1}/>
+      <div className="flex flex-row sm:flex-col w-full sm:w-64 gap-2">
+        <ScorePanel score={score} />
         <ScoreRecord />
       </div>
       <div className="grow relative mt-12" onMouseMove={handleMouseMove} onClick={handleMouseClick}>
-        <motion.div className="absolute top-0" style={{left: mouseX}}>
+        <motion.div className="absolute -top-12" style={{left: springMouseX, scale: springNextBallScale, translateX: "-50%" }}>
           <Image src={playableSkills[nextBallIndex].image} alt={playableSkillNames[nextBallIndex]} width={80} height={80} className=""  />
         </motion.div>
         <div ref={ref} className="w-full h-full border-b-2 border-x-2 border-default bg-dotted rounded-b-3xl" />
       </div>
     </div>
-    {/* <div className="h-8 w-full bg-red-500">test</div> */}
+    <div className="h-8 w-full  flex overflow-x-auto flex-row">
+      {playableSkills.map((it,idx)=>{
+        return <Fragment key={idx}>
+          <Image src={it.image} alt={it.name} width={40} height={40} 
+            className="object-contain data-[future-ball=true]:border-2 data-[next-ball=true]:border-primary-500 border-default rounded-md p-1 data-[next-second-ball=true]:border-dashed" 
+            data-future-ball={nextBallIndex==idx || nextSecondBallIndex==idx } 
+            data-next-ball={nextBallIndex==idx} data-next-second-ball={nextSecondBallIndex==idx} />
+          <ArrowRightIcon className="w-icon h-icon"/>
+        </Fragment>
+      })}
+      <FireIcon className="w-icon h-icon"/>
+    </div>
   </div>
 }
 export default WatermelonSkillsGame;
