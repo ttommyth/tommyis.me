@@ -80,6 +80,7 @@ export const WatermelonSkillsGame:FC<{
   useEffect(()=>{
     if(!ref)
       return;
+    setScore(0);
     const playableItems = playableSkills.filter(it=>it.gameScoreWeight!=undefined);
     const playableItemDict = Object.fromEntries(playableItems.map(it=>[it.gameScoreWeight, it]));
     rectRef.current = ref.current?.getBoundingClientRect()??{x:0,y:0,height:0,width:0, bottom:0, left:0, right:0, top:0, toJSON:()=>({})};
@@ -185,7 +186,6 @@ export const WatermelonSkillsGame:FC<{
       (render as any).canvas = null;
       (render as any).context = null;
       render.textures = {};
-      mouseX.clearListeners();
     }
   }, [reset, mouseX]);
   useEffect(()=>{
@@ -193,7 +193,7 @@ export const WatermelonSkillsGame:FC<{
       const newRect = ref.current?.getBoundingClientRect()
       if(rectRef.current?.width != newRect?.width || rectRef.current?.height != newRect?.height)
         setReset(Math.random());
-    }, 500);
+    }, 1000);
     window.addEventListener("resize", debouncedCallback);
     return ()=>{
       window.removeEventListener("resize", debouncedCallback);
@@ -201,7 +201,7 @@ export const WatermelonSkillsGame:FC<{
   },[])
   const handleMouseMove = useCallback<MouseEventHandler>((ev)=>{
     const bound = ev.currentTarget.getBoundingClientRect();
-    mouseX.updateAndNotify(Math.min(bound.width,  ev.clientX - bound.left));
+    mouseX.set(Math.min(bound.width,  ev.clientX - bound.left));
   }, [mouseX]);
   const handleMouseClick = useCallback<MouseEventHandler>((ev)=>{
     if(!worldRef.current || disableSpawn)
@@ -225,18 +225,19 @@ export const WatermelonSkillsGame:FC<{
     }, 350)
 
   }, [nextBallIndex, nextSecondBallIndex, disableSpawn]);
-  useMotionValueEvent(mouseX, "change", (latest) => {
-    console.log("x changed to", latest)
-  })
-  return <div className="w-full flex flex-col pt-appbar sm:pt-24 h-[90dvh] gap-2">
+  // useMotionValueEvent(mouseX, "change", (latest) => {
+  //   console.log("x changed to", latest)
+  // })
+  return <div className="w-full flex flex-col pt-appbar sm:pt-24 h-[100dvh] sm:h-[90dvh] gap-2">
     <div className="flex flex-col sm:flex-row w-full grow gap-2">
       <div className="flex flex-row sm:flex-col w-full sm:w-64 gap-2 pt-4">
         <ScorePanel score={score} />
         <ScoreRecord />
+        <span className="text-xs text-center">⚠️ Resize window will cause game reset ⚠️</span>
       </div>
-      <div className="grow relative mt-12 select-none" onMouseMove={handleMouseMove} onClick={handleMouseClick}>
-        <motion.div className="absolute -top-12" style={{left: springMouseX, scale: springNextBallScale, translateX: "-50%", opacity: disableSpawn?"50%":"100%" }}>
-          <Image src={playableSkills[nextBallIndex].image} alt={playableSkillNames[nextBallIndex]} width={80} height={80} className=""  />
+      <div className="grow relative mt-12 select-none overflow-visible" onMouseMove={handleMouseMove} onClick={handleMouseClick}>
+        <motion.div className="absolute -top-12 w-[80px] h-[80px]" style={{left: springMouseX, scale: springNextBallScale, translateX: "-50%", opacity: disableSpawn?"50%":"100%" }}>
+          <Image src={playableSkills[nextBallIndex].image} alt={playableSkillNames[nextBallIndex]} width={80} height={80} className="object-cover w-[80px] h-[80px]"  />
         </motion.div>
         <div ref={ref} className="w-full h-full border-b-2 border-x-2 border-default bg-dotted rounded-b-3xl" />
       </div>
