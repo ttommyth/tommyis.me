@@ -241,7 +241,7 @@ export const WatermelonSkillsGame:FC<{
         <div ref={ref} className="w-full h-full border-b-2 border-x-2 border-default bg-dotted rounded-b-3xl" />
       </div>
     </div>
-    <div className="overflow-x-auto overflow-y-visible py-2 h-auto">
+    <div className="overflow-x-auto overflow-y-clip py-2 h-auto">
       <div className="flex flex-row items-center">
         {playableSkills.map((it,idx)=>{
           return <Fragment key={idx}>
