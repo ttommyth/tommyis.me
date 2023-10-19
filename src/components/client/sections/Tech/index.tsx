@@ -186,7 +186,8 @@ const TechPlayground:FC<{
     <div ref={ref} className="w-full h-full">
 
     </div>
-    <button className="absolute top-28 sm:top-2 right-2" onClick={ev=>setReset(Math.random())}><ArrowPathIcon className=" w-8 h-8" /></button>
+    <button className="absolute top-32 sm:top-2 right-2" onClick={ev=>setReset(Math.random())}><ArrowPathIcon className=" w-8 h-8" /></button>
+    <Link href="/melongame" className="absolute top-32 block sm:hidden left-2 z-20"><span className=" text-xl p-2 text-gray-500">🍉 GAME</span></Link>
     <div className={twMerge(locked?"block": "hidden", "absolute sm:hidden left-0 top-0 bottom-0 right-0  z-10 bg-dotted-glass opacity-50 transition")} />
     <button className="absolute right-2 bottom-2 z-10 block sm:hidden rounded-full bg-primary-500/80 p-2" onClick={ev=>setLocked(v=>!v)}>{locked?<LockClosedIcon className=" w-8 h-8"  />:<LockOpenIcon className=" w-8 h-8" />}</button>
   </>
