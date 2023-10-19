@@ -206,8 +206,9 @@ export const WatermelonSkillsGame:FC<{
   const handleMouseClick = useCallback<MouseEventHandler>((ev)=>{
     if(!worldRef.current || disableSpawn)
       return;
+    const bound = ev.currentTarget.getBoundingClientRect();
     const nextSkill = playableSkills[nextBallIndex??0];
-    nextSkillBodyRef.current = nextSkill.createBody(springMouseX.get(), 0);
+    nextSkillBodyRef.current = nextSkill.createBody('ontouchstart' in window? (ev.clientX - bound.left) :springMouseX.get(), 0);
     // nextSkillBodyRef.current.position.y = nextSkillBodyRef.current.circleRadius!*1;
     // nextSkillBodyRef.current.velocity.x = 0;
     // nextSkillBodyRef.current.velocity.y = 0;
@@ -229,7 +230,7 @@ export const WatermelonSkillsGame:FC<{
   })
   return <div className="w-full flex flex-col pt-appbar sm:pt-24 h-[90dvh] gap-2">
     <div className="flex flex-col sm:flex-row w-full grow gap-2">
-      <div className="flex flex-row sm:flex-col w-full sm:w-64 gap-2">
+      <div className="flex flex-row sm:flex-col w-full sm:w-64 gap-2 pt-4">
         <ScorePanel score={score} />
         <ScoreRecord />
       </div>
@@ -240,17 +241,19 @@ export const WatermelonSkillsGame:FC<{
         <div ref={ref} className="w-full h-full border-b-2 border-x-2 border-default bg-dotted rounded-b-3xl" />
       </div>
     </div>
-    <div className="h-8 w-full  flex overflow-x-auto flex-row">
-      {playableSkills.map((it,idx)=>{
-        return <Fragment key={idx}>
-          <Image src={it.image} alt={it.name} width={40} height={40} 
-            className="object-contain data-[future-ball=true]:border-2 data-[next-ball=true]:border-primary-500 border-default rounded-md p-1 data-[next-second-ball=true]:border-dashed" 
-            data-future-ball={nextBallIndex==idx || nextSecondBallIndex==idx } 
-            data-next-ball={nextBallIndex==idx} data-next-second-ball={nextSecondBallIndex==idx} />
-          <ArrowRightIcon className="w-icon h-icon"/>
-        </Fragment>
-      })}
-      <FireIcon className="w-icon h-icon"/>
+    <div className="overflow-x-auto overflow-y-visible py-2 h-auto">
+      <div className="flex flex-row items-center">
+        {playableSkills.map((it,idx)=>{
+          return <Fragment key={idx}>
+            <Image src={it.image} alt={it.name} width={40} height={40} 
+              className="object-contain data-[future-ball=true]:border-2 data-[next-ball=true]:border-primary-500 border-default rounded-md p-1 data-[next-second-ball=true]:border-dashed" 
+              data-future-ball={nextBallIndex==idx || nextSecondBallIndex==idx } 
+              data-next-ball={nextBallIndex==idx} data-next-second-ball={nextSecondBallIndex==idx} />
+            <ArrowRightIcon className="w-icon h-icon"/>
+          </Fragment>
+        })}
+        <FireIcon className="w-icon h-icon"/>
+      </div>
     </div>
   </div>
 }
