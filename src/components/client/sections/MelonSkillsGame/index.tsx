@@ -126,6 +126,8 @@ export const WatermelonSkillsGame:FC<{
       event.pairs.forEach(pair=>{
         if(pair.bodyA.label == pair.bodyB.label){
           const higher = pair.bodyA.position.y < pair.bodyB.position.y?pair.bodyA:pair.bodyB;
+          if(!Matter.Composite.get(engine.world, pair.bodyA.id, pair.bodyA.type) || !Matter.Composite.get(engine.world, pair.bodyB.id, pair.bodyB.type))
+            return;
           Matter.Composite.remove(engine.world, [pair.bodyA, pair.bodyB]);
           const skill = playableItemDict[parseInt(higher.label)+1];
           if(skill){
