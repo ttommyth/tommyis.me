@@ -12,7 +12,11 @@ const font = Noto_Sans({ subsets: ['latin'], display: 'swap', weight:['300','400
 export const metadata: Metadata = {
   title: 'Tommy is me',
   description: 'The portfolio page of Tommy the developer',
-  keywords:["Next.js", "SEO", "React", "full-stack development", "frontend developer", "Tailwind CSS", "portfolio", "projects", "web development", "developer", "typescript", "c#", "csharp", "dotnetcore", ".net core"]
+  keywords:[
+    "Next.js", "SEO", "React", "full-stack development", "frontend developer", "Tailwind CSS", "portfolio", "projects", "web development", "developer", "software engineer",
+    "typescript", "c#", "csharp", "dotnetcore", ".net core",
+    "lalamove", "cooltech", "channel c", "channelc"
+  ]
 }
 
 export default function RootLayout({

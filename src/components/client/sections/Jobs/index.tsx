@@ -4,7 +4,7 @@ import { FC, useState } from "react"
 import { ConditionalWrapper } from "../../utils/ConditionalWrapper";
 import Link from "next/link";
 import { ArrowDownIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
-import {TodoNode, JobNode, ProjectNode, PersonalProjectNode, EducationNode } from "./Nodes";
+import {TodoNode, JobNode, ProjectNode, PersonalProjectNode, EducationNode, JobSpacer } from "./Nodes";
 import { ChannelC } from "./projects/ct/ChannelC";
 import { Kitchee } from "./projects/ct/Kitchee";
 import { Studylu } from "./projects/ct/Studylu";
@@ -22,6 +22,20 @@ export const Jobs = ()=>{
       <h2 className="text-4xl mb-8">My Work</h2>
       <div className="ml-8 sm:ml-8 p-4 pl-6 pr-8 border-l-2 border-default w-full h-auto relative flex flex-col  transition-colors gap-8">
         <TodoNode  />
+        <JobNode job={{
+          title: "Senior Software Engineer [Full Stack (Frontend)]",
+          company: "Lalamove",
+          url: "https://lalamove.com",
+          period: "12/2023 - now"
+        }}
+        variant="lalamove"
+        />
+        <ProjectNode project={{
+          name: "web.lalamove.com",
+          labels: ["Website"],
+          period: "",
+        }} i={expandIndex++} expanded={expanded} setExpanded={setExpanded} showExpand={false}/>
+        <JobSpacer />
         <JobNode job={{
           title: "Senior System Analyst",
           company: "Cooltech Solutions Limited",
@@ -63,6 +77,7 @@ export const Jobs = ()=>{
         }} i={expandIndex++} expanded={expanded} setExpanded={setExpanded}>
           <CtLoan/>
         </ProjectNode>
+        <JobSpacer />
         <JobNode job={{
           title: "System Analyst",
           company: "Cooltech Solutions Limited",
@@ -113,6 +128,7 @@ export const Jobs = ()=>{
           url: "https://hksl.com.hk",
           period: "08/2017 - 06/2018"
         }} />
+        <JobSpacer />
         <EducationNode education={{
           title: "BSc Computer Science",
           school: "City University of Hong Kong",

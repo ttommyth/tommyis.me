@@ -1,9 +1,8 @@
-import { ArrowRightOnRectangleIcon, ArrowTopRightOnSquareIcon, ChevronDownIcon } from "@heroicons/react/24/solid"
+import { ArrowTopRightOnSquareIcon, ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { FC, PropsWithChildren, useState } from "react"
+import { FC, PropsWithChildren } from "react"
 import { ConditionalWrapper } from "../../utils/ConditionalWrapper"
-import ImageCarousel from "../../common/ImageCarousel"
 import { twMerge } from "tailwind-merge"
 import { AcademicCapIcon, LockClosedIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
@@ -15,10 +14,10 @@ const projectLabelStyles:{[key:string]:string}={
 }
 
 //toDO;
-export const TodoNode:FC<{}> = ()=>{
+export const TodoNode:FC<{lookingForJob?: boolean}> = ({lookingForJob})=>{
   return <div className="flex flex-col ">
     <div className="absolute left-[-8px] mt-1  w-auto h-6 bg-default border-default  text-center transition-colors text-base-300 dark:text-base-900" title="comment">
-      <span className="text-comment">{"//TODO: insert next job here"}</span>
+      <span className="text-comment">{lookingForJob?"//TODO: insert next job here":"//TODO: bright new future await here"}</span>
     </div>
     <span className="h-8"></span>
   </div>
@@ -32,11 +31,20 @@ export const JobNode:FC<{
     company:string,
     url?:string,
     period:string
-  }
-}> = ({job})=>{
-  return <div className="flex flex-col items-start">
+  },
+  variant?: "lalamove",
+}> = ({job,variant})=>{
+  return <div className={
+    twMerge(
+      "flex flex-col items-start",
+      {
+        "default":"",
+        "lalamove": "selection:bg-lalamove-500 selection:text-white"
+      }[variant??"default"] 
+    )
+  }>
     <div className="absolute  left-[-1px] mt-1 -translate-x-1/2 w-icon h-icon bg-default border-default border-2 rounded-full transition-colors" title="Job"/>
-    <h3 className="text-xl font-bold">{job.title}</h3>
+    <h3 className={"text-xl font-bold"}>{job.title}</h3>
     <ConditionalWrapper wrapper={(node)=><Link href={job.url!} target="_blank" className="flex justify-center gap-2">{node} <ArrowTopRightOnSquareIcon  className="w-icon h-icon inline-block text-gray-500"/> </Link>} condition={!!job.url}>
       <h4 className="text-gray-500 text-md inline-block w-auto">{job.company}</h4>
     </ConditionalWrapper>
@@ -51,8 +59,8 @@ export const ProjectNode:FC<PropsWithChildren<{
     url?:string,
     period:string,
     confidential?:boolean
-  },i:number, expanded:number|undefined, setExpanded:(v:number|undefined)=>void
-}>> = ({project, i, expanded, setExpanded, children})=>{
+  },i:number, expanded:number|undefined, setExpanded:(v:number|undefined)=>void, showExpand?:boolean
+}>> = ({project, i, expanded, setExpanded, children, showExpand=true})=>{
   return <div className="flex flex-col ml-0 sm:ml-4 gap-2 ">
     <div className="absolute left-[-1px] mt-1 -translate-x-1/2 w-icon h-icon bg-default border-default border-2 rounded-md transition-colors p-0 overflow-hidden text-default" title="Project">
       <motion.div 
@@ -71,6 +79,7 @@ export const ProjectNode:FC<PropsWithChildren<{
       </span>)}
     </span>
     <h4 className="text-xs text-gray-500">{project.period}</h4>
+    {showExpand&&
     <motion.div     
       className="w-full h-auto border-default border-2 border-solid aria-expanded:border-style-expand rounded-md flex flex-col items-center bg-dotted " aria-expanded={expanded==i}>
       <motion.header
@@ -113,6 +122,7 @@ export const ProjectNode:FC<PropsWithChildren<{
         </AnimatePresence>
       }
     </motion.div>
+    }
   </div>
 }
 
@@ -159,7 +169,13 @@ export const EducationNode:FC<{
   </div>
 }
 
-
+export const JobSpacer:FC = ()=>{
+  return <div className="flex flex-col items-start mb-4">
+    <div className="absolute  left-[-1px] py-1 -translate-x-1/2 bg-default  transition-colors text-default" title="Next" >
+      <ChevronUpIcon  className="w-icon h-icon"/>
+    </div>
+  </div>
+}
 
 const JobAccordion: FC<{ i:number, expanded:number|false, setExpanded:(v:number|false)=>void}> = ({ i, expanded, setExpanded})=>{
   const isOpen = i === expanded;
