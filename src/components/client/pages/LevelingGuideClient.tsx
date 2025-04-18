@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { directionEmojis, Step, stepsAct1, stepsAct2, stepsAct3, stepsAct4, stepsAct5, stepsAct6, stepsEndgame } from '@/helper/guideData'
+import { directionEmojis, Step, stepsAct1, stepsAct2, stepsAct3, stepsAct4, stepsAct5, stepsAct6, stepsEndgame } from '@/data/guideData'
 
 
 
