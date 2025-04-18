@@ -5,28 +5,44 @@ import { directionEmojis, Step, stepsAct1, stepsAct2, stepsAct3, stepsAct4, step
 
 
 type StepItemProps = Step & { stepKey: string; completed?: boolean; onToggle: (key: string) => void }
-function StepItem({ text, area, direction, stepKey, completed = false, onToggle }: StepItemProps) {
-  // Inline replace area using {area} placeholder
-  const [before, after] = text.split('{area}');
+
+// helper to inline-highlight names in text
+function parseStepText(text: string, areas: string[], npcs: string[], enemies: string[]) {
+  const allKeys = [...areas, ...npcs, ...enemies]
+  if (allKeys.length === 0) return [text]
+  // escape for regex
+  const escaped = allKeys.map(k => k.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'))
+  const pattern = new RegExp(`(${escaped.join('|')})`, 'g')
+  const parts = text.split(pattern)
+  return parts.map((part, i) => {
+    if (areas.includes(part)) {
+      const isLast = part === areas[areas.length - 1]
+      return <span key={i} className="text-primary-500">🗺️ {isLast ? <strong>{part}</strong> : part}</span>
+    }
+    if (npcs.includes(part)) {
+      return <span key={i} className="text-secondary-500">🧍‍♂️{part}</span>
+    }
+    if (enemies.includes(part)) {
+      return <span key={i} className="text-red-500">🐉 {part}</span>
+    }
+    return part
+  })
+}
+
+function StepItem({ text, areas = [], npcs = [], enemies = [], direction, stepKey, completed = false, onToggle }: StepItemProps) {
   return (
     <li
       onClick={() => onToggle(stepKey)}
-      className={`px-4 py-2 cursor-pointer flex items-start ${completed ? 'opacity-50' : ''}`}
+      className={`px-4 py-2 cursor-pointer flex flex-col ${completed ? 'opacity-50' : ''}`}
     >
-      {/* fixed-width arrow column; show emoji or leave blank for alignment */}
-      <span className="flex-shrink-0 mr-2 w-6 text-center">
-        {direction && <span role="img" aria-label={direction}>{directionEmojis[direction]}</span>}
-      </span>
-      <div className="flex-1">
-        {before}
-        {area && (
-          <span className="inline-flex items-center">
-            <span role="img" aria-label="map">🗺️</span>
-            <strong>{area}</strong>
-          </span>
-        )}
-        {after}
+      <div className="flex items-start">
+        {/* fixed-width arrow column; show emoji or leave blank for alignment */}
+        <span className="flex-shrink-0 mr-2 w-6 text-center">
+          {direction && <span role="img" aria-label={direction}>{directionEmojis[direction]}</span>}
+        </span>
+        <p className="flex-1">{parseStepText(text, areas, npcs, enemies)}</p>
       </div>
+      {/* inline highlights applied in paragraph, no separate tags needed */}
     </li>
   )
 }
