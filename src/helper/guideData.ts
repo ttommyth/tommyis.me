@@ -1,6 +1,15 @@
 // Generated leveling guide data for Last Epoch
-import { Step } from '../app/[locale]/leveling/page'
-
+export const directionEmojis: Record<string, string> = {
+  'north': '⬆️',
+  'south': '⬇️',
+  'east': '➡️',
+  'west': '⬅️',
+  'north-east': '↗️',
+  'north-west': '↖️',
+  'south-east': '↘️',
+  'south-west': '↙️',
+}
+export type Step = { text: string; area?: string; direction?: keyof typeof directionEmojis }
 export const stepsAct1: Step[] = [
   { text: 'Group up all mobs to 2nd phoenix, kill them to get to lvl 2. Skip the rest.' },
   { text: 'Talk to the NPC in The Burning Forest (top dialogue choices) to let him help you. Kill the end boss and go to town.', area: 'The Burning Forest' },

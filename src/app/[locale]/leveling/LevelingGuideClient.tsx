@@ -1,19 +1,8 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { stepsAct1, stepsAct2, stepsAct3, stepsAct4, stepsAct5, stepsAct6, stepsEndgame } from '@/helper/guideData'
+import { directionEmojis, Step, stepsAct1, stepsAct2, stepsAct3, stepsAct4, stepsAct5, stepsAct6, stepsEndgame } from '@/helper/guideData'
 
-const directionEmojis: Record<string, string> = {
-  'north': '⬆️',
-  'south': '⬇️',
-  'east': '➡️',
-  'west': '⬅️',
-  'north-east': '↗️',
-  'north-west': '↖️',
-  'south-east': '↘️',
-  'south-west': '↙️',
-}
 
-type Step = { text: string; area?: string; direction?: keyof typeof directionEmojis }
 
 type StepItemProps = Step & { stepKey: string; completed?: boolean; onToggle: (key: string) => void }
 function StepItem({ text, area, direction, stepKey, completed = false, onToggle }: StepItemProps) {
