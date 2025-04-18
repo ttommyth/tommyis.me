@@ -1,8 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { directionEmojis, Step, stepsAct1, stepsAct2, stepsAct3, stepsAct4, stepsAct5, stepsAct6, stepsEndgame } from '@/data/guideData'
-
-
+import { directionIcons, Step, stepsAct1, stepsAct2, stepsAct3, stepsAct4, stepsAct5, stepsAct6, stepsEndgame } from '@/data/guideData'
 
 type StepItemProps = Step & { stepKey: string; completed?: boolean; onToggle: (key: string) => void }
 
@@ -36,9 +34,9 @@ function StepItem({ text, areas = [], npcs = [], enemies = [], direction, stepKe
       className={`px-4 py-2 cursor-pointer flex flex-col ${completed ? 'opacity-50' : ''}`}
     >
       <div className="flex items-start">
-        {/* fixed-width arrow column; show emoji or leave blank for alignment */}
-        <span className="flex-shrink-0 mr-2 w-6 text-center">
-          {direction && <span role="img" aria-label={direction}>{directionEmojis[direction]}</span>}
+        {/* fixed-width arrow column; show icon component or leave blank for alignment */}
+        <span className="flex-shrink-0 mr-2 w-12 h-6 text-center">
+          {direction && directionIcons[direction]}
         </span>
         <p className="flex-1">{parseStepText(text, areas, npcs, enemies)}</p>
       </div>
@@ -74,12 +72,12 @@ export default function LevelingGuideClient() {
   }
 
   return (
-    <div className="mx-auto px-4 py-8">
+    <div className="mx-auto px-4 pb-8 pt-20">
       <h1>Last Epoch Leveling Guide</h1>
       {acts.map((act, aIdx) => (
         <div key={act.title} className="mt-8 px-4">
           <h2 className="text-2xl font-bold border-b pb-1 mb-4">{act.title}</h2>
-          <ul className="divide-y divide-gray-200">
+          <ul className="divide-y divide-gray-200 divide-dashed">
             {act.steps.map((step, sIdx) => {
               const key = `${aIdx}-${sIdx}`
               return (
