@@ -34,7 +34,7 @@ function StepItem({ text, areas = [], npcs = [], enemies = [], direction, stepKe
   return (
     <li
       onClick={() => onToggle(stepKey)}
-      className={`px-4 py-2 cursor-pointer flex flex-col ${completed ? 'opacity-50' : ''}`}
+      className={`px-4 py-2 cursor-pointer flex flex-col ${completed ? 'opacity-50' : ''} transition-opacity`}
     >
       <div className="flex items-start gap-2">
         {/* fixed-width arrow column; show icon component or leave blank for alignment */}
@@ -157,7 +157,7 @@ export default function LevelingGuideClient() {
                   className={twMerge("w-full overflow-y-hidden")}
                 >
                   <div className="p-2 sm:p-4">
-                    <ul className="divide-y divide-default divide-dashed">
+                    <ul className="divide-y divide-invert-default divide-dashed">
                       {act.steps.map((step, sIdx) => {
                         const key = `${aIdx}-${sIdx}`
                         return (

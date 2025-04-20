@@ -38,6 +38,9 @@ textarea{
     @apply border-base-300 dark:border-base-900  transition-colors
   }
   .divide-default{
+    @apply divide-base-300 dark:divide-base-900  transition-colors
+  }
+  .divide-invert-default{
     @apply divide-base-900 dark:divide-base-300  transition-colors
   }
   .text-default{

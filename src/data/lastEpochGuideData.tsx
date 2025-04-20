@@ -94,8 +94,6 @@ export const directionIcons: Record<string, ReactNode> = {
 export type Step = {
   // The main text of the step
   text: string;
-  // Optional details for the step
-  details?: string;
   // Optional areas, npcs, and enemies associated with the step; extracted from the text
   areas?: string[];
   // Optional direction for the step; extracted from the text
