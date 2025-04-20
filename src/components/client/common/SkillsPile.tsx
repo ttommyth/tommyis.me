@@ -1,4 +1,6 @@
-import { getDistance } from '@/helper/maths';
+'use client';
+
+import { createSeededRandomMachine, getDistance } from '@/helper/maths';
 import Image from 'next/image';
 import { FC, useMemo } from 'react';
 import { skills, skillsDict } from '../../../data/skills';
@@ -9,9 +11,12 @@ export const SkillsPile: FC<{ skills: (typeof skills)[number]['name'][] }> = ({
   const pileStyles = useMemo(() => {
     const styles: { left: number; top: number }[] = [];
     const generateLocation: (recur?: number) => any = (recur) => {
+      const random = createSeededRandomMachine(
+        'skills-pile-' + skills.join('-') + recur,
+      );
       const target = {
-        left: Math.random() * 80 + 10,
-        top: Math.random() * 80 + 10,
+        left: random.next() * 80 + 10,
+        top: random.next() * 80 + 10,
       };
       if (
         (recur ?? 0) < 3 &&
