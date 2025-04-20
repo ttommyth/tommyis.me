@@ -7,6 +7,7 @@
 }
 
 body{
+  
   @apply bg-default text-base-800 dark:text-base-200 overflow-x-hidden
 }
 
@@ -35,6 +36,9 @@ textarea{
   }
   .border-default{
     @apply border-base-300 dark:border-base-900  transition-colors
+  }
+  .divide-default{
+    @apply divide-base-900 dark:divide-base-300  transition-colors
   }
   .text-default{
     @apply text-base-300 dark:text-base-900  transition-colors
@@ -91,8 +95,8 @@ textarea{
 
 
   .bg-dotted {
-    background-image: radial-gradient(theme("colors.base.300"/80%) 1px, transparent 0);
-    background-size: 5vw 5vw;
+    background-image: radial-gradient(theme("colors.base.200"/80%) 1px, transparent 0);
+    background-size: 2rem 2rem;
     background-position: center;
     @apply transition-colors
   }
@@ -103,12 +107,12 @@ textarea{
 
   @media (min-width: 768px){
     .bg-dotted {
-      background-size: 2vw 2vw;
+      background-size: 2rem 2rem;
     }
   }
   @media (min-width: 1024px){
     .bg-dotted {
-      background-size: 1vw 1vw;
+      background-size: 1rem 1rem;
     }
   }
 
