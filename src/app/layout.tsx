@@ -24,7 +24,7 @@ export default function RootLayout({
   params: {locale}
 }: PropsWithChildren<NextAppDirectoryProps>) {
   return (
-    <html lang={locale}>
+    <html lang={locale} className='dark'>
       <body className={twMerge(font.className, "relative")}>
         <Layout>
           {children}
