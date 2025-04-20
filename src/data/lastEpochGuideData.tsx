@@ -26,7 +26,7 @@ const iconClass = "h-5 w-5";
 const createCompositeDirection = (icons: React.ReactElement[]) => {
   return (
     <div className="flex items-center">
-      {icons.map((icon, index) => 
+      {icons.map((icon, index) =>
         React.cloneElement(icon, { className: iconClass, key: index })
       )}
     </div>
@@ -64,7 +64,7 @@ export const directionIcons: Record<string, ReactNode> = {
   'north-west': directionalIcons.upLeft,
   'south-east': directionalIcons.downRight,
   'south-west': directionalIcons.downLeft,
-  
+
   // Two-step directions using turn icons
   'north-then-east': directionalIcons.turnUpRight,
   'north-then-west': directionalIcons.turnUpLeft,
@@ -74,7 +74,7 @@ export const directionIcons: Record<string, ReactNode> = {
   'east-then-south': directionalIcons.turnRightDown,
   'west-then-north': directionalIcons.turnLeftUp,
   'west-then-south': directionalIcons.turnLeftDown,
-  
+
   // Complex multi-step directions
   // For these complex patterns, we'll keep using the composite approach
   'north-west-then-west': createCompositeDirection([directionalIcons.upLeft, directionalIcons.left]),
@@ -90,7 +90,21 @@ export const directionIcons: Record<string, ReactNode> = {
   ]),
 };
 
-export type Step = { text: string; areas?: string[]; npcs?: string[]; enemies?: string[]; direction?: keyof typeof directionIcons }
+// Define the structure of a step in the leveling guide
+export type Step = {
+  // The main text of the step
+  text: string;
+  // Optional details for the step
+  details?: string;
+  // Optional areas, npcs, and enemies associated with the step; extracted from the text
+  areas?: string[];
+  // Optional direction for the step; extracted from the text
+  npcs?: string[];
+  // Optional enemies associated with the step; extracted from the text
+  enemies?: string[];
+  // Optional direction for the step, using the defined icons
+  direction?: keyof typeof directionIcons
+}
 
 // Ensure all steps have default arrays for areas, npcs, and enemies
 function normalizeSteps(raw: Step[]): Step[] {
@@ -108,7 +122,7 @@ export const stepsAct1: Step[] = normalizeSteps([
   { text: 'Talk to the NPC in The Burning Forest (top dialogue choices) to let him help you. Kill the end boss and go to town.', areas: ['The Burning Forest'], npcs: ['Forest NPC'], enemies: ['End Boss'] },
   { text: 'Skip all NPCs in The Keepers’ Camp and go to The Fortress Gardens', areas: ['The Keepers’ Camp', 'The Fortress Gardens'], npcs: [], enemies: [], direction: 'north-west' },
   { text: 'In The Fortress Walls enter The Storerooms to complete the side quest. After leaving, talk to the NPC and head to The Keepers’s Vault', areas: ['The Keepers’s Vault'], npcs: [], enemies: [], direction: 'north-east' },
-  { text: 'Talk to Keeper Barthas and continue north immediately. Enter The Northern Road',areas:['The Northern Road'], npcs: ['Keeper Barthas'], enemies: [], direction: 'north-east' },
+  { text: 'Talk to Keeper Barthas and continue north immediately. Enter The Northern Road', areas: ['The Northern Road'], npcs: ['Keeper Barthas'], enemies: [], direction: 'north-east' },
   { text: 'Speak with the Keeper Guard, portal to town and speak to NPC (main quest), head out east to Ulatri Highlands.', areas: ['Ulatri Highlands'], npcs: ['Keeper Guard'], enemies: [], direction: 'east' },
   { text: 'Optionally kill big rares to get exp. Continue to The Osprix Warcamp', areas: ['The Osprix Warcamp'], direction: 'north-east' },
   { text: 'Continue to The Summit', areas: ['The Summit'], direction: 'north' },
@@ -123,7 +137,7 @@ export const stepsAct2: Step[] = normalizeSteps([
   { text: 'Kill the Pannion’s Students. Portal back to town.', npcs: [], enemies: ['Pannion’s Students'] },
   { text: 'Talk to NPCs (side quest north-east, complete side quest west (unique gloves), complete main quest). Head north-east to The Precipice', areas: ['The Precipice'], direction: 'north-east' },
   { text: 'Kill the Idol of Ruin, go through the time rift, loop around to the next time rift.', npcs: [], enemies: ['Idol of Ruin'] },
-  { text: 'Back in The Precipice, go east to The Armoury', areas: ['The Precipice','The Armoury'], direction: 'east' },
+  { text: 'Back in The Precipice, go east to The Armoury', areas: ['The Precipice', 'The Armoury'], direction: 'east' },
   { text: 'Clear the waves and kill the boss. Continue north-east, skip the side quest. Follow the main quest marker to The Lower District', areas: ['The Lower District'], direction: 'north-east', enemies: ['Wave Boss'] },
   { text: 'Kill the Elder Pannion. Talk to the NPC and enter the Time Rift to The End of Time', areas: ['The End of Time'], npcs: [], enemies: ['Elder Pannion'] },
   { text: 'Run directly up the stairs, talk to Elder Gaspar, choose Mastery, enter The Council Chamber', areas: ['The Council Chamber'], npcs: ['Elder Gaspar'], enemies: [] },
@@ -173,7 +187,7 @@ export const stepsAct5: Step[] = normalizeSteps([
   { text: 'Continue north, kill the Stygian Warden, talk to NPC (Alric), continue north-west and north, kill Praetor Vul’arta, talk to NPC (Alric) and enter portal to Maj’elka', areas: ['Maj’elka'], npcs: ['Alric'], enemies: ['Stygian Warden', 'Praetor Vul’arta'] },
   { text: 'Go east to The Oracle’s Abode, talk to NPC (Shrine Maiden), take waypoint to The Shining Cove', areas: ['The Oracle’s Abode'], direction: 'east', npcs: ['Shrine Maiden'] },
   { text: 'Go east into Time Rift to The Ruined Coast, kill Ortra’ek the Survivor, click the Sapphire Tablet, enter the Temporal Sanctum, take waypoint to The Oracle’s Abode (Imperial Era)', areas: ['The Ruined Coast'], direction: 'east', enemies: ['Ortra’ek the Survivor'] },
-  { text: 'Talk to NPC (Shrine Maiden) and Oracle, continue north to The Maj’elkan Catacombs', areas: ['The Maj’elkan Catacombs'], direction: 'north', npcs: ['Shrine Maiden','Oracle'] },
+  { text: 'Talk to NPC (Shrine Maiden) and Oracle, continue north to The Maj’elkan Catacombs', areas: ['The Maj’elkan Catacombs'], direction: 'north', npcs: ['Shrine Maiden', 'Oracle'] },
   { text: 'Go east → south → north-east to enter Titan’s Canyon', areas: ['Titan’s Canyon'], direction: 'east-then-south-then-north-east', npcs: [] },
   { text: 'Follow main quest marker, kill Spymaster Zerrick, and enter The Maj’elka Waystation', areas: ['The Maj’elka Waystation'], enemies: ['Spymaster Zerrick'] },
   { text: 'Follow main quest marker and talk to NPC (Alric)', npcs: ['Alric'] },
@@ -191,7 +205,7 @@ export const stepsAct6: Step[] = normalizeSteps([
   { text: 'Follow main quest marker north-east to enter The Citadel Sewers', areas: ['The Citadel Sewers'], direction: 'north-east' },
   { text: 'Destroy the three Imperial Watchers, continue south-east to enter The Immortal Summit', areas: ['The Immortal Summit'], direction: 'south-east' },
   { text: 'Go south-east then north-east to enter The Immortal Citadel', areas: ['The Immortal Citadel'], direction: 'south-east-then-north-east', npcs: [] },
-  { text: 'Talk to NPC (Yulia), kill Pontifex Yulia, Admiral Harton and Spymaster Zerrick, then talk to NPC (Yulia)', npcs: ['Yulia'], enemies: ['Pontifex Yulia','Admiral Harton','Spymaster Zerrick'] },
+  { text: 'Talk to NPC (Yulia), kill Pontifex Yulia, Admiral Harton and Spymaster Zerrick, then talk to NPC (Yulia)', npcs: ['Yulia'], enemies: ['Pontifex Yulia', 'Admiral Harton', 'Spymaster Zerrick'] },
 ]);
 
 export const stepsEndgame: Step[] = normalizeSteps([
@@ -200,7 +214,7 @@ export const stepsEndgame: Step[] = normalizeSteps([
   { text: 'In town, talk to NPCs (Chieftain Yulia and Medicine Man) then enter The Heoborean Forest', areas: ['The Heoborean Forest'], direction: 'west', npcs: ['Chieftain Yulia', 'Medicine Man'] },
   { text: 'Enter The Ice Caverns (north), acquire a Bitterwing fang (north-west), and take waypoint to The Heoborean Forest', areas: ['The Ice Caverns'], direction: 'north' },
   { text: 'Continue west to quest marker, enter The Nomad Camp, talk to NPC (Nomad Survivor), then enter The Wengari Fortress', areas: ['The Nomad Camp', 'The Wengari Fortress'], direction: 'west', npcs: ['Nomad Survivor'] },
-  { text: 'Follow side quest markers to find the right camp (start north-east), kill Wengari Beastmaster, kill Wengari Matriarch and Patriarch, talk to NPC (Blessed Horn), continue south-west (side quest marker), then take waypoint to The Ice Caverns', areas: ['The Ice Caverns'], direction: 'south-west', enemies: ['Wengari Beastmaster','Wengari Matriarch','Wengari Patriarch'], npcs: ['Blessed Horn'] },
+  { text: 'Follow side quest markers to find the right camp (start north-east), kill Wengari Beastmaster, kill Wengari Matriarch and Patriarch, talk to NPC (Blessed Horn), continue south-west (side quest marker), then take waypoint to The Ice Caverns', areas: ['The Ice Caverns'], direction: 'south-west', enemies: ['Wengari Beastmaster', 'Wengari Matriarch', 'Wengari Patriarch'], npcs: ['Blessed Horn'] },
   { text: 'Go north-east or north to enter The Tundra', areas: ['The Tundra'], direction: 'north-east' },
   { text: 'Kill the Eber (north), continue north, talk to NPC (Cliff Edge) and enter The Temple of Heorot', areas: ['The Temple of Heorot'], direction: 'north', enemies: ['Eber'], npcs: ['Cliff Edge'] },
   { text: 'Follow main quest marker north to skip the Spreading Frost and enter Farwood', areas: ['Farwood'], direction: 'north' },

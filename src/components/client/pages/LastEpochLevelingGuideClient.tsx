@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { directionIcons, Step, stepsAct1, stepsAct2, stepsAct3, stepsAct4, stepsAct5, stepsAct6, stepsEndgame } from '@/data/guideData'
+import { directionIcons, Step, stepsAct1, stepsAct2, stepsAct3, stepsAct4, stepsAct5, stepsAct6, stepsEndgame } from '@/data/lastEpochGuideData'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import { motion, AnimatePresence } from "framer-motion"
 import { twMerge } from "tailwind-merge"
