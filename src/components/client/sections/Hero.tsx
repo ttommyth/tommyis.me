@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import job from "public/image/job_developer.png";
-import { ReactComponent as  GithubLogo } from "public/icon/github.svg";
-import { ReactComponent as  LinkedinLogo } from "public/icon/linkedin.svg";
-import { ReactComponent as  KofiLogo } from "public/icon/kofi.svg";
+import GithubLogo from "public/icon/github.svg";
+import LinkedinLogo from "public/icon/linkedin.svg";
+import KofiLogo from "public/icon/kofi.svg";
 import { ArrowSmallRightIcon } from '@heroicons/react/24/solid'
 import { DarkModeSwitch } from "@/hooks/DarkModeHook";
 import { FC } from "react";
@@ -33,7 +33,7 @@ export const Hero:FC<{
           </ul>
         </div>
         <div className="w-72 relative">
-          <Image src={job} className="w-full" objectFit="contain"  alt={"Developer"} />
+          <Image src={job} className="w-full object-cover"  alt={"Developer"} />
         </div>
       </div>
     </div>

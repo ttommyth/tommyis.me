@@ -1,13 +1,13 @@
 "use client";
 import { motion } from "framer-motion";
-import { ReactComponent as  ClickEffect } from "public/icon/click.svg";
+import ClickEffect from "public/icon/click.svg";
 import { useEffect, useState } from "react";
 
 export const OnClickGraphicEffect = () => {
   const [click, setClick] = useState<{x: number, y: number} | null>(null);
   useEffect(()=>{
     const onClick= (ev: MouseEvent)=>{
-      setClick((it)=>({x: ev.clientX, y: ev.clientY}));
+      setClick({ x: ev.clientX, y: ev.clientY });
     }
     window.addEventListener("click",onClick);
     return ()=>{

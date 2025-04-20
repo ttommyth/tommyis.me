@@ -6,8 +6,8 @@ import { ChatBubbleLeftEllipsisIcon, DocumentDuplicateIcon, EnvelopeIcon, MapPin
 import { UserIcon } from "@heroicons/react/24/solid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
-import { ReactComponent as  GithubLogo } from "public/icon/github.svg";
-import { ReactComponent as  LinkedinLogo } from "public/icon/linkedin.svg";
+import GithubLogo from "public/icon/github.svg";
+import LinkedinLogo from "public/icon/linkedin.svg";
 import { FC, Fragment, PropsWithChildren, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import {FaRegPaperPlane} from "react-icons/fa";

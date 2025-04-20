@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
+import { twMerge } from "tailwind-merge";
 
 const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
   const container = useRef<HTMLDivElement|null>(null);
@@ -100,9 +101,9 @@ const ImageCarousel: FC<{images: string[]}> = ({ images }) => {
           >
             {
               images.map((_, idx)=>(
-                <Image src={images[idx]} fill alt={"image-"+(idx+1)} objectFit="contain"
+                <Image src={images[idx]} fill alt={"image-"+(idx+1)}
                   key={idx} 
-                  className={currentIndex==idx?"opacity-100":"opacity-0"}
+                  className={twMerge(currentIndex==idx?"opacity-100":"opacity-0", "object-cover")}
                   priority={true}
                   quality={75}
                   placeholder="blur"

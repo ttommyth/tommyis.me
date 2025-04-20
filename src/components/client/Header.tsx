@@ -1,6 +1,6 @@
 "use client";
 import { DarkModeSwitch } from "@/hooks/DarkModeHook"
-import { supportedLocale } from "@/locale/i18n";
+import { supportedLocale } from "@/i18n/routing";
 import { usePathname } from "next/navigation";
 export const Header = ()=>{
   const pathname = usePathname()

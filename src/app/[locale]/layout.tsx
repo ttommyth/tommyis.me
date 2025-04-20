@@ -1,5 +1,5 @@
-import { supportedLocale } from '@/locale/i18n';
-import {useLocale} from 'next-intl';
+import { supportedLocale } from '@/i18n/routing';
+import {setRequestLocale} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
 import { Noto_Sans } from 'next/font/google';
@@ -11,12 +11,6 @@ export function generateStaticParams() {
   return supportedLocale.map((locale) => ({locale}));
 }
  
-export default function LocaleLayout({children, params: {locale}}: PropsWithChildren<NextAppDirectoryProps>) {
-  // Validate that the incoming `locale` parameter is valid
-  const isValidLocale = supportedLocale.some((cur) => cur === locale);
-  if (!isValidLocale) notFound();
- 
-  return (
-    children
-  );
+export default function LocaleLayout({ children, params }: PropsWithChildren<NextAppDirectoryProps>) {
+  return children;
 }

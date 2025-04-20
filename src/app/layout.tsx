@@ -19,10 +19,11 @@ export const metadata: Metadata = {
   ]
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-  params: {locale}
+  params
 }: PropsWithChildren<NextAppDirectoryProps>) {
+  const { locale } = await params;
   return (
     <html lang={locale} className='dark'>
       <body className={twMerge(font.className, "relative")}>

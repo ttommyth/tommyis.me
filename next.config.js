@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const path = require('path');
+
 const nextConfig = {
 
   images: {
@@ -9,25 +11,23 @@ const nextConfig = {
   sassOptions: {
     includePaths: ['./src/styles'],
   },
-  webpack:(config,options)=>{
-    config.module.rules.push({
-      test: /\.(svg)$/, 
-      use: [
-        "@svgr/webpack",
-        options.defaultLoaders.babel,
-        {
-          loader: 'file-loader',
-          options: {
-            name: 'images/[hash]-[name].[ext]',
-          },
-        },
-      ],
-    })
-    return config
+  turbopack: {
+    rules: {
+      '*.svg': {
+        as: '*.js',
+        loaders: ['@svgr/webpack'],
+      },
+    },
   },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/i,
+      use: ['@svgr/webpack'],
+    });
+    return config;
+  },
+  
 }
-const withNextIntl = require('next-intl/plugin')(
-  './src/locale/i18n.ts'
-);
+const withNextIntl = require('next-intl/plugin')();
  
 module.exports = withNextIntl(nextConfig);

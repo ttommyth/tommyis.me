@@ -30,7 +30,7 @@ const TechGrid:FC<{
         animate={{opacity: highlightItems?(highlightItems.includes(it.name)?1:0.2):1}}
         className={twMerge("flex flex-col justify-end items-center")} key={it.name}>
         <div className="relative" style={{width:"50px", height:"50px"}}>
-          <Image src={it.image} alt={it.name} fill objectFit="contain" priority={true}/>
+          <Image src={it.image} alt={it.name} fill className="object-cover" priority={true}/>
         </div>
         <span className="text-xs">{it.name}</span>
       </motion.div>)
