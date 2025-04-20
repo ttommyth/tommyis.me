@@ -11,10 +11,7 @@ export const metadata: Metadata = {
   keywords:["Next.js", "SEO", "React", "full-stack development", "frontend developer", "Tailwind CSS", "portfolio", "projects", "web development", "developer", "typescript", "c#", "csharp", "dotnetcore", ".net core"]
 }
 
-export default async function Index({
-  params
-}: NextAppDirectoryProps) {
-  const t = await getTranslations('Index');
+export default async function Index() {
   return <div className='w-full h-screen'>
     <MelonSkillsGame />
   </div>;

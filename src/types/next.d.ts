@@ -1,7 +1,7 @@
 type NextAppDirectoryProps =  {
-  params: {
+  params: Promise<{
     locale:string
-  };
+  }>;
 }
 
 type ComponentWithLocale<T> = {
