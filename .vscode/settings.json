@@ -1,13 +1,8 @@
 {
-  "i18n-ally.localesPaths": [
-    "src/locale",
-    "src/locale/messages"
-  ],
+  "i18n-ally.localesPaths": ["src/locale", "src/locale/messages"],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
   "i18n-ally.keystyle": "nested",
-  "cSpell.words": [
-    "kofi"
-  ],
+  "cSpell.words": ["kofi"]
 }

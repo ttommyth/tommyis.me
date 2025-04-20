@@ -1,4 +1,3 @@
 export const ScoreRecord = () => {
-  return <>
-  </>
-}
+  return <></>;
+};

@@ -1,5 +1,5 @@
-import type { Config } from 'tailwindcss'
-import plugin from 'tailwindcss/plugin'
+import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
   darkMode: 'class',
@@ -10,23 +10,23 @@ const config: Config = {
   ],
   daisyui: {
     themes: false, // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
-    darkTheme: "dark", // name of one of the included themes for dark mode
+    darkTheme: 'dark', // name of one of the included themes for dark mode
     base: true, // applies background color and foreground color for root element by default
     styled: true, // include daisyUI colors and design decisions for all components
     utils: true, // adds responsive and modifier utility classes
     rtl: false, // rotate style direction from left-to-right to right-to-left. You also need to add dir="rtl" to your html tag and install `tailwindcss-flip` plugin for Tailwind CSS.
-    prefix: "dui-", // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
+    prefix: 'dui-', // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
     logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
   },
 
-  theme:{
+  theme: {
     extend: {
       spacing: {
-        'appbar': '4rem',
-        'icon': '1.5rem',
+        appbar: '4rem',
+        icon: '1.5rem',
       },
       colors: {
-        'red':{
+        red: {
           '50': '#fef3f2',
           '100': '#fce9e7',
           '200': '#f9d3d2',
@@ -39,8 +39,8 @@ const config: Config = {
           '900': '#7c1f2d',
           '950': '#450c13',
         },
-        'comment': '#6a9955',
-        'primary': {
+        comment: '#6a9955',
+        primary: {
           '50': '#f2f8fd',
           '100': '#e5eff9',
           '200': '#c4ddf3',
@@ -53,7 +53,7 @@ const config: Config = {
           '900': '#1b3e5f',
           '950': '#12273f',
         },
-        "secondary": {
+        secondary: {
           '50': '#fbf6ef',
           '100': '#f2e6d3',
           '200': '#e5caa2',
@@ -66,7 +66,7 @@ const config: Config = {
           '900': '#622f25',
           '950': '#371611',
         },
-        'base': {
+        base: {
           '50': '#f4f6f7',
           '100': '#e3e8ea',
           '200': '#cad2d7',
@@ -79,7 +79,7 @@ const config: Config = {
           '900': '#213036',
           '950': '#1c2026',
         },
-        'lalamove':{
+        lalamove: {
           '50': '#fff7f0',
           '100': '#ffe9d9',
           '200': '#ffc9ad',
@@ -100,9 +100,9 @@ const config: Config = {
   },
   plugins: [
     require('@tailwindcss/aspect-ratio'),
-    require("daisyui"),
+    require('daisyui'),
     plugin(
-      function ({  config, addUtilities,matchUtilities,  addBase, theme, e }) {
+      function ({ config, addUtilities, matchUtilities, addBase, theme, e }) {
         addBase({
           '*, ::before, ::after': {
             '--tw-translate-x': '0',
@@ -127,8 +127,8 @@ const config: Config = {
               'scale3d(var(--tw-scale-x), var(--tw-scale-y), var(--tw-scale-z))',
             ].join(' '),
           },
-        })
-    
+        });
+
         addUtilities({
           '.transform-style-flat': {
             'transform-style': 'flat',
@@ -136,8 +136,8 @@ const config: Config = {
           '.transform-style-3d': {
             'transform-style': 'preserve-3d',
           },
-        })
-    
+        });
+
         addUtilities({
           '.backface-visible': {
             'backface-visibility': 'visible',
@@ -145,83 +145,98 @@ const config: Config = {
           '.backface-hidden': {
             'backface-visibility': 'hidden',
           },
-        })
-    
-        matchUtilities({
-          'perspective-origin':(v)=>({
-            'perspective-origin': v
-          })
-        }, {
-          values: theme('transformOrigin')
-        })
-    
-        matchUtilities({
-          perspective:(v)=>({
-            perspective: v
-          })
-        }, {
-          values: theme('perspectiveValues')
-        })
-    
+        });
+
+        matchUtilities(
+          {
+            'perspective-origin': (v) => ({
+              'perspective-origin': v,
+            }),
+          },
+          {
+            values: theme('transformOrigin'),
+          },
+        );
+
+        matchUtilities(
+          {
+            perspective: (v) => ({
+              perspective: v,
+            }),
+          },
+          {
+            values: theme('perspectiveValues'),
+          },
+        );
+
         addUtilities({
           '.transform-3d-none': { transform: 'none' },
           // '.transform-3d': {
           //     '@defaults transform': {},
           //     transform: 'var(--tw-transform)',
           // }
-        })
-        matchUtilities({
-          "rotate-x":(v)=>({
-            '--tw-rotate-x': v,
-            transform: 'var(--tw-transform)',
-          }),
-          "rotate-y":(v)=>({
-            '--tw-rotate-y': v,
-            transform: 'var(--tw-transform)',
-          }),
-          "rotate-z":(v)=>({
-            '--tw-rotate-z': v,
-            transform: 'var(--tw-transform)',
-          })
-        }, {
-          values: theme('rotate'),
-          supportsNegativeValues:true
-        })  
-        matchUtilities(({
-          "translate-x":(v)=>({
-            '--tw-translate-x': v,
-            transform: 'var(--tw-transform)',
-          }),
-          "translate-y":(v)=>({
-            '--tw-translate-y': v,
-            transform: 'var(--tw-transform)',
-          }),
-          "translate-z":(v)=>({
-            '--tw-translate-z': v,
-            transform: 'var(--tw-transform)',
-          })
-        }), {
-          values: theme('space'),
-          supportsNegativeValues:true
-        })
-        
-        matchUtilities(({
-          "scale-x":(v)=>({
-            '--tw-scale-x': v,
-            transform: 'var(--tw-transform)',
-          }),
-          "scale-y":(v)=>({
-            '--tw-scale-y': v,
-            transform: 'var(--tw-transform)',
-          }),
-          "scale-z":(v)=>({
-            '--tw-scale-z': v,
-            transform: 'var(--tw-transform)',
-          })
-        }), {
-          values: theme('scale'),
-          supportsNegativeValues:true
-        })    
+        });
+        matchUtilities(
+          {
+            'rotate-x': (v) => ({
+              '--tw-rotate-x': v,
+              transform: 'var(--tw-transform)',
+            }),
+            'rotate-y': (v) => ({
+              '--tw-rotate-y': v,
+              transform: 'var(--tw-transform)',
+            }),
+            'rotate-z': (v) => ({
+              '--tw-rotate-z': v,
+              transform: 'var(--tw-transform)',
+            }),
+          },
+          {
+            values: theme('rotate'),
+            supportsNegativeValues: true,
+          },
+        );
+        matchUtilities(
+          {
+            'translate-x': (v) => ({
+              '--tw-translate-x': v,
+              transform: 'var(--tw-transform)',
+            }),
+            'translate-y': (v) => ({
+              '--tw-translate-y': v,
+              transform: 'var(--tw-transform)',
+            }),
+            'translate-z': (v) => ({
+              '--tw-translate-z': v,
+              transform: 'var(--tw-transform)',
+            }),
+          },
+          {
+            values: theme('space'),
+            supportsNegativeValues: true,
+          },
+        );
+
+        matchUtilities(
+          {
+            'scale-x': (v) => ({
+              '--tw-scale-x': v,
+              transform: 'var(--tw-transform)',
+            }),
+            'scale-y': (v) => ({
+              '--tw-scale-y': v,
+              transform: 'var(--tw-transform)',
+            }),
+            'scale-z': (v) => ({
+              '--tw-scale-z': v,
+              transform: 'var(--tw-transform)',
+            }),
+          },
+          {
+            values: theme('scale'),
+            supportsNegativeValues: true,
+          },
+        );
       },
       {
         theme: {
@@ -243,9 +258,8 @@ const config: Config = {
             '100vw': '100vw',
           },
         },
-      }
-    )
-    
+      },
+    ),
   ],
-}
-export default config
+};
+export default config;

@@ -1,9 +1,9 @@
-type NextAppDirectoryProps =  {
+type NextAppDirectoryProps = {
   params: Promise<{
-    locale:string
+    locale: string;
   }>;
-}
+};
 
 type ComponentWithLocale<T> = {
   locale: T;
-}
+};

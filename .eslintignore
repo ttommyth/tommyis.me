@@ -1,0 +1,11 @@
+node_modules/
+.next/
+
+# Ignore build output and static assets
+out/
+build/
+dist/
+coverage/
+public/
+.history
+.notes

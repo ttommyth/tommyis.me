@@ -3,117 +3,127 @@
 @tailwind utilities;
 
 ::selection {
-  @apply bg-primary-500 text-base-100
+  @apply bg-primary-500 text-base-100;
 }
 
-body{
-  
-  @apply bg-default text-base-800 dark:text-base-200 overflow-x-hidden
+body {
+  @apply bg-default text-base-800 dark:text-base-200 overflow-x-hidden;
 }
 
-input{
-  @apply bg-default dark:text-white  rounded-md px-4 py-2 border-2 border-default
+input {
+  @apply bg-default dark:text-white  rounded-md px-4 py-2 border-2 border-default;
 }
-textarea{
-  @apply bg-default dark:text-white  rounded-md px-4 py-2 border-2 border-default
+textarea {
+  @apply bg-default dark:text-white  rounded-md px-4 py-2 border-2 border-default;
 }
-.grecaptcha-badge { 
+.grecaptcha-badge {
   visibility: hidden;
 }
 
-@layer utilities{
-  .absolute-fill{
-    top:0;
+@layer utilities {
+  .absolute-fill {
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
   }
-  .border-style-expand{
+  .border-style-expand {
     border-style: solid dashed solid;
   }
-  .bg-default{
-    @apply bg-base-100 dark:bg-base-800 transition-colors
+  .bg-default {
+    @apply bg-base-100 dark:bg-base-800 transition-colors;
   }
-  .border-default{
-    @apply border-base-300 dark:border-base-900  transition-colors
+  .border-default {
+    @apply border-base-300 dark:border-base-900  transition-colors;
   }
-  .divide-default{
-    @apply divide-base-300 dark:divide-base-900  transition-colors
+  .divide-default {
+    @apply divide-base-300 dark:divide-base-900  transition-colors;
   }
-  .divide-invert-default{
-    @apply divide-base-900 dark:divide-base-300  transition-colors
+  .divide-invert-default {
+    @apply divide-base-900 dark:divide-base-300  transition-colors;
   }
-  .text-default{
-    @apply text-base-300 dark:text-base-900  transition-colors
+  .text-default {
+    @apply text-base-300 dark:text-base-900  transition-colors;
   }
-  .bg-default-invert{
-    @apply bg-base-800 dark:bg-base-100 transition-colors
+  .bg-default-invert {
+    @apply bg-base-800 dark:bg-base-100 transition-colors;
   }
-  .border-default-invert{
-    @apply border-base-900 dark:border-base-300  transition-colors
+  .border-default-invert {
+    @apply border-base-900 dark:border-base-300  transition-colors;
   }
-  .text-default-invert{
-    @apply text-base-900 dark:text-base-300  transition-colors
+  .text-default-invert {
+    @apply text-base-900 dark:text-base-300  transition-colors;
   }
 
-  .bg-strip{
+  .bg-strip {
     background-image: repeating-linear-gradient(
       -45deg,
-      theme("colors.base.100") ,
-      theme("colors.base.100") 8%,
-      theme("colors.base.200") 8%,
-      theme("colors.base.200") 16%
+      theme('colors.base.100'),
+      theme('colors.base.100') 8%,
+      theme('colors.base.200') 8%,
+      theme('colors.base.200') 16%
     );
   }
 
-  .dark .bg-strip{
+  .dark .bg-strip {
     background-image: repeating-linear-gradient(
       -45deg,
-      theme("colors.base.800") ,
-      theme("colors.base.800") 8%,
-      theme("colors.base.900") 8%,
-      theme("colors.base.900") 16%
+      theme('colors.base.800'),
+      theme('colors.base.800') 8%,
+      theme('colors.base.900') 8%,
+      theme('colors.base.900') 16%
     );
   }
 
   .bg-dotted-glass::before {
     display: block;
-    content: "";
+    content: '';
     position: absolute;
     top: -1px;
     left: 0;
     right: 0;
     height: 1px;
     opacity: 0.2;
-    @apply bg-gray-800 dark:bg-gray-200
+    @apply bg-gray-800 dark:bg-gray-200;
   }
   .bg-dotted-glass {
-    background-image: radial-gradient(theme("colors.base.100"/30%) 1px, theme("colors.base.100") 1px );
+    background-image: radial-gradient(
+      theme('colors.base.100'/30%) 1px,
+      theme('colors.base.100') 1px
+    );
     background-size: 4px 4px;
     backdrop-filter: blur(4px);
   }
-  :is(.dark .bg-dotted-glass){
-    background-image: radial-gradient(theme("colors.base.800"/30%) 1px, theme("colors.base.800")  1px );
+  :is(.dark .bg-dotted-glass) {
+    background-image: radial-gradient(
+      theme('colors.base.800'/30%) 1px,
+      theme('colors.base.800') 1px
+    );
   }
-
 
   .bg-dotted {
-    background-image: radial-gradient(theme("colors.base.200"/80%) 1px, transparent 0);
+    background-image: radial-gradient(
+      theme('colors.base.200'/80%) 1px,
+      transparent 0
+    );
     background-size: 2rem 2rem;
     background-position: center;
-    @apply transition-colors
+    @apply transition-colors;
   }
 
-  :is(.dark .bg-dotted){
-    background-image: radial-gradient(theme("colors.base.900"/80%)  1px, transparent 0);
+  :is(.dark .bg-dotted) {
+    background-image: radial-gradient(
+      theme('colors.base.900'/80%) 1px,
+      transparent 0
+    );
   }
 
-  @media (min-width: 768px){
+  @media (min-width: 768px) {
     .bg-dotted {
       background-size: 2rem 2rem;
     }
   }
-  @media (min-width: 1024px){
+  @media (min-width: 1024px) {
     .bg-dotted {
       background-size: 1rem 1rem;
     }
@@ -124,84 +134,97 @@ textarea{
   // }
 
   // custom prose
-  .custom-prose h2{
-    @apply text-2xl font-bold mb-4
+  .custom-prose h2 {
+    @apply text-2xl font-bold mb-4;
   }
-  .custom-prose h3{
-    @apply text-xl font-bold mb-4
+  .custom-prose h3 {
+    @apply text-xl font-bold mb-4;
   }
-  .custom-prose h4{
-    @apply text-lg font-bold mb-4
+  .custom-prose h4 {
+    @apply text-lg font-bold mb-4;
   }
-  .custom-prose h5{
-    @apply text-base font-bold mb-4
+  .custom-prose h5 {
+    @apply text-base font-bold mb-4;
   }
-  .custom-prose h6{
-    @apply text-sm font-bold mb-4
+  .custom-prose h6 {
+    @apply text-sm font-bold mb-4;
   }
-  .custom-prose p{
-    @apply mb-4 leading-6
+  .custom-prose p {
+    @apply mb-4 leading-6;
   }
-  .custom-prose ul{
-    @apply mb-4 list-disc list-inside
+  .custom-prose ul {
+    @apply mb-4 list-disc list-inside;
   }
-  .custom-prose ol{
-    @apply mb-4 list-decimal list-inside
+  .custom-prose ol {
+    @apply mb-4 list-decimal list-inside;
   }
-  .custom-prose li{
-    @apply mb-2
+  .custom-prose li {
+    @apply mb-2;
   }
-  .custom-prose a{
-    @apply text-blue-500 underline
+  .custom-prose a {
+    @apply text-blue-500 underline;
   }
-  .custom-prose a:hover{
-    @apply text-blue-600
+  .custom-prose a:hover {
+    @apply text-blue-600;
   }
-  .custom-prose blockquote{
-    @apply border-l-4 border-blue-500 pl-4 mb-4
+  .custom-prose blockquote {
+    @apply border-l-4 border-blue-500 pl-4 mb-4;
   }
-  .custom-prose code{
-    @apply bg-gray-100 dark:bg-gray-800 px-1 rounded
+  .custom-prose code {
+    @apply bg-gray-100 dark:bg-gray-800 px-1 rounded;
   }
-  .custom-prose pre{
-    @apply bg-gray-100 dark:bg-gray-800 px-1 rounded
+  .custom-prose pre {
+    @apply bg-gray-100 dark:bg-gray-800 px-1 rounded;
   }
-  .custom-prose hr{
-    @apply my-4
+  .custom-prose hr {
+    @apply my-4;
   }
-  .custom-prose img{
-    @apply my-4
+  .custom-prose img {
+    @apply my-4;
   }
-  .custom-prose strong{
-    @apply font-bold text-primary-500
-  }
-  
-  .custom-prose em{
-    @apply font-thin
+  .custom-prose strong {
+    @apply font-bold text-primary-500;
   }
 
+  .custom-prose em {
+    @apply font-thin;
+  }
 
-  .bg-highlight{
+  .bg-highlight {
     animation: highlight 4s linear infinite;
     background-size: 400% 100%;
     background-position: 400% 0%;
     background-color: none;
-    background-image: linear-gradient(99deg, #1A202C 0%, #2D3748 35%, #4A5568 50%,#2D3748 65%, #1A202C 100%);
+    background-image: linear-gradient(
+      99deg,
+      #1a202c 0%,
+      #2d3748 35%,
+      #4a5568 50%,
+      #2d3748 65%,
+      #1a202c 100%
+    );
   }
-  .bg-highlight-glass{
+  .bg-highlight-glass {
     animation: highlight 4s linear infinite;
     background-size: 400% 100%;
     background-position: 400% 0%;
     background-color: none;
-    background-image: linear-gradient(99deg, #1A202C33 0%, #2D374833 35%, #4A5568aa 50%,#2D374833 65%, #1A202C33 100%);
+    background-image: linear-gradient(
+      99deg,
+      #1a202c33 0%,
+      #2d374833 35%,
+      #4a5568aa 50%,
+      #2d374833 65%,
+      #1a202c33 100%
+    );
   }
 
   @keyframes highlight {
     to {
       background-position: 0% 0%;
     }
-   }
-   @keyframes circle-enter {
+  }
+  @keyframes circle-enter {
     0% {
       opacity: 0;
       transform: scale(1, 0);
@@ -212,29 +235,29 @@ textarea{
       transform: scale(1, 1);
     }
   }
-   .interact{
-     @apply cursor-pointer relative
-   }
-   .interact:after{
-    content: "";
+  .interact {
+    @apply cursor-pointer relative;
+  }
+  .interact:after {
+    content: '';
     position: absolute;
     margin: -8px;
-    @apply border-default-invert border-2 border-dashed absolute-fill rounded-full select-none opacity-0 transition-all rotate-0 
-   }
-   .interact:hover:after{
-    @apply opacity-100 rotate-12 transition-all
-   }
-   
-   .group-interact{
-    @apply cursor-pointer relative
-   }
-   .group-interact:after{
-    content: "";
+    @apply border-default-invert border-2 border-dashed absolute-fill rounded-full select-none opacity-0 transition-all rotate-0;
+  }
+  .interact:hover:after {
+    @apply opacity-100 rotate-12 transition-all;
+  }
+
+  .group-interact {
+    @apply cursor-pointer relative;
+  }
+  .group-interact:after {
+    content: '';
     position: absolute;
     margin: -8px;
-    @apply border-default-invert border-2 border-dashed absolute-fill rounded-full select-none opacity-0 transition-all rotate-0 
-   }
-   .group:hover .group-interact:after{
-    @apply opacity-100 rotate-12 transition-all
-   }
+    @apply border-default-invert border-2 border-dashed absolute-fill rounded-full select-none opacity-0 transition-all rotate-0;
+  }
+  .group:hover .group-interact:after {
+    @apply opacity-100 rotate-12 transition-all;
+  }
 }
