@@ -63,7 +63,7 @@ const TechGrid: FC<{
               src={it.image}
               alt={it.name}
               fill
-              className="object-cover"
+              className="object-contain"
               priority={true}
             />
           </div>
@@ -195,7 +195,10 @@ const TechPlayground: FC<{
     Render.run(render);
 
     // create runner
-    const runner = Runner.create();
+    const runner = Runner.create({
+      delta: 1000 / 120, // fixed time step (~16.67ms)
+      isFixed: true, // ignore real elapsed time
+    });
 
     // run the engine
     Runner.run(runner, engine);

@@ -93,6 +93,20 @@ const config: Config = {
           '950': '#ff0f00',
         },
       },
+      dropShadow: (utils) => ({
+        'dark-solid': [
+          `2px 2px 0 ${utils.theme('colors.base.800')}`,
+          `2px -2px 0 ${utils.theme('colors.base.800')}`,
+          `-2px -2px 0 ${utils.theme('colors.base.800')}`,
+          `-2px 2px 0 ${utils.theme('colors.base.800')}`,
+        ],
+        'light-solid': [
+          `2px 2px 0 ${utils.theme('colors.base.100')}`,
+          `2px -2px 0 ${utils.theme('colors.base.100')}`,
+          `-2px -2px 0 ${utils.theme('colors.base.100')}`,
+          `-2px 2px 0 ${utils.theme('colors.base.100')}`,
+        ],
+      }),
     },
   },
   corePlugins: {
@@ -102,7 +116,7 @@ const config: Config = {
     require('@tailwindcss/aspect-ratio'),
     require('daisyui'),
     plugin(
-      function ({ config, addUtilities, matchUtilities, addBase, theme, e }) {
+      function ({ addUtilities, matchUtilities, addBase, theme }) {
         addBase({
           '*, ::before, ::after': {
             '--tw-translate-x': '0',

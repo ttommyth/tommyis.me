@@ -70,11 +70,7 @@ const playableSkills = playableSkillNames.map((it, idx) => ({
     });
   },
 }));
-export const WatermelonSkillsGame: FC<{
-  highlightItems?: string[];
-}> = (props) => {
-  const { highlightItems } = props;
-
+export const WatermelonSkillsGame: FC = () => {
   const ref = useRef<HTMLDivElement | null>(null);
   const rectRef = useRef<DOMRect | null>(null);
   const nextSkillBodyRef = useRef<Matter.Body | null>(null);
@@ -95,9 +91,7 @@ export const WatermelonSkillsGame: FC<{
   const springNextBallScale = useSpring(nextBallScale);
   const [score, setScore] = useState(0);
   const [reset, setReset] = useState(0);
-  const { scrollY } = useScroll({
-    target: ref,
-  });
+  useScroll({ target: ref });
 
   useEffect(() => {
     if (!ref) return;
@@ -172,13 +166,6 @@ export const WatermelonSkillsGame: FC<{
         collisionFilter: { category: collisionCategories.base },
       },
     );
-    const roof = Bodies.rectangle(
-      rect.width / 2 + 160,
-      -80,
-      rect.width + 320,
-      160,
-      { isStatic: true, render: { opacity: 0 } },
-    );
     // add all of the bodies to the world
     Composite.add(engine.world, [
       ground,
@@ -186,11 +173,6 @@ export const WatermelonSkillsGame: FC<{
       wallRight, //, roof
     ]);
 
-    // const boxes = [...playableItems, ...playableItems, ...playableItems] //TODO: tmp
-    //   .map((skill,idx)=>skill.createBody(40+ (Math.random()*rect.width),100 + 20+ 40*Math.random()));
-    // Composite.add(engine.world,
-    //   boxes
-    // )
     Matter.Events.on(engine, 'collisionStart', function (event) {
       event.pairs.forEach((pair) => {
         if (pair.bodyA.label == pair.bodyB.label) {
@@ -226,46 +208,28 @@ export const WatermelonSkillsGame: FC<{
         }
       });
     });
-    // add mouse control
-    // const mouse = Mouse.create(render.canvas),
-    //   mouseConstraint = MouseConstraint.create(engine, {
-    //     mouse: mouse,
-    //     constraint: {
-    //       stiffness: 0.1,
-    //       render: {
-    //         visible: false
-    //       }
-    //     }
-    //   });
 
-    // World.add(engine.world, mouseConstraint);
-
-    // keep the mouse in sync with rendering
-    // render.mouse = mouse;
     // run the renderer
     Render.run(render);
 
     // create runner
-    const runner = Runner.create();
+    const runner = Runner.create({
+      delta: 1000 / 120, // fixed time step (~16.67ms)
+      isFixed: true, // ignore real elapsed time
+    });
 
-    // run the engine
+    // run the engine with fixed-step updates
     Runner.run(runner, engine);
 
-    // const nextSkill = playableSkills[nextBallIndex??0];
-    // nextSkillBodyRef.current = nextSkill.createBody(0, 0, true);
-    // nextSkillBodyRef.current.position.y = nextSkillBodyRef.current.circleRadius!/2;
-    // Matter.Composite.add(engine.world, nextSkillBodyRef.current);
-    // mouseX.on("change", (v)=>{
-    //   console.log(v)
-    // });
     worldRef.current = engine.world;
     engineRef.current = engine;
     return () => {
       Render.stop(render);
       World.clear(engine.world, false);
       Engine.clear(engine);
-      render.canvas.remove();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (render as any).canvas = null;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (render as any).context = null;
       render.textures = {};
     };
@@ -300,9 +264,6 @@ export const WatermelonSkillsGame: FC<{
         'ontouchstart' in window ? ev.clientX - bound.left : springMouseX.get(),
         0,
       );
-      // nextSkillBodyRef.current.position.y = nextSkillBodyRef.current.circleRadius!*1;
-      // nextSkillBodyRef.current.velocity.x = 0;
-      // nextSkillBodyRef.current.velocity.y = 0;
 
       Matter.Body.setVelocity(nextSkillBodyRef.current, {
         x: springMouseX.getVelocity() / 200,
@@ -320,11 +281,14 @@ export const WatermelonSkillsGame: FC<{
         setDisableSpawn(false);
       }, 350);
     },
-    [nextBallIndex, nextSecondBallIndex, disableSpawn],
+    [
+      nextBallIndex,
+      nextSecondBallIndex,
+      disableSpawn,
+      nextBallScale,
+      springMouseX,
+    ],
   );
-  // useMotionValueEvent(mouseX, "change", (latest) => {
-  //   console.log("x changed to", latest)
-  // })
   return (
     <div className="w-full flex flex-col pt-appbar sm:pt-24 h-[100dvh] sm:h-[90dvh] gap-2">
       <div className="flex flex-col sm:flex-row w-full grow gap-2">

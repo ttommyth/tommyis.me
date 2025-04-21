@@ -33,7 +33,7 @@ export const SkillsPile: FC<{ skills: (typeof skills)[number]['name'][] }> = ({
       return target;
     };
     skills.forEach((skill, idx) => {
-      styles[idx] = generateLocation();
+      styles[idx] = generateLocation(idx);
     });
     return styles.map((it, idx) => ({
       left: it.left + '%',
@@ -45,7 +45,7 @@ export const SkillsPile: FC<{ skills: (typeof skills)[number]['name'][] }> = ({
     <div className="relative w-full h-96 sm:h-64 select-none p-2">
       {skills.map((skill, idx) => (
         <div
-          className="absolute bg-default rounded-md p-2 -translate-x-1/2 -translate-y-1/2 hover:z-10 dui-tooltip"
+          className="absolute  rounded-md p-2 -translate-x-1/2 -translate-y-1/2 hover:z-10 dui-tooltip"
           data-tip={skill}
           key={idx}
           style={pileStyles[idx]}
@@ -54,8 +54,8 @@ export const SkillsPile: FC<{ skills: (typeof skills)[number]['name'][] }> = ({
             src={skillsDict[skill].image}
             width={80}
             height={80}
-            key={idx}
             alt={skill}
+            className="drop-shadow-light-solid dark:drop-shadow-dark-solid"
           />
         </div>
       ))}

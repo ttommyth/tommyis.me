@@ -29,17 +29,29 @@ export const Hero: FC<{
             </span>
             <ul className="flex gap-2 mt-4">
               <li>
-                <Link href={githubLink} target="_blank" className="interact">
+                <Link
+                  href={githubLink}
+                  target="_blank"
+                  className="interact block"
+                >
                   <GithubLogo className="w-8 h-8 fill-current " />{' '}
                 </Link>
               </li>
               <li>
-                <Link href={linkedinLink} target="_blank" className="interact">
+                <Link
+                  href={linkedinLink}
+                  target="_blank"
+                  className="interact block"
+                >
                   <LinkedinLogo className="w-8 h-8 fill-current" />{' '}
                 </Link>
               </li>
               <li>
-                <Link href={kofiLink} target="_blank" className="interact">
+                <Link
+                  href={kofiLink}
+                  target="_blank"
+                  className="interact block"
+                >
                   <KofiLogo className="w-8 h-8 fill-current" />{' '}
                 </Link>
               </li>
