@@ -1,6 +1,6 @@
 'use client';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
-import { motion } from 'framer-motion';
+import { Variants, motion } from 'framer-motion';
 import { delay } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { useLocalForage } from './LocalForageHook';
@@ -44,17 +44,33 @@ export const DarkModeHelper = () => {
 const sunVariants = {
   light: {
     opacity: 1,
+    rotate: 0,
     scale: 1,
     transition: {
-      scale: { duration: 0.4, delay: 0.4 },
+      rotate: {
+        duration: 0.4,
+        delay: 0.4,
+        type: 'spring',
+        stiffness: 500,
+        mass: 3,
+      },
+      scale: {
+        duration: 0.4,
+        delay: 0.4,
+        type: 'spring',
+        stiffness: 200,
+        mass: 1.2,
+      },
       opacity: { duration: 0, delay: 0.5 },
     },
   },
   dark: {
     opacity: 0,
+    rotate: -45,
     scale: 2.5,
     transition: {
-      scale: { duration: 0.4 },
+      rotate: { duration: 0, delay: 0.4 },
+      scale: { duration: 0.4, type: 'spring', stiffness: 80 },
       opacity: { duration: 0, delay: 0.4 },
     },
   },
@@ -64,28 +80,32 @@ const moonVariants = {
   dark: {
     opacity: 1,
     rotate: 0,
-    scale: 1,
+    skewX: 0,
+    skewY: 0,
     y: 0,
     transition: {
-      rotate: { duration: 0.3, delay: 0.6 },
-      scale: { duration: 0.3, delay: 0.6 },
-      y: { duration: 0.2, delay: 0.5 },
+      rotate: { duration: 0.3, delay: 0.6, type: 'spring', stiffness: 200 },
+      y: { duration: 0.2, delay: 0.5, type: 'spring', stiffness: 200 },
+      skewX: { duration: 0.3, delay: 0.6, type: 'spring', stiffness: 200 },
+      skewY: { duration: 0.3, delay: 0.6, type: 'spring', stiffness: 200 },
       opacity: { duration: 0 },
     },
   },
   light: {
     opacity: 0,
-    rotate: -45,
-    scale: 1.1,
-    y: 20,
+    rotate: -25,
+    skewX: 10,
+    skewY: 10,
+    y: 25,
     transition: {
-      rotate: { duration: 0.3 },
-      scale: { duration: 0.3 },
+      rotate: { duration: 0.3, type: 'spring', stiffness: 200 },
       y: { duration: 0.2, delay: 0.1 },
+      skewX: { duration: 0.3, type: 'spring', stiffness: 200 },
+      skewY: { duration: 0.3, type: 'spring', stiffness: 200 },
       opacity: { duration: 0, delay: 0.3 },
     },
   },
-};
+} satisfies Variants;
 
 export const DarkModeSwitch = () => {
   const [theme, setTheme] = useDarkMode();
