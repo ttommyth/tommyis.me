@@ -203,7 +203,7 @@ export default function LevelingGuideClient() {
                   className={twMerge('w-full overflow-y-hidden')}
                 >
                   <div className="p-2 sm:p-4">
-                    <ul className="divide-y divide-invert-default divide-dashed">
+                    <ul className="divide-y-2 divide-invert-default !divide-opacity-25 divide-dashed divide">
                       {act.steps.map((step, sIdx) => {
                         const key = `${aIdx}-${sIdx}`;
                         return (
