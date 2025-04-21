@@ -31,28 +31,28 @@ textarea {
     border-style: solid dashed solid;
   }
   .bg-default {
-    @apply bg-base-100 dark:bg-base-800 transition-colors;
+    @apply bg-base-100 dark:bg-base-800 transition-colors duration-500;
   }
   .border-default {
-    @apply border-base-300 dark:border-base-900  transition-colors;
+    @apply border-base-300 dark:border-base-900  transition-colors duration-500;
   }
   .divide-default {
-    @apply divide-base-300 dark:divide-base-900  transition-colors;
+    @apply divide-base-300 dark:divide-base-900  transition-colors duration-500;
   }
   .divide-invert-default {
-    @apply divide-base-900 dark:divide-base-300  transition-colors;
+    @apply divide-base-900 dark:divide-base-300  transition-colors duration-500;
   }
   .text-default {
-    @apply text-base-300 dark:text-base-900  transition-colors;
+    @apply text-base-300 dark:text-base-900  transition-colors duration-500;
   }
   .bg-default-invert {
-    @apply bg-base-800 dark:bg-base-100 transition-colors;
+    @apply bg-base-800 dark:bg-base-100 transition-colors duration-500;
   }
   .border-default-invert {
-    @apply border-base-900 dark:border-base-300  transition-colors;
+    @apply border-base-900 dark:border-base-300  transition-colors duration-500;
   }
   .text-default-invert {
-    @apply text-base-900 dark:text-base-300  transition-colors;
+    @apply text-base-900 dark:text-base-300  transition-colors duration-500;
   }
 
   .bg-strip {
@@ -99,6 +99,47 @@ textarea {
       theme('colors.base.800'/30%) 1px,
       theme('colors.base.800') 1px
     );
+  }
+
+  .light-bg-dotted-glass::before {
+    display: block;
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    opacity: 0.2;
+    @apply bg-gray-200;
+  }
+
+  .light-bg-dotted-glass {
+    background-image: radial-gradient(
+      theme('colors.base.100'/30%) 1px,
+      theme('colors.base.100') 1px
+    );
+    background-size: 4px 4px;
+    backdrop-filter: blur(4px);
+  }
+
+  .dark-bg-dotted-glass::before {
+    display: block;
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    opacity: 0.2;
+    @apply bg-gray-800;
+  }
+  .dark-bg-dotted-glass {
+    background-image: radial-gradient(
+      theme('colors.base.800'/30%) 1px,
+      theme('colors.base.800') 1px
+    );
+    background-size: 4px 4px;
+    backdrop-filter: blur(4px);
   }
 
   .bg-dotted {
