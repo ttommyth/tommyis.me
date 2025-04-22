@@ -7,8 +7,8 @@ export const Header = () => {
   const pathname = usePathname();
   const paths = pathname.split('/');
   return (
-    <header className=" fixed left-0 top-0 right-0 z-50  border-dashed border-b-2 border-default flex justify-center">
-      <div className="w-full h-full relative">
+    <header className=" fixed left-0 top-0 right-0 z-50  border-dashed border-b-2 border-default ">
+      <div className="w-full h-full relative flex justify-center">
         <div className="opacity-100 dark:opacity-0 transition-opacity duration-500">
           <div className="light-bg-dotted-glass absolute top-0 left-0 right-0 bottom-0 " />
         </div>
