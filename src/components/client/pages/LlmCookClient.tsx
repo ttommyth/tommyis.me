@@ -914,6 +914,9 @@ export default function LlmCookClient() {
         }
 
         setSelectedStep(null);
+
+        // Set processing to false *after* status updates
+        setIsProcessing(false);
       }
     },
     [
