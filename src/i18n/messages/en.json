@@ -5,5 +5,48 @@
     "heroTitle2": "Tommy is me",
     "iam": "I am ",
     "iamArray": "[\"a developer\", \"a software engineer\", \"full stack dev\", \"react dev\", \"zero configuration🤖\", \"blazingly fast🔥\" ]"
+  },
+  "ColorSandbox": {
+    "pageTitle": "CSS Color Space Explorer",
+    "pageDescription": "Observe how RGB, HSL, and Oklch handle color transitions and display vibrant colors. Oklch is particularly adept at predictable lightness and accessing wider color gamuts (like P3).",
+    "rgbTitle": "RGB",
+    "rgbNotes": {
+      "transitions": "<strong>Transitions:</strong> Generally smooth but can have perceived shifts in brightness.",
+      "gamut": "<strong>Gamut:</strong> Typically sRGB. Colors outside this range are clipped.",
+      "use": "<strong>Use:</strong> Legacy, direct hardware mapping."
+    },
+    "hslTitle": "HSL",
+    "hslNotes": {
+      "transitions": "<strong>Transitions:</strong> Can be unpredictable, especially with saturation or lightness changes (e.g., gray \"dead zones\" when transitioning hues at high/low L/S).",
+      "gamut": "<strong>Gamut:</strong> Typically sRGB. Can lead to unexpected color shifts if trying to represent P3 colors directly.",
+      "use": "<strong>Use:</strong> Human-readable, but often less perceptually uniform."
+    },
+    "oklchTitle": "Oklch",
+    "oklchNotes": {
+      "transitions": "<strong>Transitions:</strong> Perceptually uniform. Changes in Lightness (L) are predictable. Hue transitions avoid unexpected shifts in brightness/saturation.",
+      "gamut": "<strong>Gamut:</strong> Can represent colors far outside sRGB, suitable for P3 and Rec.2020 displays. Gracefully handles out-of-gamut colors by finding the closest in-gamut color at the same lightness and hue.",
+      "hdrExample": "<strong>Example HDR (P3):</strong> <p3PurpleSpan>This vibrant purple</p3PurpleSpan> ({colorString}) might only render correctly on a P3 display.",
+      "p3Example": "<strong>Direct P3:</strong> <p3GreenSpan>This green</p3GreenSpan> ({colorString}) uses <code>color(display-p3 ...)</code>.",
+      "use": "<strong>Use:</strong> Modern, perceptually uniform, wide gamut support.",
+      "targetInstruction": "Global Picker Target: <swatch></swatch> Adjust Oklch sliders to make this section's main preview match it."
+    },
+    "gamutNotes": {
+      "sRgbClipped": "Displayed sRGB color is clipped from a wider gamut source.",
+      "sRgbClippedHsl": "Displayed HSL (sRGB) is derived from a wider gamut source."
+    },
+    "globalPickerTitle": "Global Color Picker",
+    "selectedColorLabel": "Selected Color:",
+    "globalPickerNote": "Picking a color here will update the HSL, RGB and Oklch sections below.",
+    "sliderRed": "Red",
+    "sliderGreen": "Green",
+    "sliderBlue": "Blue",
+    "sliderHue": "Hue",
+    "sliderSaturation": "Saturation",
+    "sliderLightness": "Lightness",
+    "sliderOklchLightness": "Lightness (L)",
+    "sliderOklchChroma": "Chroma (C)",
+    "sliderOklchHue": "Hue (H)",
+    "footerNote": "Play with the sliders to see color interpolation and gamut differences.",
+    "footerWarning": "Ensure your browser and display support P3 for full HDR color viewing."
   }
 }
