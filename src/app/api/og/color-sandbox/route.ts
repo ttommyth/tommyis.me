@@ -28,7 +28,7 @@ import {
 import ImageTemplate from './image-template'; // Import the new TSX template
 
 // Helper to convert CuloriColor to a hex string for CSS
-export const toCssColor = (color: CuloriColor | undefined): string => {
+const toCssColor = (color: CuloriColor | undefined): string => {
   if (!color) return '#transparent'; // Fallback for undefined colors
   return formatHex(color);
 };

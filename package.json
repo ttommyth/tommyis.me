@@ -11,7 +11,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.17",
+    "@headlessui/react": "^2.2.2",
     "@heroicons/react": "^2.2.0",
     "@hookform/resolvers": "^3.3.1",
     "@react-three/fiber": "^8.14.4",
