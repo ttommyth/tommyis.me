@@ -3,22 +3,28 @@ import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { PropsWithChildren } from 'react';
 
-// Ensure this interface matches your project's definition or is globally available
+// Assuming supportedLocale is still needed for validation, or simplify further
+// For now, let's keep a basic validation if you have `supportedLocale` easily available
+// If not, you can comment out the validation for this test.
+// import { supportedLocale } from '@/i18n/routing';
+// import { notFound } from 'next/navigation';
+
 interface NextAppDirectoryProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
+/*
 export function generateStaticParams() {
   return supportedLocale.map((locale) => ({ locale }));
 }
+*/
 
 export default async function LocaleLayout({
   children,
   params,
 }: PropsWithChildren<NextAppDirectoryProps>) {
-  const locale = params.locale;
-
-  if (!supportedLocale.includes(locale as any)) notFound();
+  const locale = (await params).locale;
+  if (!supportedLocale.includes(locale)) notFound();
 
   let messages;
   try {
@@ -29,12 +35,9 @@ export default async function LocaleLayout({
   }
 
   return (
-    // <html lang={locale}> // HTML and BODY are usually in the root layout src/app/layout.tsx
-    //   <body>
+    // Assuming you don't want <html> and <body> tags here if you have a root app/layout.tsx
     <NextIntlClientProvider locale={locale} messages={messages}>
       {children}
     </NextIntlClientProvider>
-    //   </body>
-    // </html>
   );
 }

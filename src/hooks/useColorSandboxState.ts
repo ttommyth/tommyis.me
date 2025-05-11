@@ -30,12 +30,14 @@ function formatNumber(value: number, type: PrecisionType): string {
 // --- End Formatting Utility ---
 
 // --- Color Store Definition ---
+// currentMasterColorState is the module-level store state, initialized to a default.
+// This will be updated by the hook's useEffect on the client if initialColorFromProps is provided.
 let currentMasterColorState: CuloriColor = {
   mode: 'hsl',
   h: 210,
   s: 0.6,
   l: 0.6,
-}; // Default
+};
 const listeners = new Set<() => void>();
 
 const colorStore = {
@@ -50,36 +52,47 @@ const colorStore = {
   getSnapshot: (): CuloriColor => {
     return currentMasterColorState;
   },
-  initialize: (initialColor?: CuloriColor) => {
-    if (initialColor) {
-      currentMasterColorState = initialColor;
-    }
-  },
+  // initialize and the original getServerSnapshot on colorStore are no longer directly used by useSyncExternalStore in the hook.
+  // The hook will provide its own getServerSnapshot.
 };
 // --- End Color Store Definition ---
 
 export interface UseColorSandboxStateProps {
-  initialColor?: CuloriColor;
+  initialColor?: CuloriColor; // This prop will come from the server-rendered page
 }
 
-// Initialize store once with prop if provided. This effect runs once on mount.
-let storeInitialized = false;
-
 export function useColorSandboxState(props?: UseColorSandboxStateProps) {
-  if (!storeInitialized) {
-    colorStore.initialize(props?.initialColor);
-    storeInitialized = true;
-  }
+  const initialColorFromProps = props?.initialColor;
+  // Ref to track if the initial prop has been applied to the store,
+  // to prevent re-applying if the prop reference changes but value is same,
+  // or to ensure it's only applied once if that's the desired logic.
+  const initialColorAppliedToStoreRef = useRef(false);
+
+  useEffect(() => {
+    // This effect runs on the client.
+    // If initialColorFromProps is provided (e.g., from server via props),
+    // it updates the client-side store to match.
+    if (initialColorFromProps && !initialColorAppliedToStoreRef.current) {
+      // Compare to avoid unnecessary updates if store already matches, or simply set.
+      // For simplicity here, we set it if ref is false.
+      colorStore.setColor(initialColorFromProps);
+      initialColorAppliedToStoreRef.current = true;
+    }
+    // If `initialColorFromProps` itself can change over time (e.g. parent component re-renders with new initialColor),
+    // and the store should reflect that, this effect's dependency array and logic would need adjustment.
+    // For now, this focuses on the initial hydration scenario.
+  }, [initialColorFromProps]);
 
   const masterColor = useSyncExternalStore(
     colorStore.subscribe,
-    colorStore.getSnapshot,
+    colorStore.getSnapshot, // For client-side, reads from the (potentially updated) currentMasterColorState
+    // For server-side snapshot:
+    // Use initialColorFromProps if it's provided (meaning we are on the server and got it from page.tsx).
+    // Otherwise, fall back to the module-level default currentMasterColorState.
+    () => initialColorFromProps || currentMasterColorState,
   );
 
-  const t = useTranslations('ColorSandbox.gamutNotes');
-
-  const [rgbGamutNote, setRgbGamutNote] = useState<string | null>(null);
-  const [hslGamutNote, setHslGamutNote] = useState<string | null>(null);
+  const t = useTranslations('ColorSandbox.gamutNotes'); // For gamut notes
 
   // Derived values (these remain the same, depending on masterColor from the store)
   const masterColorHsl = useMemo(
@@ -149,10 +162,13 @@ export function useColorSandboxState(props?: UseColorSandboxStateProps) {
     [hState, sState, lState],
   );
   const oklchString = useMemo(
-    () => `oklch(${okL} ${okC} ${okH})`, // Manually construct for precision
+    () => `oklch(${okL} ${okC} ${okH})`,
     [okL, okC, okH],
   );
   const globalPickerColorString = hslString;
+
+  const [rgbGamutNote, setRgbGamutNote] = useState<string | null>(null);
+  const [hslGamutNote, setHslGamutNote] = useState<string | null>(null);
 
   useEffect(() => {
     const sourceIsP3Like =
@@ -194,27 +210,29 @@ export function useColorSandboxState(props?: UseColorSandboxStateProps) {
       }
       const clickXrelativeToBorderBox = clientX - rect.left;
       const clickYrelativeToBorderBox = clientY - rect.top;
-      const clickX = clickXrelativeToBorderBox - pickerDiv.clientLeft;
-      const clickY = clickYrelativeToBorderBox - pickerDiv.clientTop;
-      const boundedX = Math.min(Math.max(0, clickX), pickerDiv.clientWidth);
-      const boundedY = Math.min(Math.max(0, clickY), pickerDiv.clientHeight);
+      const clickX = Math.min(
+        Math.max(0, clickXrelativeToBorderBox - pickerDiv.clientLeft),
+        pickerDiv.clientWidth,
+      );
+      const clickY = Math.min(
+        Math.max(0, clickYrelativeToBorderBox - pickerDiv.clientTop),
+        pickerDiv.clientHeight,
+      );
       const newSat =
-        pickerDiv.clientWidth > 0
-          ? (boundedX / pickerDiv.clientWidth) * 100
-          : 0;
+        pickerDiv.clientWidth > 0 ? (clickX / pickerDiv.clientWidth) * 100 : 0;
       const newLight =
         pickerDiv.clientHeight > 0
-          ? 100 - (boundedY / pickerDiv.clientHeight) * 100
+          ? 100 - (clickY / pickerDiv.clientHeight) * 100
           : 50;
 
       colorStore.setColor({
         mode: 'hsl',
-        h: parseFloat(globalHue),
+        h: parseFloat(globalHue), // globalHue is derived from masterColorHsl
         s: newSat / 100,
         l: newLight / 100,
       });
     },
-    [globalHue],
+    [globalHue], // Depends on globalHue from derived state
   );
 
   const handleSatLightPickerMouseDown = useCallback(
@@ -290,8 +308,8 @@ export function useColorSandboxState(props?: UseColorSandboxStateProps) {
         s: masterColorHsl.s,
         l: masterColorHsl.l,
       }),
-    [masterColorHsl],
-  ); // Depends on masterColorHsl
+    [masterColorHsl], // Depends on masterColorHsl from derived state
+  );
 
   const handleRgbRChange = useCallback(
     (newR: number) =>
@@ -301,8 +319,8 @@ export function useColorSandboxState(props?: UseColorSandboxStateProps) {
         g: masterColorRgb.g,
         b: masterColorRgb.b,
       }),
-    [masterColorRgb],
-  ); // Depends on masterColorRgb
+    [masterColorRgb], // Depends on masterColorRgb from derived state
+  );
   const handleRgbGChange = useCallback(
     (newG: number) =>
       colorStore.setColor({

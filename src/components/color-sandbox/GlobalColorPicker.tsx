@@ -19,6 +19,7 @@ interface GlobalColorPickerProps {
   ) => void;
   satLightPickerRef: React.RefObject<HTMLDivElement>;
   globalPickerColorString: string;
+  hueGradientColors?: string[];
 }
 
 const GlobalColorPicker: React.FC<GlobalColorPickerProps> = ({
@@ -32,13 +33,10 @@ const GlobalColorPicker: React.FC<GlobalColorPickerProps> = ({
   handleSatLightPickerTouchStart,
   satLightPickerRef,
   globalPickerColorString,
+  hueGradientColors,
 }) => {
   return (
     <section className="mb-12 p-6 bg-gray-100 dark:bg-gray-800 rounded-xl shadow-2xl">
-      <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-6 text-center">
-        {/* Assuming 'globalPickerTitle' is a valid key */}
-        {t('globalPickerTitle') || 'Global HSL Color Picker'}
-      </h2>
       <div className="grid grid-cols-1 md:grid-cols-[400px_200px] gap-6 items-center justify-center">
         <div>
           <ColorSlider
@@ -48,6 +46,7 @@ const GlobalColorPicker: React.FC<GlobalColorPickerProps> = ({
             step={1}
             value={globalHue.toString()}
             onValueChange={handleGlobalHueChange}
+            gradientColors={hueGradientColors}
           />
           <div
             ref={satLightPickerRef}

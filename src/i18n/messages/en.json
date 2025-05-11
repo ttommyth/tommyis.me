@@ -7,7 +7,7 @@
     "iamArray": "[\"a developer\", \"a software engineer\", \"full stack dev\", \"react dev\", \"zero configuration🤖\", \"blazingly fast🔥\" ]"
   },
   "ColorSandbox": {
-    "pageTitle": "CSS Color Space Explorer",
+    "pageTitle": "Color Sandbox",
     "pageDescription": "Observe how RGB, HSL, and Oklch handle color transitions and display vibrant colors. Oklch is particularly adept at predictable lightness and accessing wider color gamuts (like P3).",
     "rgbTitle": "RGB",
     "rgbNotes": {
@@ -47,6 +47,29 @@
     "sliderOklchChroma": "Chroma (C)",
     "sliderOklchHue": "Hue (H)",
     "footerNote": "Play with the sliders to see color interpolation and gamut differences.",
-    "footerWarning": "Ensure your browser and display support P3 for full HDR color viewing."
+    "footerWarning": "Ensure your browser and display support P3 for full HDR color viewing.",
+
+    "tabs": {
+      "converters": "Converters",
+      "palettes": "Palettes",
+      "harmonies": "Harmonies"
+    },
+    "palette": {
+      "stepsLabel": "Number of Steps:",
+      "tints": "Tints",
+      "shades": "Shades",
+      "tones": "Tones"
+    },
+    "harmony": {
+      "complementary": "Complementary",
+      "analogous": "Analogous",
+      "triadic": "Triadic",
+      "tetradic": "Tetradic",
+      "splitComplementary": "Split Complementary",
+      "analogousAngleLabel": "Analogous Angle (°):",
+      "tetradicAngleLabel": "Tetradic Angle (°):",
+      "splitComplementaryAngleLabel": "Split Comp. Angle (°):",
+      "resetAngleTooltip": "Reset Angle"
+    }
   }
 }
