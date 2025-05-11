@@ -167,23 +167,22 @@ export function useColorSandboxState(props?: UseColorSandboxStateProps) {
   );
   const globalPickerColorString = hslString;
 
-  const [rgbGamutNote, setRgbGamutNote] = useState<string | null>(null);
-  const [hslGamutNote, setHslGamutNote] = useState<string | null>(null);
-
-  useEffect(() => {
-    const sourceIsP3Like =
-      masterColor.mode === 'oklch' ||
-      masterColor.mode === 'p3' ||
-      masterColor.mode === 'rec2020';
+  const rgbGamutNote = useMemo(() => {
     const isMasterColorInSrgb = inGamut('rgb')(masterColor);
 
-    if (sourceIsP3Like && !isMasterColorInSrgb) {
-      setRgbGamutNote(t('sRgbClipped'));
-      setHslGamutNote(t('sRgbClippedHsl'));
-    } else {
-      setRgbGamutNote(null);
-      setHslGamutNote(null);
+    if (!isMasterColorInSrgb) {
+      return t('sRgbClipped');
     }
+    return null;
+  }, [masterColor, t]);
+
+  const hslGamutNote = useMemo(() => {
+    const isMasterColorInSrgb = inGamut('rgb')(masterColor);
+
+    if (!isMasterColorInSrgb) {
+      return t('sRgbClippedHsl');
+    }
+    return null;
   }, [masterColor, t]);
 
   const satLightPickerRef = useRef<HTMLDivElement>(null);
