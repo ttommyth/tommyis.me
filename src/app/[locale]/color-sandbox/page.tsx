@@ -33,7 +33,10 @@ export async function generateMetadata(
 
   // Construct the OG image URL
   // Ensure your domain is correctly set, perhaps from an environment variable for production
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const siteUrl =
+    `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` ||
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    'http://localhost:3000';
   const ogImageUrl = new URL(`${siteUrl}/api/og/color-sandbox`);
   ogImageUrl.searchParams.set('gh', Array.isArray(gh) ? gh[0] : (gh ?? '210'));
   ogImageUrl.searchParams.set('gs', Array.isArray(gs) ? gs[0] : (gs ?? '100'));
