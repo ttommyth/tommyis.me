@@ -565,22 +565,21 @@ const ColorSandboxClientPage = ({
                 selectedIndex={selectedTabIndex}
                 onChange={setSelectedTabIndex}
               >
-                <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+                <Tab.List className="flex space-x-1 rounded-xl">
                   {tabCategories.map((category) => (
                     <Tab
                       key={category}
                       className={({ selected }) =>
-                        `w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700
-                    ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2
-                    ${selected ? 'bg-white shadow' : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'}`
+                        `w-full rounded-t-lg py-2.5 text-sm font-medium leading-5 focus:outline-none  border-transparent border-t-2 border-x-2
+                    ${selected ? '  border-dashed  border-default' : ''}`
                       }
                     >
                       {category}
                     </Tab>
                   ))}
                 </Tab.List>
-                <Tab.Panels className="mt-2">
-                  <Tab.Panel className="rounded-xl bg-white dark:bg-gray-800 p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2">
+                <Tab.Panels className="">
+                  <Tab.Panel className="rounded-xl p-3 focus:outline-none bg-dotted border-default border-dashed border-2">
                     <ConvertersTabPanel
                       t={t}
                       rgbString={rgbString}
@@ -597,7 +596,7 @@ const ColorSandboxClientPage = ({
                       displayP3Color={displayP3Color}
                     />
                   </Tab.Panel>
-                  <Tab.Panel className="rounded-xl bg-white dark:bg-gray-800 p-6 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2">
+                  <Tab.Panel className="rounded-xl p-6 focus:outline-none bg-dotted border-default border-dashed border-2">
                     <PalettesTabPanel
                       t={t}
                       paletteSteps={paletteSteps}
@@ -608,7 +607,7 @@ const ColorSandboxClientPage = ({
                       handlePreviewClick={handlePreviewClick}
                     />
                   </Tab.Panel>
-                  <Tab.Panel className="rounded-xl bg-white dark:bg-gray-800 p-6 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2">
+                  <Tab.Panel className="rounded-xl p-6 focus:outline-none bg-dotted border-default border-dashed border-2">
                     <HarmoniesTabPanel
                       t={t}
                       complementaryHarmony={complementaryHarmony}
@@ -629,14 +628,7 @@ const ColorSandboxClientPage = ({
               </Tab.Group>
             </div>
 
-            <footer className="text-center mt-12 py-6 border-t border-gray-200 dark:border-gray-700">
-              <p className="text-gray-500 dark:text-gray-400">
-                {pageTranslations('footerNote')}
-              </p>
-              <p className="text-gray-500 dark:text-gray-400 mt-1">
-                {pageTranslations('footerWarning')}
-              </p>
-            </footer>
+            <footer className="text-center mt-12 py-6 border-t border-gray-200 dark:border-gray-700"></footer>
           </>
         )}
       </div>
