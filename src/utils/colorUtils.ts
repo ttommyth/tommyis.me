@@ -1,9 +1,9 @@
-import { Color as CuloriColor, Oklch, formatCss } from 'culori';
+import { Color as CuloriColor, Oklch, formatHex } from 'culori';
 
 // Helper to get CSS string from Culori color object
 export const getCssString = (colorObj: CuloriColor | undefined): string => {
   if (!colorObj) return 'transparent';
-  const str = formatCss(colorObj);
+  const str = formatHex(colorObj);
   return str || 'transparent';
 };
 
