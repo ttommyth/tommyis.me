@@ -343,7 +343,7 @@ export async function GET(request: NextRequest) {
       status: 200,
       headers: {
         'Content-Type': 'image/png',
-        'Cache-Control': 'public, immutable, no-transform, max-age=31536000', // Cache aggressively
+        'Cache-Control': 'public, immutable, no-transform, max-age=3600', // Cache for 1 hour
       },
     });
   } catch (e: any) {
