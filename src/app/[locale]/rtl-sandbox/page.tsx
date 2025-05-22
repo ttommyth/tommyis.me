@@ -15,6 +15,8 @@ import {
   ArrowLongRightIcon,
   ArrowsRightLeftIcon,
 } from '@heroicons/react/24/outline'; // Assuming Heroicons are available
+import { ChevronDownIcon } from '@heroicons/react/24/solid'; // Added for expand/collapse
+import { AnimatePresence, motion } from 'framer-motion'; // Added for animations
 import { useLocale, useTranslations } from 'next-intl';
 
 // Placeholder for direction detection utilities
@@ -50,6 +52,7 @@ export default function RtlSandboxPage() {
     useState<FirstStrongCharInfo | null>(null);
   const [bidiSegments, setBidiSegments] = useState<BiDiSegment[]>([]);
   const [showWeakUnderlines, setShowWeakUnderlines] = useState<boolean>(true);
+  const [definitionsExpanded, setDefinitionsExpanded] = useState(false); // State for definitions section
 
   useEffect(() => {
     if (inputText) {
@@ -268,8 +271,17 @@ export default function RtlSandboxPage() {
       ON: 'bg-stone-300 dark:bg-stone-600 text-stone-800 dark:text-stone-200 border-stone-400 dark:border-stone-500', // Other Neutral
     };
 
-    const mirroredChars = ['(', ')', '[', ']', '{', '}', '<', '>'];
-    const neutralTypes: UbaBidiType[] = [
+    const mirroredChars: ReadonlyArray<string> = [
+      '(',
+      ')',
+      '[',
+      ']',
+      '{',
+      '}',
+      '<',
+      '>',
+    ];
+    const neutralTypes: ReadonlyArray<UbaBidiType> = [
       'ON',
       'WS',
       'CS',
@@ -337,9 +349,9 @@ export default function RtlSandboxPage() {
                 ) {
                   titleText += `\\nResolved: ${UBA_TYPE_DEFINITIONS[chunk.resolvedType] || chunk.resolvedType}`;
                 }
-                if (chunkIsUniformlyMirrored) {
+                if (chunkIsUniformlyMirrored && isRtlSegment) {
                   titleText += '\\n(Mirrored)';
-                } else if (chunkContainsAnyMirroredChar) {
+                } else if (chunkContainsAnyMirroredChar && isRtlSegment) {
                   titleText += '\\n(Contains mirrored characters)';
                 }
 
@@ -350,28 +362,25 @@ export default function RtlSandboxPage() {
                     className={`inline-flex flex-col items-center p-1.5 m-0.5 rounded border text-xs ${
                       typeToColorMap[chunk.originalType] || typeToColorMap.ON // Fallback to ON color
                     } min-w-[2em] min-h-[3.5em] justify-center ${
-                      chunkIsUniformlyMirrored
+                      chunkIsUniformlyMirrored && isRtlSegment
                         ? 'ring-2 ring-orange-500 ring-inset'
                         : ''
                     }`}
                   >
                     <span className="font-mono text-sm whitespace-pre-wrap">
-                      {chunkIsUniformlyMirrored || !chunkContainsAnyMirroredChar
-                        ? chunkText === ' '
-                          ? "' '"
-                          : chunkText
-                        : chunkText.split('').map((char, charInnerIdx) => (
-                            <span
-                              key={charInnerIdx}
-                              className={
-                                isRtlSegment && mirroredChars.includes(char)
-                                  ? 'font-bold text-orange-600 dark:text-orange-400'
-                                  : ''
-                              }
-                            >
-                              {char === ' ' ? "' '" : char}
-                            </span>
-                          ))}{' '}
+                      {/* Reverted to original character display logic, but kept highlighting for mirrored context */}
+                      {chunkText.split('').map((char, charInnerIdx) => (
+                        <span
+                          key={charInnerIdx}
+                          className={
+                            isRtlSegment && mirroredChars.includes(char)
+                              ? 'font-bold text-orange-600 dark:text-orange-400' // Style if char is mirrored in RTL context
+                              : ''
+                          }
+                        >
+                          {char === ' ' ? "' '" : char}
+                        </span>
+                      ))}{' '}
                       {/* Make space visible / keep existing space logic */}
                     </span>
                     <span className="mt-1 opacity-80">
@@ -543,6 +552,60 @@ export default function RtlSandboxPage() {
         <p className="mt-3 text-sm text-base-500 dark:text-base-400 italic">
           ({t('resolvedTypesNote')})
         </p>
+      </section>
+
+      {/* UBA Type Definitions Section */}
+      <section className="py-4">
+        <motion.header
+          initial={false}
+          onClick={() => setDefinitionsExpanded(!definitionsExpanded)}
+          className="flex items-center justify-between cursor-pointer p-3 bg-base-200 dark:bg-base-700 hover:bg-base-300 dark:hover:bg-base-600 rounded-md shadow transition-colors"
+          aria-expanded={definitionsExpanded}
+        >
+          <h2 className="text-xl font-semibold">
+            {t('ubaTypeDefinitionsTitle')}{' '}
+            {/* Assuming you'll add this translation */}
+          </h2>
+          <motion.div
+            animate={{ rotate: definitionsExpanded ? 180 : 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ChevronDownIcon className="w-6 h-6 text-base-700 dark:text-base-300" />
+          </motion.div>
+        </motion.header>
+        <AnimatePresence initial={false}>
+          {definitionsExpanded && (
+            <motion.section
+              key="definitions-content"
+              initial="collapsed"
+              animate="open"
+              exit="collapsed"
+              variants={{
+                open: { opacity: 1, height: 'auto', marginTop: '1rem' },
+                collapsed: { opacity: 0, height: 0, marginTop: '0rem' },
+              }}
+              transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+              className="overflow-hidden"
+            >
+              <div className="p-4 border border-t-0 border-default rounded-b-md bg-base-100 dark:bg-base-800">
+                <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                  {Object.entries(UBA_TYPE_DEFINITIONS).map(
+                    ([type, description]) => (
+                      <div key={type} className="break-inside-avoid">
+                        <dt className="font-semibold text-primary-600 dark:text-primary-400">
+                          {type}
+                        </dt>
+                        <dd className="text-sm text-base-700 dark:text-base-300">
+                          {description}
+                        </dd>
+                      </div>
+                    ),
+                  )}
+                </dl>
+              </div>
+            </motion.section>
+          )}
+        </AnimatePresence>
       </section>
     </div>
   );

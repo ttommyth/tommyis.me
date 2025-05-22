@@ -128,8 +128,10 @@ function getUbaBidiType(char: string): UbaBidiType {
   // Common Punctuation and Symbols (very simplified, UBA is more granular)
   // CS (Common Separator): , . / : ;
   if ([',', '.', ':', ';'].includes(char)) return 'CS';
-  // Treat markup-like symbols as LTR for visualization stability within segments
-  if (['<', '>', '/'].includes(char)) return 'L';
+  // Treat markup-like symbols as LTR for visualization stability within segments -- REMOVED for < > /
+  // if (['<', '>', '/'].includes(char)) return 'L';
+  // Let '/' be ON for now. < and > will also become ON by falling through.
+  if (char === '/') return 'ON'; // Explicitly making / ON, was L implicitly via the removed line.
 
   // ES (European Separator): Used between EN, like a decimal point. Often same as CS.
   // ET (European Terminator): $, %, #, degree sign etc. Often used with EN.
@@ -241,9 +243,6 @@ export function analyzeBiDiSegments(
           chunks[m].resolvedType === chunks[k].resolvedType
         ) {
           chunks[i].resolvedType = chunks[k].resolvedType; // e.g. EN CS EN -> EN EN EN
-        } else if (m === chunks.length) {
-          // CS/ES is at the end after a number
-          chunks[i].resolvedType = chunks[k].resolvedType; // e.g. EN CS -> EN EN
         }
       }
     }
@@ -337,17 +336,35 @@ export function analyzeBiDiSegments(
           break;
         }
       }
-      let finalNeutralResolvedType: UbaBidiType =
-        paragraphBaseDirection === 'ltr' ? 'L' : 'R'; // Default to paragraph dir
+
+      // Determine the neutral's resolved type based on UBA rules N1 and N2
+      let finalNeutralResolvedType: UbaBidiType;
       if (
         prevStrongResolvedType &&
         prevStrongResolvedType === nextStrongResolvedType
       ) {
+        // N1: A sequence of neutrals takes the direction of the surrounding strong characters
+        // if the strong characters are of the same direction. (e.g. L + ON + L => L + L + L)
         finalNeutralResolvedType = prevStrongResolvedType;
+      } else {
+        // N2: Otherwise (strong types differ, or strong type on only one side, or no strong types at all),
+        // the neutral sequence takes the paragraph embedding level (paragraph direction).
+        // (e.g. L + ON + R => L + P + R; L + ON => L + P; ON + L => P + L, where P = paragraph direction)
+        finalNeutralResolvedType = paragraphBaseDirection === 'ltr' ? 'L' : 'R';
       }
       chunk.resolvedType = finalNeutralResolvedType;
     }
   }
+
+  // DEBUGGING: Log paragraphBaseDirection and last few chunks after N-rules
+  console.log(
+    '[BiDi Debug] After N-rules: paragraphBaseDirection:',
+    paragraphBaseDirection,
+  );
+  console.log(
+    '[BiDi Debug] Last 5 chunks:',
+    JSON.parse(JSON.stringify(chunks.slice(-5))),
+  );
 
   // 2. Group chunks into BiDiSegments based on final resolved direction
   const finalSegments: BiDiSegment[] = [];

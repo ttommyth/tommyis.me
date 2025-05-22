@@ -254,6 +254,7 @@
     "loadLtrFirst": "LTR First",
     "loadNeutralFirst": "Neutral First",
     "loadMixedComplex": "Complex Mixed",
-    "exampleMixedComplexRtlFirst": "Complex RTL Start"
+    "exampleMixedComplexRtlFirst": "Complex RTL Start",
+    "ubaTypeDefinitionsTitle": "UBA Type Definitions"
   }
 }
