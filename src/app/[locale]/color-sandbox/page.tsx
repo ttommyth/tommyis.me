@@ -1,5 +1,6 @@
 import { Color as CuloriColor } from 'culori';
 import type { Metadata, ResolvingMetadata } from 'next';
+import Link from 'next/link';
 import ColorSandboxClientPage from './ColorSandboxClientPage'; // Import the new client component
 
 interface ColorSandboxPageProps {
@@ -121,6 +122,11 @@ export default async function ColorSandboxPage({
   // and useColorSandboxState will use its internal default.
 
   return (
-    <ColorSandboxClientPage initialColorFromSearch={initialColorFromServer} />
+    <>
+      <ColorSandboxClientPage initialColorFromSearch={initialColorFromServer} />
+      <p>
+        <Link href="/tools">Back to Tools</Link>
+      </p>
+    </>
   );
 }

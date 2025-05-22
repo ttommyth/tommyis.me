@@ -1,6 +1,7 @@
 // Refactor leveling guide page to use a StepItem component and data-driven steps
 import LevelingGuideClient from '@/components/client/pages/LastEpochLevelingGuideClient';
 import { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Tommy is me',
@@ -17,5 +18,12 @@ export const metadata: Metadata = {
   ],
 };
 export default function LevelingGuidePage() {
-  return <LevelingGuideClient />;
+  return (
+    <>
+      <LevelingGuideClient />
+      <p>
+        <Link href="/tools">Back to Tools</Link>
+      </p>
+    </>
+  );
 }

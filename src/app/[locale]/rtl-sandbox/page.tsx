@@ -18,6 +18,7 @@ import {
 import { ChevronDownIcon } from '@heroicons/react/24/solid'; // Added for expand/collapse
 import { AnimatePresence, motion } from 'framer-motion'; // Added for animations
 import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 
 // Placeholder for direction detection utilities
 // We will create this file next: src/utils/directionality.ts
@@ -607,6 +608,13 @@ export default function RtlSandboxPage() {
           )}
         </AnimatePresence>
       </section>
+      <div className="mt-8">
+        <p>
+          <Link href="/tools" className="text-accent hover:underline">
+            Back to Tools
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
