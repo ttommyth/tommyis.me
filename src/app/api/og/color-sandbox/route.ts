@@ -116,23 +116,29 @@ export async function GET(request: NextRequest) {
 
   let analogousAngle = parseFloat(aaParam || '30');
   if (isNaN(analogousAngle)) analogousAngle = 30;
+  analogousAngle = Math.min(360, Math.max(0, analogousAngle));
 
   let splitComplementaryAngle = parseFloat(saParam || '30');
   if (isNaN(splitComplementaryAngle)) splitComplementaryAngle = 30;
+  splitComplementaryAngle = Math.min(360, Math.max(0, splitComplementaryAngle));
 
   let tetradicAngle = parseFloat(taParam || '60');
   if (isNaN(tetradicAngle)) tetradicAngle = 60;
+  tetradicAngle = Math.min(360, Math.max(0, tetradicAngle));
 
   let paletteSteps = parseInt(psParam || '12', 10);
-  if (isNaN(paletteSteps) || paletteSteps < 0) paletteSteps = 12; // Ensure non-negative
+  if (isNaN(paletteSteps) || paletteSteps < 1) paletteSteps = 12;
+  // Cap palette size to bound CPU/memory usage of generated images (DoS protection).
+  paletteSteps = Math.min(64, paletteSteps);
 
   // Default color if params are missing (e.g., a pleasant blue)
   let primaryColor: CuloriColor = { mode: 'hsl', h: 210, s: 1, l: 0.5 };
 
   if (hParam && sParam && lParam) {
-    const h = parseFloat(hParam);
-    const s = parseFloat(sParam); // Assuming 0-100 from URL
-    const l = parseFloat(lParam); // Assuming 0-100 from URL
+    // Clamp user-supplied values to valid ranges before use.
+    const h = Math.min(360, Math.max(0, parseFloat(hParam)));
+    const s = Math.min(100, Math.max(0, parseFloat(sParam))); // 0-100 from URL
+    const l = Math.min(100, Math.max(0, parseFloat(lParam))); // 0-100 from URL
 
     if (!isNaN(h) && !isNaN(s) && !isNaN(l)) {
       // Keep primaryColor as CuloriColor for toCssColor utility
@@ -348,7 +354,8 @@ export async function GET(request: NextRequest) {
     });
   } catch (e: any) {
     console.error('Error generating OG image:', e);
-    return new NextResponse(`Failed to generate image: ${e.message}`, {
+    // Return a generic message to avoid leaking internal error details.
+    return new NextResponse('Failed to generate image', {
       status: 500,
     });
   }
