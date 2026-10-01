@@ -109,11 +109,11 @@ const ImageCarousel: FC<{ images: string[] }> = ({ images }) => {
                 fill
                 alt={'image-' + (idx + 1)}
                 key={idx}
+                sizes="(max-width: 896px) 100vw, 896px"
                 className={twMerge(
                   currentIndex == idx ? 'opacity-100' : 'opacity-0',
                   'object-cover',
                 )}
-                priority={true}
                 quality={75}
                 placeholder="blur"
                 blurDataURL={`/_next/image?url=${images[idx]}&w=64&q=1`}
@@ -124,18 +124,27 @@ const ImageCarousel: FC<{ images: string[] }> = ({ images }) => {
         <Link
           href={images[currentIndex]}
           target="_blank"
-          className="absolute top-0 right-0 p-2 m-2 bg-default text-default-inverted rounded-md !bg-opacity-50 backdrop-blur-md "
+          aria-label="Open image in a new tab"
+          className="absolute top-0 right-0 p-2 m-2 bg-default text-default-invert rounded-md !bg-opacity-50 backdrop-blur-md "
         >
           <ArrowTopRightOnSquareIcon className="w-icon h-icon" />
         </Link>
       </div>
       <div className="carousel-indicator absolute bottom-0 flex justify-center left-1/2 -translate-x-1/2 p-1 mb-1 rounded-full gap-2  bg-default text-default-invert">
-        <div className="cursor-pointer" onClick={handlePrevious}>
+        <button
+          type="button"
+          className="cursor-pointer active:scale-95 transition-transform"
+          aria-label="Previous image"
+          onClick={handlePrevious}
+        >
           <ChevronLeftIcon className="w-icon h-icon" />
-        </div>
+        </button>
         {images.map((_, index) => (
-          <motion.div
+          <motion.button
             key={index}
+            type="button"
+            aria-label={`Show image ${index + 1}`}
+            aria-current={currentIndex === index ? 'true' : undefined}
             className={`w-icon h-icon bg-default border-default-invert border-2 cursor-pointer flex justify-center items-center`}
             onClick={() => handleDotClick(index)}
             initial="initial"
@@ -144,8 +153,6 @@ const ImageCarousel: FC<{ images: string[] }> = ({ images }) => {
             variants={dotsVariants}
           >
             <motion.div
-              key={index}
-              onClick={() => handleDotClick(index)}
               initial="initial"
               animate={currentIndex === index ? 'animate' : 'initial'}
               whileHover="hover"
@@ -153,12 +160,17 @@ const ImageCarousel: FC<{ images: string[] }> = ({ images }) => {
             >
               <ChevronUpIcon className="w-icon h-icon " />
             </motion.div>
-          </motion.div>
+          </motion.button>
         ))}
 
-        <div className="cursor-pointer" onClick={handleNext}>
+        <button
+          type="button"
+          className="cursor-pointer active:scale-95 transition-transform"
+          aria-label="Next image"
+          onClick={handleNext}
+        >
           <ChevronRightIcon className="w-icon h-icon" />
-        </div>
+        </button>
       </div>
     </div>
   );

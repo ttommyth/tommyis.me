@@ -8,6 +8,7 @@ import {
 import {
   motion,
   useAnimationControls,
+  useReducedMotion,
   useScroll,
   useVelocity,
 } from 'framer-motion';
@@ -63,8 +64,8 @@ const TechGrid: FC<{
               src={it.image}
               alt={it.name}
               fill
+              sizes="50px"
               className="object-contain"
-              priority={true}
             />
           </div>
           <span className="text-xs">{it.name}</span>
@@ -77,8 +78,10 @@ const TechPlayground: FC<{
   highlightItems?: string[];
 }> = (props) => {
   const { highlightItems } = props;
+  const reduceMotion = useReducedMotion();
 
   const ref = useRef<HTMLDivElement | null>(null);
+  const activeRef = useRef(true);
   const bodyRef = useRef<{ [key: string]: Matter.Body }>({});
   const rectRef = useRef<DOMRect | null>(null);
   const [locked, setLocked] = useState(true);
@@ -88,7 +91,7 @@ const TechPlayground: FC<{
   });
   const scrollYVelocity = useVelocity(scrollY);
   useEffect(() => {
-    if (!ref) return;
+    if (!ref || reduceMotion) return;
     rectRef.current = ref.current?.getBoundingClientRect() ?? {
       x: 0,
       y: 0,
@@ -202,7 +205,23 @@ const TechPlayground: FC<{
 
     // run the engine
     Runner.run(runner, engine);
+
+    // pause the simulation while the playground is off-screen / tab hidden
+    const updateRunning = () => {
+      runner.enabled = activeRef.current && !document.hidden;
+    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        activeRef.current = entry.isIntersecting;
+        updateRunning();
+      },
+      { rootMargin: '120px 0px' },
+    );
+    observer.observe(ref.current as Element);
+    document.addEventListener('visibilitychange', updateRunning);
     return () => {
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', updateRunning);
       Render.stop(render);
       World.clear(engine.world, false);
       Engine.clear(engine);
@@ -211,7 +230,7 @@ const TechPlayground: FC<{
       (render as any).context = null;
       render.textures = {};
     };
-  }, [reset]);
+  }, [reset, reduceMotion]);
   useEffect(() => {
     if (bodyRef.current) {
       Object.entries(bodyRef.current).forEach(([key, body]) => {
@@ -251,6 +270,7 @@ const TechPlayground: FC<{
   }, []);
   useEffect(() => {
     const debouncedCallback = throttle((ev) => {
+      if (!activeRef.current) return;
       const velocity = scrollYVelocity.get();
       Object.entries(bodyRef.current).forEach(([key, body]) => {
         Matter.Body.setVelocity(body, {
@@ -268,7 +288,9 @@ const TechPlayground: FC<{
     <>
       <div ref={ref} className="w-full h-full"></div>
       <button
+        type="button"
         className="absolute top-32 sm:top-2 right-2"
+        aria-label="Reset the pieces"
         onClick={(ev) => setReset(Math.random())}
       >
         <ArrowPathIcon className=" w-8 h-8" />
@@ -277,7 +299,9 @@ const TechPlayground: FC<{
         href="/melongame"
         className="absolute top-32 block sm:hidden left-2 z-20"
       >
-        <span className=" text-xl p-2 text-gray-500">🍉 GAME</span>
+        <span className=" text-xl p-2 text-base-600 dark:text-base-300">
+          🍉 GAME
+        </span>
       </Link>
       <div
         className={twMerge(
@@ -286,7 +310,10 @@ const TechPlayground: FC<{
         )}
       />
       <button
+        type="button"
         className="absolute right-2 bottom-2 z-10 block sm:hidden rounded-full bg-primary-500/80 p-2"
+        aria-label={locked ? 'Unlock the playground' : 'Lock the playground'}
+        aria-pressed={locked}
         onClick={(ev) => setLocked((v) => !v)}
       >
         {locked ? (
@@ -352,6 +379,10 @@ export const Tech: FC<{}> = (props) => {
   const [layoutFormat, setLayoutFormat] = useState<'playground' | 'grid'>(
     'playground',
   );
+  const reduceMotion = useReducedMotion();
+  useEffect(() => {
+    if (reduceMotion) setLayoutFormat('grid');
+  }, [reduceMotion]);
 
   const minisearch = useMemo(() => {
     const ms = new MiniSearch({
@@ -409,7 +440,9 @@ export const Tech: FC<{}> = (props) => {
         <h2 className="text-4xl font-extrabold flex items-center">
           <span className="mr-2">⬅️ My Skill set </span>
           <Link href="/melongame">
-            <span className=" text-xl p-2 text-gray-500">🍉 GAME</span>
+            <span className=" text-xl p-2 text-base-600 dark:text-base-300">
+              🍉 GAME
+            </span>
           </Link>
         </h2>
         <FilterInput

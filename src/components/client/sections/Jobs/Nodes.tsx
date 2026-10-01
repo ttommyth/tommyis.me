@@ -71,16 +71,16 @@ export const JobNode: FC<{
             className="flex justify-center gap-2"
           >
             {node}{' '}
-            <ArrowTopRightOnSquareIcon className="w-icon h-icon inline-block text-gray-500" />{' '}
+            <ArrowTopRightOnSquareIcon className="w-icon h-icon inline-block text-base-600 dark:text-base-300" />{' '}
           </Link>
         )}
         condition={!!job.url}
       >
-        <h4 className="text-gray-500 text-md inline-block w-auto">
+        <h4 className="text-base-600 dark:text-base-300 inline-block w-auto">
           {job.company}
         </h4>
       </ConditionalWrapper>
-      <h4 className="text-xs text-gray-500">{job.period}</h4>
+      <h4 className="text-xs text-base-600 dark:text-base-300">{job.period}</h4>
     </div>
   );
 };
@@ -143,7 +143,7 @@ export const ProjectNode: FC<
           </span>
         ))}
       </span>
-      <h4 className="text-xs text-gray-500">{project.period}</h4>
+      <h4 className="text-xs text-base-600 dark:text-base-300">{project.period}</h4>
       {showExpand && (
         <motion.div
           className="w-full h-auto border-default border-2 border-solid aria-expanded:border-style-expand rounded-md flex flex-col items-center bg-dotted "
@@ -175,7 +175,7 @@ export const ProjectNode: FC<
                   open: { opacity: 1, height: 'auto' },
                   collapsed: { opacity: 0, height: 0 },
                 }}
-                transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+                transition={{ duration: 0.55, ease: [0.04, 0.62, 0.23, 0.98] }}
                 className={twMerge('w-full overflow-y-hidden')}
               >
                 <div className="p-2 sm:p-4">
@@ -231,16 +231,16 @@ export const PersonalProjectNode: FC<{
             className="flex justify-center gap-2"
           >
             {node}{' '}
-            <ArrowTopRightOnSquareIcon className="w-icon h-icon inline-block text-gray-500" />{' '}
+            <ArrowTopRightOnSquareIcon className="w-icon h-icon inline-block text-base-600 dark:text-base-300" />{' '}
           </Link>
         )}
         condition={!!project.url}
       >
-        <h4 className="text-gray-500 text-md inline-block w-auto">
+        <h4 className="text-base-600 dark:text-base-300 inline-block w-auto">
           {project.company}
         </h4>
       </ConditionalWrapper>
-      <h4 className="text-xs text-gray-500">{project.period}</h4>
+      <h4 className="text-xs text-base-600 dark:text-base-300">{project.period}</h4>
     </div>
   );
 };
@@ -266,15 +266,19 @@ export const EducationNode: FC<{
       <span className="flex items-baseline gap-2">
         <h3 className="text-xl font-bold">{education.title}</h3>
         {education?.gpa ? (
-          <span className=" text-xs text-gray-500">GPA: {education.gpa}</span>
+          <span className=" text-xs text-base-600 dark:text-base-300">
+            GPA: {education.gpa}
+          </span>
         ) : (
           <></>
         )}
       </span>
-      <h4 className="text-gray-500 text-md inline-block w-auto">
+      <h4 className="text-base-600 dark:text-base-300 inline-block w-auto">
         {education.school}
       </h4>
-      <h4 className="text-xs text-gray-500">{education.period}</h4>
+      <h4 className="text-xs text-base-600 dark:text-base-300">
+        {education.period}
+      </h4>
     </div>
   );
 };

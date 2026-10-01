@@ -6,8 +6,26 @@
   @apply bg-primary-500 text-base-100;
 }
 
+:focus-visible {
+  @apply outline outline-2 outline-offset-2 outline-primary-500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 body {
   @apply bg-default text-base-800 dark:text-base-200 overflow-x-hidden;
+}
+
+html {
+  position: relative;
 }
 
 input {
@@ -277,7 +295,7 @@ textarea {
     }
   }
   .interact {
-    @apply cursor-pointer relative;
+    @apply cursor-pointer relative transition-transform duration-150 ease-out active:scale-95;
   }
   .interact:after {
     content: '';
@@ -290,7 +308,7 @@ textarea {
   }
 
   .group-interact {
-    @apply cursor-pointer relative;
+    @apply cursor-pointer relative transition-transform duration-150 ease-out active:scale-95;
   }
   .group-interact:after {
     content: '';

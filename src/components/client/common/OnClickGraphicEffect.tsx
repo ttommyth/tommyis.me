@@ -1,19 +1,27 @@
 'use client';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import ClickEffect from 'public/icon/click.svg';
 import { useEffect, useState } from 'react';
 
 export const OnClickGraphicEffect = () => {
+  const reduceMotion = useReducedMotion();
   const [click, setClick] = useState<{ x: number; y: number } | null>(null);
   useEffect(() => {
+    if (reduceMotion) return;
     const onClick = (ev: MouseEvent) => {
+      if (
+        ev.target instanceof Element &&
+        ev.target.closest('input, textarea, select, [contenteditable]')
+      ) {
+        return;
+      }
       setClick({ x: ev.clientX, y: ev.clientY });
     };
     window.addEventListener('click', onClick);
     return () => {
       window.removeEventListener('click', onClick);
     };
-  }, []);
+  }, [reduceMotion]);
   return (
     <>
       {click ? (

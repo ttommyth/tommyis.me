@@ -45,7 +45,7 @@ export const SkillsPile: FC<{ skills: (typeof skills)[number]['name'][] }> = ({
     <div className="relative w-full h-96 sm:h-64 select-none p-2">
       {skills.map((skill, idx) => (
         <div
-          className="absolute  rounded-md p-2 -translate-x-1/2 -translate-y-1/2 hover:z-10 dui-tooltip"
+          className="absolute w-max rounded-md p-2 -translate-x-1/2 -translate-y-1/2 hover:z-10 dui-tooltip"
           data-tip={skill}
           key={idx}
           style={pileStyles[idx]}
@@ -55,7 +55,7 @@ export const SkillsPile: FC<{ skills: (typeof skills)[number]['name'][] }> = ({
             width={80}
             height={80}
             alt={skill}
-            className="drop-shadow-light-solid dark:drop-shadow-dark-solid"
+            className="w-20 h-20 object-contain drop-shadow-light-solid dark:drop-shadow-dark-solid"
           />
         </div>
       ))}

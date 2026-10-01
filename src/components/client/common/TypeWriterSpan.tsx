@@ -1,6 +1,6 @@
 'use client';
 
-import { animate, motion, useMotionValue, useTransform } from 'framer-motion';
+import { animate, motion, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
 import { FC, useEffect, useRef, useState } from 'react';
 
 const BlinkingCursor = () => {
@@ -26,6 +26,7 @@ export const TypeWriterSpan: FC<{
   showCursor: boolean;
   onEvent?: (ref: HTMLSpanElement, event: 'play' | 'complete') => void;
 }> = ({ children, showCursor, onEvent }) => {
+  const reduceMotion = useReducedMotion();
   const spanRef = useRef<HTMLSpanElement>(null);
   const [done, setDone] = useState(false);
   const count = useMotionValue(0);
@@ -35,6 +36,10 @@ export const TypeWriterSpan: FC<{
   );
 
   useEffect(() => {
+    if (reduceMotion) {
+      count.set(children.length);
+      return;
+    }
     const controls = animate(count, children.length, {
       type: 'tween',
       duration: children.length * 0.035,
@@ -54,7 +59,7 @@ export const TypeWriterSpan: FC<{
   return (
     <span className="" ref={spanRef}>
       <motion.span>{displayText}</motion.span>
-      {showCursor ? <BlinkingCursor /> : <></>}
+      {showCursor && !reduceMotion ? <BlinkingCursor /> : <></>}
     </span>
   );
 };

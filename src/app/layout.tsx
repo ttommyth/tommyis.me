@@ -10,7 +10,7 @@ import { twMerge } from 'tailwind-merge';
 const font = Noto_Sans({
   subsets: ['latin'],
   display: 'swap',
-  weight: ['300', '400', '700'],
+  weight: ['300', '400', '700', '800', '900'],
 });
 
 export const metadata: Metadata = {

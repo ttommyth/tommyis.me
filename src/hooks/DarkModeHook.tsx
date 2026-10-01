@@ -131,6 +131,7 @@ export const DarkModeSwitch = () => {
     <button
       onClick={() => delayedSetTheme(targetTheme == 'light' ? 'dark' : 'light')}
       type="button"
+      aria-label={`Switch to ${targetTheme == 'light' ? 'dark' : 'light'} mode`}
       className="interact relative w-8 h-8 p-0 overflow-hidden rounded-full flex-shrink-0"
     >
       <motion.span

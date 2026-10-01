@@ -1,5 +1,5 @@
 'use client';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { maxBy } from 'lodash';
 import { FC } from 'react';
 
@@ -7,10 +7,15 @@ export const VerticalRoll: FC<{
   messages: string[];
 }> = (props) => {
   const { messages } = props;
+  const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) {
+    return <span className="inline-block">{messages[0]}</span>;
+  }
 
   return (
     <span className="relative inline-block overflow-hidden">
-      <motion.div
+      <motion.span
         animate={{
           translateY: [
             ...messages.map((_, idx) => `-${100 * idx}%`),
@@ -22,7 +27,7 @@ export const VerticalRoll: FC<{
           duration: 4 * messages.length,
           ease: 'anticipate',
         }}
-        className="h-auto"
+        className="block h-auto"
       >
         <span className="invisible">{maxBy(messages, (it) => it.length)}</span>
         {messages.map((it, idx) => (
@@ -40,7 +45,7 @@ export const VerticalRoll: FC<{
         >
           {messages[0]}
         </span>
-      </motion.div>
+      </motion.span>
     </span>
   );
 };

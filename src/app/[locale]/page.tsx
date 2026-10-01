@@ -34,11 +34,11 @@ export default async function Index({ params }: NextAppDirectoryProps) {
   const t = await getTranslations('Index');
   return (
     <div
-      className="w-auto overflow-x-auto sm:overflow-x-hidden flex flex-row sm:flex-col snap-x  snap-mandatory sm:snap-none gap-16 sm:gap-4 px-8 py-0 sm:px-0 sm:py-8"
+      className="w-auto overflow-x-hidden flex flex-col gap-4 px-0 py-4 sm:py-8"
       id="root-container"
     >
       <div
-        className="snap-always snap-center relative sm:static w-[100dvw] sm:w-auto h-[100dvh] min-h-[500px]"
+        className="relative sm:static w-[100dvw] sm:w-auto h-[100dvh] min-h-[500px]"
         id="hero"
       >
         <Hero
@@ -51,19 +51,19 @@ export default async function Index({ params }: NextAppDirectoryProps) {
         />
       </div>
       <div
-        className="snap-always snap-center relative sm:static  w-[100dvw] sm:w-auto h-[100dvh] min-h-[500px]"
+        className="relative sm:static  w-[100dvw] sm:w-auto h-[100dvh] min-h-[500px] scroll-mt-appbar"
         id="skills"
       >
         <Tech />
       </div>
       <div
-        className="snap-always snap-center relative sm:static  w-[100dvw] sm:w-auto h-[100dvh] sm:h-auto scroll-m-0 sm:scroll-m-20"
+        className="relative sm:static  w-[100dvw] sm:w-auto scroll-mt-appbar sm:scroll-m-20"
         id="jobs"
       >
         <Jobs />
       </div>
       <div
-        className="snap-always snap-center relative sm:static  w-[100dvw] sm:w-auto h-[100dvh] sm:h-auto scroll-m-0 sm:scroll-m-20"
+        className="relative sm:static  w-[100dvw] sm:w-auto h-[100dvh] sm:h-auto scroll-mt-appbar sm:scroll-m-20"
         id="contact"
       >
         <Contact />

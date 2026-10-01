@@ -16,8 +16,8 @@ export const Header = () => {
           <div className="dark-bg-dotted-glass absolute top-0 left-0 right-0 bottom-0 " />
         </div>
 
-        <div className="max-w-6xl flex flex-row justify-center items-center h-appbar gap-8 w-full z-10 relative px-4">
-          <ul className="flex mx-auto container   gap-8   grow overflow-y-auto whitespace-nowrap h-full items-center">
+        <div className="max-w-6xl flex flex-row justify-center items-center h-appbar gap-4 sm:gap-8 w-full z-10 relative px-4">
+          <ul className="flex mx-auto container gap-4 sm:gap-8 grow overflow-y-auto whitespace-nowrap h-full items-center text-[13px] sm:text-base">
             {paths.length == 1 ||
             (paths.length == 2 && supportedLocale.includes(paths[1])) ? (
               <>

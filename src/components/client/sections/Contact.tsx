@@ -60,6 +60,7 @@ export const Contact = () => {
     keyof typeof validationSchema.fields | 'submit' | 'submitted'
   >('name');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { handleSubmit, watch, register, getFieldState, trigger, formState } =
     useForm({
       defaultValues: {
@@ -76,17 +77,23 @@ export const Contact = () => {
     [key in keyof typeof validationSchema.fields]: string;
   }) => {
     setLoading(true);
+    setError(null);
     try {
-      grecaptcha!.ready(async () => {
-        const token = await grecaptcha?.execute(
-          process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!,
-          { action: 'submit' },
-        );
-        await axios.post('/api/contact', { ...data, recaptcha: token });
-        setStep('submitted');
-      });
+      await new Promise<void>((resolve) => grecaptcha!.ready(resolve));
+      const token = await grecaptcha!.execute(
+        process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!,
+        { action: 'submit' },
+      );
+      await axios.post('/api/contact', { ...data, recaptcha: token });
+      setStep('submitted');
     } catch (err) {
-      if (err instanceof Error) alert(err.message);
+      setError(
+        axios.isAxiosError(err) && err.response?.data?.message
+          ? String(err.response.data.message)
+          : err instanceof Error
+            ? err.message
+            : 'Something went wrong sending your message. Please try again, or email me directly.',
+      );
     } finally {
       setLoading(false);
     }
@@ -154,6 +161,8 @@ export const Contact = () => {
                           <></>
                         ) : (
                           <button
+                            type="button"
+                            aria-label={`Edit ${it}`}
                             onClick={(ev) => setStep(it)}
                             className="ml-2 interact"
                           >
@@ -189,6 +198,11 @@ export const Contact = () => {
               className="m-2  mb-8 flex flex-col"
               onSubmit={handleSubmit(onSubmit)}
             >
+              {error ? (
+                <p role="alert" className="text-red-500 text-sm px-2 pb-2">
+                  {error}
+                </p>
+              ) : null}
               <span className="relative group">
                 {step == 'submitted' ? (
                   <></>
@@ -206,7 +220,10 @@ export const Contact = () => {
                         return (
                           <textarea
                             className="pr-10 w-full"
-                            {...register(it, { required: true })}
+                            {...register(it, {
+                              required: true,
+                              onChange: () => setError(null),
+                            })}
                             key={idx}
                             style={{ display: step == it ? 'block' : 'none' }}
                             placeholder={it}
@@ -216,7 +233,10 @@ export const Contact = () => {
                         <input
                           type="text"
                           className="pr-10 w-full"
-                          {...register(it, { required: true })}
+                          {...register(it, {
+                            required: true,
+                            onChange: () => setError(null),
+                          })}
                           key={idx}
                           style={{ display: step == it ? 'block' : 'none' }}
                           placeholder={it}
@@ -226,6 +246,7 @@ export const Contact = () => {
                     <button
                       className="absolute right-2 top-1/2 -translate-y-1/2 disabled:text-base-500 "
                       type="button"
+                      aria-label="Next step"
                       onClick={(ev) =>
                         setStep((v) =>
                           v == 'name'
