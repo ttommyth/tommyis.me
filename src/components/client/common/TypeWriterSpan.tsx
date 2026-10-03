@@ -1,6 +1,12 @@
 'use client';
 
-import { animate, motion, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
+import {
+  animate,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+} from 'framer-motion';
 import { FC, useEffect, useRef, useState } from 'react';
 
 const BlinkingCursor = () => {

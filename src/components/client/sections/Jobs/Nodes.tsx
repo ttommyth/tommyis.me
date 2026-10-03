@@ -143,7 +143,9 @@ export const ProjectNode: FC<
           </span>
         ))}
       </span>
-      <h4 className="text-xs text-base-600 dark:text-base-300">{project.period}</h4>
+      <h4 className="text-xs text-base-600 dark:text-base-300">
+        {project.period}
+      </h4>
       {showExpand && (
         <motion.div
           className="w-full h-auto border-default border-2 border-solid aria-expanded:border-style-expand rounded-md flex flex-col items-center bg-dotted "
@@ -240,7 +242,9 @@ export const PersonalProjectNode: FC<{
           {project.company}
         </h4>
       </ConditionalWrapper>
-      <h4 className="text-xs text-base-600 dark:text-base-300">{project.period}</h4>
+      <h4 className="text-xs text-base-600 dark:text-base-300">
+        {project.period}
+      </h4>
     </div>
   );
 };
